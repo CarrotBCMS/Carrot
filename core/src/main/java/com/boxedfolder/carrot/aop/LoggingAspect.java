@@ -25,9 +25,17 @@ public class LoggingAspect {
     public void resourceMethod() {
     }
 
+    @Pointcut("execution(* com.boxedfolder.carrot.sync.rest.*.*(..))")
+    public void syncMethod() {
+    }
+
     @Before("resourceMethod()")
     public void logResourceMethod(JoinPoint joinPoint) {
-        Logger log = LoggerFactory.getLogger(joinPoint.getClass());
-        log.info("\n\nCarrot REST request with signature: " + joinPoint.getSignature() + "\nArguments: " + Arrays.toString(joinPoint.getArgs()) + "\n");
+        logInfo(getClass(), joinPoint);
+    }
+
+    private void logInfo(Class theClass, JoinPoint joinPoint) {
+        Logger log = LoggerFactory.getLogger(theClass);
+        log.info("\n\nCarrot " + joinPoint.getSourceLocation() + " REST request with signature: " + joinPoint.getSignature() + "\nArguments: " + Arrays.toString(joinPoint.getArgs()) + "\n");
     }
 }
