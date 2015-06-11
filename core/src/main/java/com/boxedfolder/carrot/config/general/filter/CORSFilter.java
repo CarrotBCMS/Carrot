@@ -15,6 +15,8 @@ import java.io.IOException;
  * Adds specific headers to every response to allow cross-origin resource sharing. Only
  * available in develop mode.
  *
+ * With Spring Boot 1.3.0 it can be activated via annotation.
+ *
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Profile(Profiles.DEVELOP)
