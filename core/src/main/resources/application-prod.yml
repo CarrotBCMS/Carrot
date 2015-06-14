@@ -1,5 +1,6 @@
 spring:
     profiles: prod
+
     thymeleaf:
         cache: true
         mode: LEGACYHTML5

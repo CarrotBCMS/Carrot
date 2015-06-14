@@ -12,5 +12,6 @@ spring:
         auth: false
         from: mail@boxedfolder.com
 
-    thymeleaf:
-        mode: LEGACYHTML5
+auth:
+    username: user
+    password: password
