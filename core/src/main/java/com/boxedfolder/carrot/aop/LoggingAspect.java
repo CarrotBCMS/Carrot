@@ -21,12 +21,8 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class LoggingAspect {
-    @Pointcut("execution(* com.boxedfolder.carrot.web.client.*.*(..))")
+    @Pointcut("execution(* com.boxedfolder.carrot.web.*.*(..))")
     public void resourceMethod() {
-    }
-
-    @Pointcut("execution(* com.boxedfolder.carrot.sync.rest.*.*(..))")
-    public void syncMethod() {
     }
 
     @Before("resourceMethod()")
@@ -36,6 +32,6 @@ public class LoggingAspect {
 
     private void logInfo(Class theClass, JoinPoint joinPoint) {
         Logger log = LoggerFactory.getLogger(theClass);
-        log.info("\n\nCarrot " + joinPoint.getSourceLocation() + " REST request with signature: " + joinPoint.getSignature() + "\nArguments: " + Arrays.toString(joinPoint.getArgs()) + "\n");
+        log.info("\n\nCarrot REST request with signature: " + joinPoint.getSignature() + "\nArguments: " + Arrays.toString(joinPoint.getArgs()) + "\n");
     }
 }
