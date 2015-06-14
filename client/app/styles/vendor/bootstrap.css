@@ -313,7 +313,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: Oxygen;
+  font-family: Oxygen, Helvetica, sans-serif;
   font-size: 15px;
   line-height: 1.428571429;
   color: #333333;
