@@ -18,6 +18,9 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import javax.inject.Inject;
 
 /**
+ * This security config is not using spring session to store session data in redis or something.
+ * A stateless session with a custom x-auth-filter had been used instead.
+ *
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Configuration
@@ -32,13 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Define secured routes here
-        String[] securedEndpoints = {"/client/**"};
+        String[] securedEndpoints = {"/client/ping"};
 
         for (String endpoint : securedEndpoints) {
             http.authorizeRequests().antMatchers(endpoint).authenticated();
         }
-
-        http.authorizeRequests().antMatchers("/sync/ping").permitAll();
 
         SecurityConfigurer<DefaultSecurityFilterChain, HttpSecurity> securityConfigurerAdapter =
                 new XAuthTokenConfigurer(userDetailsServiceBean());

@@ -5,6 +5,11 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Load username and password from configuration.
+ *
+ * @author Heiko Dreyer (heiko@boxedfolder.com)
+ */
 @Component
 @ConfigurationProperties(prefix = "auth")
 public class UserProperties {

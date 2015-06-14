@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
- * Logs incoming (REST) requests.
+ * Logs incoming requests.
  *
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
