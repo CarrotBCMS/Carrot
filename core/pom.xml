@@ -53,11 +53,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-            <version>1.0.1.RELEASE</version>
-        </dependency>
 
         <!-- nekoHTML for Thymeleaf legacy support -->
 
@@ -65,14 +60,6 @@
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
             <version>1.9.21</version>
-        </dependency>
-
-        <!-- Embedded Redis store -->
-
-        <dependency>
-            <groupId>com.github.kstyrc</groupId>
-            <artifactId>embedded-redis</artifactId>
-            <version>0.6</version>
         </dependency>
 
         <!-- Hibernate validator -->

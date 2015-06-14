@@ -32,6 +32,6 @@ public class LoggingAspect {
 
     private void logInfo(Class theClass, JoinPoint joinPoint) {
         Logger log = LoggerFactory.getLogger(theClass);
-        log.info("\n\nCarrot REST request with signature: " + joinPoint.getSignature() + "\nArguments: " + Arrays.toString(joinPoint.getArgs()) + "\n");
+        log.info("\n\nCarrot request with signature: " + joinPoint.getSignature() + "\nArguments: " + Arrays.toString(joinPoint.getArgs()) + "\n");
     }
 }

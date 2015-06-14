@@ -1,4 +1,4 @@
-package com.boxedfolder.carrot.config;
+package com.boxedfolder.carrot.config.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
