@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Define secured routes here
-        String[] securedEndpoints = {"/**"};
+        String[] securedEndpoints = {"/client/**"};
 
         for (String endpoint : securedEndpoints) {
             http.authorizeRequests().antMatchers(endpoint).authenticated();

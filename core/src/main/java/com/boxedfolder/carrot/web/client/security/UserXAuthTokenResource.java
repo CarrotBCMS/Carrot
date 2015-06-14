@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author bfolder
  */
 @RestController
-@RequestMapping("/client")
 public class UserXAuthTokenResource {
     private final TokenUtils tokenUtils = new TokenUtils();
     private final AuthenticationManager authenticationManager;
@@ -43,6 +42,7 @@ public class UserXAuthTokenResource {
 
     @RequestMapping(value = "/authenticate", method = {RequestMethod.POST})
     public UserTransfer authorize(@RequestParam String username, @RequestParam String password) {
+        System.out.println("BLA: " + username + password);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
