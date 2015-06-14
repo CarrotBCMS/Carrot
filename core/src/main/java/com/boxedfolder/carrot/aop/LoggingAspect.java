@@ -21,7 +21,7 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class LoggingAspect {
-    @Pointcut("execution(* com.boxedfolder.carrot.web.rest.*.*(..))")
+    @Pointcut("execution(* com.boxedfolder.carrot.web.client.*.*(..))")
     public void resourceMethod() {
     }
 
