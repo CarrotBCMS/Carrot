@@ -42,7 +42,6 @@ public class UserXAuthTokenResource {
 
     @RequestMapping(value = "/client/authenticate", method = {RequestMethod.POST})
     public UserTransfer authorize(@RequestParam String username, @RequestParam String password) {
-        System.out.println("BLA: " + username + password);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
