@@ -15,8 +15,7 @@ angular
         'ngResource',
         'ngRoute',
         'ngSanitize',
-        'ngTouch',
-        'ngStorage'
+        'ngTouch'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -39,17 +38,17 @@ angular
             .otherwise({
                 redirectTo: "/login"
             });
-    }).run(function ($rootScope, $http, $location, $localStorage) {
+    }).run(function ($rootScope, $http, $location, $cookieStore) {
         $rootScope.logout = function () {
             delete $http.defaults.headers.common["x-auth-token"];
             delete $rootScope.user;
-            delete $localStorage.user;
+            $cookieStore.remove("user");
             $location.path("/login");
         };
 
         /* Try getting valid user session cookie or go to login page */
         var originalPath = $location.path();
-        var user = $localStorage.user;
+        var user = $cookieStore.get("user");
 
         if (user !== undefined) {
             $rootScope.user = user;
