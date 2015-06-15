@@ -5,12 +5,10 @@
                   class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
                   ng-submit="login()" ng-controller="LoginController">
                 <fieldset>
-                    <a href="/" class="login-logo"><img class="login-logo-logo" src="images/logo.png" /></a>
-                    <h3 class="bottom30">Sign in</h3>
-                    <div ng-include="'views/fragments/alerts.html'"></div>
+                    <div class="center"><img class="login-logo" src="images/logo.svg" /></div>
                     <div class="form-group">
-                        <input type="email" ng-model="username" name="username" id="email" class="form-control input-lg"
-                               placeholder="Email Address" required/>
+                        <input type="text" ng-model="username" name="username" id="email" class="form-control input-lg"
+                               placeholder="Username" required/>
                     </div>
                     <div class="form-group">
                         <input type="password" ng-model="password" name="password" id="password"
@@ -18,28 +16,11 @@
                                placeholder="Password" required/>
                     </div>
                     <div class="row top10">
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="register()">
-                                <span class="glyphicon glyphicon glyphicon-user"></span> Register
-                            </button>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="col-xs-12 col-sm-8 col-md-12">
                             <button type="submit" ng-disabled="form.$invalid"
                                     class="btn btn-primary btn-lg btn-block">
-                                <span class="glyphicon glyphicon-save"></span> Login
+                                <span class="glyphicon glyphicon glyphicon-user"></span> Login
                             </button>
-                        </div>
-                    </div>
-                    <div class="row top10">
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <!--
-                            <div class="checkbox">
-                                <label>
-                                    <input id="login-remember" type="checkbox" name="remember-me" value="1"/> Remember
-                                    me
-                                </label>
-                            </div>
-                            -->
                         </div>
                     </div>
                 </fieldset>
