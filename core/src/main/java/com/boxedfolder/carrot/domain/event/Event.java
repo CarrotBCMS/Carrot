@@ -10,12 +10,14 @@ import org.joda.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
+@MappedSuperclass
 public class Event extends AbstractEntity {
     public static final double TYPE_ENTER = 0;
     public static final double TYPE_EXIT = 1;
