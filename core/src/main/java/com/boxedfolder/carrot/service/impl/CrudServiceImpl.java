@@ -11,7 +11,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import javax.inject.Inject;
 import java.util.List;
 
-public abstract class CrudServiceImpl<T extends AbstractEntity, S extends PagingAndSortingRepository<T, Long>> implements CrudService<T> {
+public abstract class CrudServiceImpl<T extends AbstractEntity, S extends PagingAndSortingRepository<T, Long>>
+        implements CrudService<T>
+{
     protected S repository;
 
     @Override
