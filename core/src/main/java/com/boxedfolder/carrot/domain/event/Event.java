@@ -5,6 +5,8 @@ import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.joda.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -17,6 +19,11 @@ import java.util.List;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "eventType")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = NotificationEvent.class),
+        @JsonSubTypes.Type(value = TextEvent.class)
+})
 @MappedSuperclass
 public class Event extends AbstractEntity {
     public static final double TYPE_ENTER = 0;
