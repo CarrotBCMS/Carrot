@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.notNull;
@@ -52,15 +53,24 @@ public class BeaconResourceTest {
         testData = new ArrayList<Beacon>();
         Beacon beacon = new Beacon();
         beacon.setName("Beacon 1");
+        beacon.setMajor(1);
+        beacon.setMinor(2);
+        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546014"));
         testData.add(beacon);
 
         beacon = new Beacon();
         beacon.setName("Beacon 2");
+        beacon.setMajor(1);
+        beacon.setMinor(2);
+        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546011"));
         testData.add(beacon);
         testData.add(beacon);
 
         beacon = new Beacon();
         beacon.setName("Beacon 3");
+        beacon.setMajor(1);
+        beacon.setMinor(2);
+        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546012"));
         testData.add(beacon);
         testData.add(beacon);
     }
