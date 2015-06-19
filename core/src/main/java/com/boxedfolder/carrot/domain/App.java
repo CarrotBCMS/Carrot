@@ -4,12 +4,8 @@ import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +16,7 @@ import java.util.UUID;
 @Entity
 public class App extends AbstractEntity {
     @JsonIgnore
-    @Type(type = "uuid-binary")
+    @Column(columnDefinition = "BINARY(16)", name = "app_key")
     private UUID applicationKey;
 
     @JsonView(View.MetaSync.class)
