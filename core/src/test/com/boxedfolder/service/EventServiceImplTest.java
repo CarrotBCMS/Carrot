@@ -1,6 +1,8 @@
 package com.boxedfolder.service;
 
 import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.event.NotificationEvent;
+import com.boxedfolder.carrot.domain.event.TextEvent;
 import com.boxedfolder.carrot.repository.EventRepository;
 import com.boxedfolder.carrot.service.impl.EventServiceImpl;
 import org.junit.Before;
@@ -32,15 +34,15 @@ public class EventServiceImplTest {
         testData = new ArrayList<Event>();
 
         // Create 3 different events
-        Event event = new Event();
+        Event event = new TextEvent();
         event.setName("Event 1");
         testData.add(event);
 
-        event = new Event();
+        event = new NotificationEvent();
         event.setName("Event 2");
         testData.add(event);
 
-        event = new Event();
+        event = new TextEvent();
         event.setName("Event 3");
         testData.add(event);
     }

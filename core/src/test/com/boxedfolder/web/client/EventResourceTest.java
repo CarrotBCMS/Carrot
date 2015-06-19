@@ -1,6 +1,8 @@
 package com.boxedfolder.web.client;
 
 import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.event.NotificationEvent;
+import com.boxedfolder.carrot.domain.event.TextEvent;
 import com.boxedfolder.carrot.service.EventService;
 import com.boxedfolder.carrot.web.client.EventResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,16 +45,16 @@ public class EventResourceTest {
 
         // Create 3 events
         testData = new ArrayList<Event>();
-        Event event = new Event();
+        Event event = new TextEvent();
         event.setName("Event 1");
         testData.add(event);
 
-        event = new Event();
+        event = new NotificationEvent();
         event.setName("Event 2");
         testData.add(event);
         testData.add(event);
 
-        event = new Event();
+        event = new TextEvent();
         event.setName("Event 3");
         testData.add(event);
         testData.add(event);

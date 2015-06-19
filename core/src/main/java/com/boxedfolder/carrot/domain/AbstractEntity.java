@@ -18,9 +18,6 @@ public abstract class AbstractEntity {
     @Column(nullable = false)
     private String name;
 
-    @JsonProperty
-    private boolean deleted;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -65,14 +62,6 @@ public abstract class AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setIsDeleted(boolean isDeleted) {
-        this.deleted = isDeleted;
     }
 
     public int hashCode() {

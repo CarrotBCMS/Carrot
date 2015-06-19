@@ -21,11 +21,11 @@ import java.util.List;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "eventType")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = NotificationEvent.class),
-        @JsonSubTypes.Type(value = TextEvent.class)
+        @JsonSubTypes.Type(value = NotificationEvent.class, name = "notification"),
+        @JsonSubTypes.Type(value = TextEvent.class, name = "text")
 })
 @MappedSuperclass
-public class Event extends AbstractEntity {
+public abstract class Event extends AbstractEntity {
     public static final double TYPE_ENTER = 0;
     public static final double TYPE_EXIT = 1;
     public static final double TYPE_BOTH = 2;
