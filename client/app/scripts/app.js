@@ -40,9 +40,18 @@ angular
 
             // General
             .otherwise({
-                redirectTo: "/"
+                redirectTo: "/login"
             });
-    }).run(function ($rootScope, $http, $location, $cookieStore) {
+    }).run(function ($rootScope, $http, $location, $cookieStore, $log) {
+        $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
+            if (next.$$route) {
+                var user = $rootScope.user;
+                if (user && next.$$route.originalPath == "/login") {
+                    $location.path('/')
+                }
+            }
+        });
+
         $rootScope.logout = function () {
             delete $http.defaults.headers.common["x-auth-token"];
             delete $rootScope.user;
