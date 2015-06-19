@@ -16,13 +16,14 @@ import java.util.List;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "eventType")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = NotificationEvent.class, name = "notification"),
         @JsonSubTypes.Type(value = TextEvent.class, name = "text")
 })
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "type")
 public abstract class Event extends AbstractEntity {
     public static final double TYPE_ENTER = 0;
     public static final double TYPE_EXIT = 1;

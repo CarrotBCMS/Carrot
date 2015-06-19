@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -16,7 +17,7 @@ import javax.validation.constraints.Size;
 public abstract class AbstractEntity {
     @JsonView(View.General.class)
     @Size(min = 1)
-    @Column(nullable = false)
+    @NotNull
     private String name;
 
     @JsonView(View.Meta.class)

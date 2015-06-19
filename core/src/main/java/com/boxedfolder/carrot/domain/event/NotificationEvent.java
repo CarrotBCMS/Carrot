@@ -1,19 +1,20 @@
 package com.boxedfolder.carrot.domain.event;
 
 import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.hibernate.annotations.Polymorphism;
+import org.hibernate.annotations.PolymorphismType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
+@DiscriminatorValue("notification")
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class NotificationEvent extends Event {
     @JsonView(View.General.class)
     @Column(nullable = false)
@@ -21,11 +22,10 @@ public class NotificationEvent extends Event {
     private String title;
 
     @JsonView(View.General.class)
-    @Column(nullable = false)
+    @NotNull
     private String message;
 
     @JsonView(View.General.class)
-    @Column(nullable = false)
     private String payload;
 
     public String getTitle() {
