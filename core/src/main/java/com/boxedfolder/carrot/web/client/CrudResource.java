@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
-@RestController
 public abstract class CrudResource<T extends CrudService<S>, S extends AbstractEntity> {
     protected T service;
 
