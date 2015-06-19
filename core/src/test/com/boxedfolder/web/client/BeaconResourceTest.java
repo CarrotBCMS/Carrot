@@ -1,8 +1,10 @@
 package com.boxedfolder.web.client;
 
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.BeaconService;
 import com.boxedfolder.carrot.web.client.BeaconResouce;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +35,7 @@ public class BeaconResourceTest {
     private BeaconService service;
     private MockMvc restUserMockMvc;
     private List<Beacon> testData;
+    private ObjectMapper mapper;
 
     @Before
     public void setup() {
@@ -40,6 +43,10 @@ public class BeaconResourceTest {
         BeaconResouce resource = new BeaconResouce();
         resource.setService(service);
         restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
+
+        mapper = new ObjectMapper();
+        mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
+        mapper.setConfig(mapper.getSerializationConfig().withView(View.Client.class));
 
         // Create 3 beacons
         testData = new ArrayList<Beacon>();
@@ -60,7 +67,6 @@ public class BeaconResourceTest {
 
     @Test
     public void testGetAllBeacons() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(testData);
 
         when(service.findAll()).thenReturn(testData);
@@ -73,7 +79,6 @@ public class BeaconResourceTest {
     @Test
     public void testAddBeacon() throws Exception {
         Beacon beacon = testData.get(0);
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(beacon);
         given(service.save((Beacon)notNull())).willReturn(beacon);
         restUserMockMvc.perform(post("/client/beacons")
@@ -94,7 +99,6 @@ public class BeaconResourceTest {
     public void testGetSingleBeacon() throws Exception {
         Beacon beacon = testData.get(0);
         given(service.find(1L)).willReturn(beacon);
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(beacon);
         restUserMockMvc.perform(get("/client/beacons/1"))
                 .andExpect(status().isOk())

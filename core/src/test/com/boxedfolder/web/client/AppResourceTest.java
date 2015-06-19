@@ -1,8 +1,10 @@
 package com.boxedfolder.web.client;
 
 import com.boxedfolder.carrot.domain.App;
+import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.AppService;
 import com.boxedfolder.carrot.web.client.AppResource;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +35,7 @@ public class AppResourceTest {
     private AppService service;
     private MockMvc restUserMockMvc;
     private List<App> testData;
+    private ObjectMapper mapper;
 
     @Before
     public void setup() {
@@ -40,6 +43,10 @@ public class AppResourceTest {
         AppResource resource = new AppResource();
         resource.setService(service);
         restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
+
+        mapper = new ObjectMapper();
+        mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
+        mapper.setConfig(mapper.getSerializationConfig().withView(View.Client.class));
 
         // Create 3 apps
         testData = new ArrayList<App>();
@@ -60,7 +67,6 @@ public class AppResourceTest {
 
     @Test
     public void testGetAllApps() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(testData);
 
         when(service.findAll()).thenReturn(testData);
@@ -73,7 +79,6 @@ public class AppResourceTest {
     @Test
     public void testAddApp() throws Exception {
         App app = testData.get(0);
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(app);
         given(service.save((App)notNull())).willReturn(app);
         restUserMockMvc.perform(post("/client/apps")
@@ -94,7 +99,6 @@ public class AppResourceTest {
     public void testGetSingleApp() throws Exception {
         App app = testData.get(0);
         given(service.find(1L)).willReturn(app);
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(app);
         restUserMockMvc.perform(get("/client/apps/1"))
                 .andExpect(status().isOk())

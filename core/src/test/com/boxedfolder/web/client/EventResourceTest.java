@@ -3,8 +3,10 @@ package com.boxedfolder.web.client;
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.event.TextEvent;
+import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.EventService;
 import com.boxedfolder.carrot.web.client.EventResource;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +37,7 @@ public class EventResourceTest {
     private EventService service;
     private MockMvc restUserMockMvc;
     private List<Event> testData;
+    private ObjectMapper mapper;
 
     @Before
     public void setup() {
@@ -42,6 +45,10 @@ public class EventResourceTest {
         EventResource resource = new EventResource();
         resource.setService(service);
         restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
+
+        mapper = new ObjectMapper();
+        mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
+        mapper.setConfig(mapper.getSerializationConfig().withView(View.Client.class));
 
         // Create 3 events
         testData = new ArrayList<Event>();
@@ -62,7 +69,6 @@ public class EventResourceTest {
 
     @Test
     public void testGetAllEvents() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(testData);
 
         when(service.findAll()).thenReturn(testData);
@@ -75,7 +81,6 @@ public class EventResourceTest {
     @Test
     public void testAddEvent() throws Exception {
         Event event = testData.get(0);
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(event);
         given(service.save((Event)notNull())).willReturn(event);
         restUserMockMvc.perform(post("/client/events")
@@ -96,7 +101,6 @@ public class EventResourceTest {
     public void testGetSingleEvent() throws Exception {
         Event event = testData.get(0);
         given(service.find(1L)).willReturn(event);
-        ObjectMapper mapper = new ObjectMapper();
         String value = mapper.writeValueAsString(event);
         restUserMockMvc.perform(get("/client/events/1"))
                 .andExpect(status().isOk())
