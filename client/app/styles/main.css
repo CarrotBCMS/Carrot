@@ -19,10 +19,9 @@ body {
     padding: 0.2em 0;
 }
 
-header {
-    height: 3px;
-    background-color: #FF9324;
-    margin-bottom: 25px;
+.main-container {
+    border-top: 3px solid #FF9324;
+    padding-top: 25px;
 }
 
 .navbar-brand {
@@ -41,6 +40,7 @@ header {
 .navbar-default .navbar-nav li:last-child {
     border-top: 1px solid #d9d9d9;
     padding-top: 10px;
+    cursor: pointer;
 }
 
 .side-menu {

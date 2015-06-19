@@ -32,10 +32,6 @@ angular
                 templateUrl: 'views/login.html',
                 controller: 'LoginController'
             })
-            .otherwise({
-                redirectTo: '/'
-            })
-
             // Content
             .when('/', {
                 templateUrl: 'views/dashboard.html',
@@ -44,7 +40,7 @@ angular
 
             // General
             .otherwise({
-                redirectTo: "/login"
+                redirectTo: "/"
             });
     }).run(function ($rootScope, $http, $location, $cookieStore) {
         $rootScope.logout = function () {
