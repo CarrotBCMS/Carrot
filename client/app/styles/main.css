@@ -24,17 +24,17 @@ body {
 }
 
 /** Login **/
-/*************/
+/***********/
 
 .login-logo {
     width: 275px;
     height: 175px;
-    padding: 10px 25px 25px 0px;
+    padding: 10px 25px 5px 0px;
     margin-left: -40px;
 }
 
 /** Fixes **/
-/*************/
+/***********/
 
 .center {
     text-align: center;
@@ -157,4 +157,29 @@ input.ng-invalid-email, input.ng-invalid-minlength {
     .bottom30 {
         margin-bottom: 30px;
     }
+}
+
+
+/** Animations **/
+/****************/
+
+.ng-scope.fade {
+    display: none;
+    opacity: 0;
+    animation-duration: 0.25s;
+    animation-name: fadeIn;
+}
+
+.ng-scope.in {
+    display: block;
+    opacity: 1;
+    animation-duration: 0.25s;
+}
+
+.fade-div .ng-leave {
+    animation: fadeOut 0.25s;
+}
+
+.fade-div .ng-enter {
+    animation: fadeIn 0.25s;
 }

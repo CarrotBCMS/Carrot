@@ -15,9 +15,17 @@ angular
         'ngResource',
         'ngRoute',
         'ngSanitize',
-        'ngTouch'
+        'ngTouch',
+        'angular-flash.service',
+        'angular-flash.flash-alert-directive'
     ])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider, flashProvider) {
+        // General
+        flashProvider.errorClassnames.push('alert-danger');
+        flashProvider.warnClassnames.push('alert-warning');
+        flashProvider.infoClassnames.push('alert-info');
+        flashProvider.successClassnames.push('alert-success');
+
         $routeProvider
             // Login
             .when('/login', {
