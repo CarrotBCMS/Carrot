@@ -5,12 +5,15 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.validation.constraints.Size;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class NotificationEvent extends Event {
     @JsonView(View.General.class)
     @Column(nullable = false)

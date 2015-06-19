@@ -4,7 +4,6 @@ import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.util.View;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -22,7 +21,8 @@ import java.util.List;
         @JsonSubTypes.Type(value = NotificationEvent.class, name = "notification"),
         @JsonSubTypes.Type(value = TextEvent.class, name = "text")
 })
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Event extends AbstractEntity {
     public static final double TYPE_ENTER = 0;
     public static final double TYPE_EXIT = 1;

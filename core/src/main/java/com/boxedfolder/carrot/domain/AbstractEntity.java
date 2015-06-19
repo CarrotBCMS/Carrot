@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
 
     @JsonView(View.Meta.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @JsonView(View.Meta.class)
