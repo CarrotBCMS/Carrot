@@ -2,24 +2,26 @@ package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Entity
 public class App extends AbstractEntity {
-    @JsonView(View.General.class)
-    @Size(min = 16, max = 16)
-    private String applicationKey;
+    @JsonIgnore
+    @Type(type = "uuid-binary")
+    private UUID applicationKey;
 
     @JsonView(View.MetaSync.class)
     @ManyToMany(mappedBy = "apps", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
@@ -28,11 +30,13 @@ public class App extends AbstractEntity {
     @ManyToMany(mappedBy = "apps", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<Event>();
 
-    public String getApplicationKey() {
+    @JsonView(View.General.class)
+    public UUID getApplicationKey() {
         return applicationKey;
     }
 
-    public void setApplicationKey(String applicationKey) {
+    @JsonIgnore
+    public void setApplicationKey(UUID applicationKey) {
         this.applicationKey = applicationKey;
     }
 

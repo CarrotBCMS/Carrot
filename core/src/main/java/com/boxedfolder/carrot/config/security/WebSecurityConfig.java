@@ -1,9 +1,11 @@
 package com.boxedfolder.carrot.config.security;
 
+import com.boxedfolder.carrot.config.Profiles;
 import com.boxedfolder.carrot.config.security.service.UserDetailService;
 import com.boxedfolder.carrot.config.security.xauth.XAuthTokenConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
