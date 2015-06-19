@@ -10,10 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.joda.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +41,10 @@ public abstract class Event extends AbstractEntity {
     @Column(nullable = false)
     private int eventType;
 
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<Beacon> beacons = new ArrayList<Beacon>();
 
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<App> apps = new ArrayList<App>();
 
     public float getThreshold() {

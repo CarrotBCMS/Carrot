@@ -3,12 +3,14 @@ package com.boxedfolder.carrot.service;
 import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
+@Service
 public interface CrudService<T extends AbstractEntity> {
     T find(Long id) throws GeneralExceptions.NotFoundException;
     List<T> findAll();
