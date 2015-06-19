@@ -17,14 +17,17 @@ angular
         'ngSanitize',
         'ngTouch',
         'angular-flash.service',
-        'angular-flash.flash-alert-directive'
+        'angular-flash.flash-alert-directive',
+        'angular-loading-bar'
     ])
-    .config(function ($routeProvider, flashProvider) {
+    .config(function ($routeProvider, flashProvider, cfpLoadingBarProvider) {
         // General
         flashProvider.errorClassnames.push('alert-danger');
         flashProvider.warnClassnames.push('alert-warning');
         flashProvider.infoClassnames.push('alert-info');
         flashProvider.successClassnames.push('alert-success');
+        cfpLoadingBarProvider.includeSpinner = true;
+        //cfpLoadingBarProvider.latencyThreshold = 200;
 
         $routeProvider
             // Login
@@ -46,6 +49,9 @@ angular
         $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
             if (next.$$route) {
                 var user = $rootScope.user;
+                $log.debug("hi " + user)
+                $log.debug(ev)
+                $log.debug(curr)
                 if (user && next.$$route.originalPath == "/login") {
                     $location.path('/')
                 }
