@@ -1,7 +1,8 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.util.LocalDateTimeSerializer;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDateTime;
 
@@ -13,21 +14,22 @@ import javax.validation.constraints.Size;
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
-    @JsonProperty
+    @JsonView(View.General.class)
     @Size(min = 1)
     @Column(nullable = false)
     private String name;
 
+    @JsonView(View.Meta.class)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonProperty
+    @JsonView(View.Meta.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "date_created", nullable = false, updatable = false)
     private LocalDateTime dateCreated;
 
-    @JsonProperty
+    @JsonView(View.Meta.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;

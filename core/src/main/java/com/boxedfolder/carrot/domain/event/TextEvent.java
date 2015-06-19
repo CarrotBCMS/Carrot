@@ -1,6 +1,7 @@
 package com.boxedfolder.carrot.domain.event;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.Column;
 
@@ -8,7 +9,7 @@ import javax.persistence.Column;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 public class TextEvent extends Event {
-    @JsonProperty
+    @JsonView(View.General.class)
     @Column(nullable = false)
     private String text;
 

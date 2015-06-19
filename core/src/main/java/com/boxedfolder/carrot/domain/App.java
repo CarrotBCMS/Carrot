@@ -1,10 +1,9 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.event.Event;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonView;
 
-import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
@@ -15,15 +14,14 @@ import java.util.List;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 public class App extends AbstractEntity {
-    @JsonProperty
+    @JsonView(View.General.class)
     @Size(min = 16, max = 16)
     private String applicationKey;
 
-    @JsonIgnore
+    @JsonView(View.MetaSync.class)
     @ManyToMany(mappedBy = "apps", fetch = FetchType.LAZY)
     private List<Beacon> beacons = new ArrayList<Beacon>();
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "apps", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<Event>();
 

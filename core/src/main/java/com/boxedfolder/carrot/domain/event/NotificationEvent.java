@@ -1,6 +1,7 @@
 package com.boxedfolder.carrot.domain.event;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Size;
@@ -9,16 +10,16 @@ import javax.validation.constraints.Size;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 public class NotificationEvent extends Event {
-    @JsonProperty
+    @JsonView(View.General.class)
     @Column(nullable = false)
     @Size(min = 1)
     private String title;
 
-    @JsonProperty
+    @JsonView(View.General.class)
     @Column(nullable = false)
     private String message;
 
-    @JsonProperty
+    @JsonView(View.General.class)
     @Column(nullable = false)
     private String payload;
 

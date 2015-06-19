@@ -3,10 +3,11 @@ package com.boxedfolder.carrot.domain.event;
 import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.joda.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -30,23 +31,22 @@ public abstract class Event extends AbstractEntity {
     public static final double TYPE_EXIT = 1;
     public static final double TYPE_BOTH = 2;
 
-    @JsonProperty
+    @JsonView(View.General.class)
     private float threshold;
 
-    @JsonProperty
+    @JsonView(View.General.class)
     private LocalDateTime scheduledStartDate;
 
-    @JsonProperty
+    @JsonView(View.General.class)
     private LocalDateTime scheduledEndDate;
 
+    @JsonView(View.General.class)
     @Column(nullable = false)
     private int eventType;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
     private List<Beacon> beacons = new ArrayList<Beacon>();
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
     private List<App> apps = new ArrayList<App>();
 
