@@ -44,6 +44,14 @@ angular
                 templateUrl: 'views/apps.html',
                 controller: 'AppController'
             })
+            .when('/beacons', {
+                templateUrl: 'views/beacons.html',
+                controller: 'BeaconController'
+            })
+            .when('/events', {
+                templateUrl: 'views/events.html',
+                controller: 'EventController'
+            })
 
             // General
             .otherwise({

@@ -9,7 +9,7 @@
  * Controller showing apps
  */
 angular.module('Carrot')
-    .controller('AppController', function ($scope, App) {
+    .controller('AppController', function ($scope, $log, App) {
         $scope.apps = App.query(function(data) {
             $log.debug(JSON.stringify(data));
         });;
