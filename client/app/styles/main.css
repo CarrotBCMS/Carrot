@@ -102,6 +102,19 @@ footer a:hover {
     color: #bfbfbf;
 }
 
+.ng-table-header  {
+    text-align: left;
+}
+
+.list-action {
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.table .action {
+    text-align: center;
+}
+
 /** Login **/
 /***********/
 

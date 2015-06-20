@@ -9,8 +9,26 @@
  * Controller showing apps
  */
 angular.module('Carrot')
-    .controller('AppController', function ($scope, $log, App) {
-        $scope.apps = App.query(function(data) {
-            $log.debug(JSON.stringify(data));
-        });;
+    .controller('AppController', function ($scope, $log, ngTableParams, App) {
+        var data = App.query(function(data) {
+            $scope.tableParams = new ngTableParams({
+                page: 1,
+                count: 10
+            }, {
+                total: data.length,
+                getData: function ($defer, params) {
+                    var pageData = data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                    $log.debug(pageData);
+                    $defer.resolve(pageData);
+                }
+            })
+        });
+
+        $scope.delete = function(item) {
+            $log.debug("Delete item " + item);
+        };
+
+        $scope.edit = function(item) {
+            $log.debug("Edit item " + item);
+        };
     });

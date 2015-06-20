@@ -16,6 +16,7 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
+        'ngTable',
         'angular-flash.service',
         'angular-flash.flash-alert-directive',
         'angular-loading-bar'
