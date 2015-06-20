@@ -7,10 +7,25 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <small><b>Events</b></small>
+                <button type="button" ng-click="add()" class="btn btn-default btn-xs pull-right bottom15"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Event</button>
             </div>
             <div class="panel-body">
-
-
+                <table ng-table="tableParams" class="table">
+                    <tbody>
+                    <tr ng-repeat="event in $data">
+                        <td data-title="'Name'">
+                            {{event.name}}
+                        </td>
+                        <td data-title="'Action'" class="action">
+                            <a ng-click="edit(event)" class="list-action"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a ng-click="delete(event)" class="list-action"><span class="glyphicon glyphicon-remove"></span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="center top30 bottom30" ng-show="data.length == 0">
+                    No Events yet.
+                </div>
             </div>
         </div>
     </div>
