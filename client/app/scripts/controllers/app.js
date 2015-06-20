@@ -10,7 +10,7 @@
  */
 angular.module('Carrot')
     .controller('AppController', function ($scope, $log, ngTableParams, App, Entity) {
-        var data = App.query(function (data) {
+        $scope.data = App.query(function (data) {
             $scope.tableParams = new ngTableParams({
                 page: 1,
                 count: 10
@@ -19,7 +19,6 @@ angular.module('Carrot')
                 getData: function ($defer, params) {
                     var pageData = data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                     params.total(data.length);
-                    $log.debug("data length " + pageData.length);
 
                     // Fix empty page after deletion
                     if (pageData.length == 0 && data.length > 0) {
@@ -28,14 +27,14 @@ angular.module('Carrot')
 
                     $defer.resolve(pageData);
                 }
-            })
+            });
         });
 
         $scope.delete = function (item) {
             Entity.delete(item, "App", function (object) {
-                var index = data.indexOf(item);
+                var index = $scope.data.indexOf(item);
                 if (index > -1) {
-                    data.splice(index, 1);
+                    $scope.data.splice(index, 1);
                 }
                 $scope.tableParams.reload()
             });
