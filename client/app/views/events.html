@@ -16,6 +16,12 @@
                         <td data-title="'Name'">
                             {{event.name}}
                         </td>
+                        <td data-title="'Type'">
+                            {{typeToString(event.eventType)}}
+                        </td>
+                        <td data-title="'Scheduled'">
+                            {{event.scheduledStartDate ? 'Yes' : 'No'}}
+                        </td>
                         <td data-title="'Action'" class="action">
                             <a ng-click="edit(event)" class="list-action"><span class="glyphicon glyphicon-edit"></span></a>
                             <a ng-click="delete(event)" class="list-action"><span class="glyphicon glyphicon-remove"></span></a>

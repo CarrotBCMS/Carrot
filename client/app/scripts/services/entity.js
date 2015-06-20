@@ -62,6 +62,7 @@ angular.module('Carrot')
 
             scope.edit = function (item) {
                 $log.debug("Edit item " + item);
+                $log.debug(JSON.stringify(item))
             };
 
             scope.add = function () {
