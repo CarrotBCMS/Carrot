@@ -9,7 +9,7 @@
  * Controller showing apps
  */
 angular.module('Carrot')
-    .controller('AppController', function ($scope, $log, ngTableParams, App, Entity) {
+    .controller('AppController', function ($scope, $log, ngTableParams, App, EntityService) {
         $scope.data = App.query(function (data) {
             $scope.tableParams = new ngTableParams({
                 page: 1,
@@ -31,7 +31,7 @@ angular.module('Carrot')
         });
 
         $scope.delete = function (item) {
-            Entity.delete(item, "App", function (object) {
+            EntityService.delete(item, "App", function (object) {
                 var index = $scope.data.indexOf(item);
                 if (index > -1) {
                     $scope.data.splice(index, 1);

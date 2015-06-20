@@ -9,7 +9,7 @@
  * Controller showing beacons
  */
 angular.module('Carrot')
-    .controller('BeaconController', function ($scope, $log, ngTableParams, Beacon, Entity) {
+    .controller('BeaconController', function ($scope, $log, ngTableParams, Beacon, EntityService) {
         $scope.data = Beacon.query(function (data) {
             $scope.tableParams = new ngTableParams({
                 page: 1,
@@ -31,7 +31,7 @@ angular.module('Carrot')
         });
 
         $scope.delete = function (item) {
-            Entity.delete(item, "Beacon", function (object) {
+            EntityService.delete(item, "Beacon", function (object) {
                 var index = $scope.data.indexOf(item);
                 if (index > -1) {
                     $scope.data.splice(index, 1);

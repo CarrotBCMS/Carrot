@@ -9,7 +9,7 @@
  * Controller showing beacons
  */
 angular.module('Carrot')
-    .controller('EventController', function ($scope, $log, ngTableParams, Event, Entity) {
+    .controller('EventController', function ($scope, $log, ngTableParams, Event, EntityService) {
         $scope.data = Event.query(function (data) {
             $scope.tableParams = new ngTableParams({
                 page: 1,
@@ -31,7 +31,7 @@ angular.module('Carrot')
         });
 
         $scope.delete = function (item) {
-            Entity.delete(item, "Event", function (object) {
+            EntityService.delete(item, "Event", function (object) {
                 var index = $scope.data.indexOf(item);
                 if (index > -1) {
                     $scope.data.splice(index, 1);
