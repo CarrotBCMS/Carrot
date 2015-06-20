@@ -20,12 +20,16 @@ body {
 }
 
 .main-container {
-    border-top: 3px solid #FF9324;
+    border-top: 4px solid #FF9324;
     padding-top: 25px;
 }
 
 .navbar-brand {
-    margin: -5px 0px 10px 2px;
+    margin: 0px 0px 10px 2px;
+}
+
+.navbar-header {
+    width: 100%;
 }
 
 .logo {
@@ -34,7 +38,11 @@ body {
 
 .navbar {
     margin-bottom: 10px;
-    min-height: 60px;
+}
+
+.navbar-nav {
+    margin: 7px 0;
+    width: 100%;
 }
 
 .navbar-default .navbar-nav li:last-child {
@@ -45,7 +53,7 @@ body {
 
 .side-menu {
     min-height: 200px;
-    max-width: 250px;
+    min-width: 150px;
 }
 
 .side-menu-container ul li {
@@ -56,6 +64,7 @@ body {
 .logout {
     border-top: 1px solid #d9d9d9;
     padding-top: 15px;
+    width: 100%;
 }
 
 .side-menu .nav > li > a {
@@ -99,7 +108,7 @@ footer a:hover {
 .login-logo {
     width: 275px;
     height: 175px;
-    padding: 10px 25px 5px 0px;
+    padding: 10px 30px 5px 0px;
     margin-left: -40px;
 }
 
