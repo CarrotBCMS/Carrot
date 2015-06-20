@@ -170,19 +170,30 @@ input.ng-invalid-email, input.ng-invalid-minlength {
 .ng-scope.in {
     display: block;
     opacity: 1;
-    animation-duration: 0.25s;
+    animation-duration: 0.15s;
 }
 
 .fade-div .ng-leave {
-    animation: fadeOut 0.25s;
+    animation: fadeOut 0.15s;
 }
 
 .fade-div .ng-enter {
-    animation: fadeIn 0.25s;
+    animation: fadeIn 0.15s;
+}
+
+.logo {
+    z-index: 60000;
+    position: relative;
+}
+
+.logo:hover {
+    animation-duration: 1s;
+    animation-name: swing;
+    animation-delay: 0.15s;
 }
 
 /** Spaces **/
-/****************/
+/************/
 
 .top10 {
     margin-top: 10px;
@@ -240,7 +251,8 @@ input.ng-invalid-email, input.ng-invalid-minlength {
     margin-bottom: 30px;
 }
 
-/* Loading bar spinner */
+/** Loading bar spinner **/
+/*************************/
 
 #loading-bar .peg {
     -moz-box-shadow: #7bb344 1px 0 6px 1px;
