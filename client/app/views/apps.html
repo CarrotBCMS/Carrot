@@ -9,6 +9,7 @@
                 <small><b>Apps</b></small>
             </div>
             <div class="panel-body">
+                <button type="button" ng-click="add()" class="btn btn-default pull-right bottom15"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> New App</button>
                 <table ng-table="tableParams" class="table">
                     <tbody>
                     <tr ng-repeat="app in $data">
