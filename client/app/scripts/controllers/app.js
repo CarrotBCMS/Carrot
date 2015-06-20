@@ -9,7 +9,7 @@
  * Controller showing apps
  */
 angular.module('Carrot')
-    .controller('AppController', function ($scope, $log, ngTableParams, App) {
+    .controller('AppController', function ($scope, $log, ngTableParams, App, Entity) {
         var data = App.query(function(data) {
             $scope.tableParams = new ngTableParams({
                 page: 1,
@@ -24,9 +24,7 @@ angular.module('Carrot')
             })
         });
 
-        $scope.delete = function(item) {
-            $log.debug("Delete item " + item);
-        };
+        $scope.delete = Entity.delete;
 
         $scope.edit = function(item) {
             $log.debug("Edit item " + item);

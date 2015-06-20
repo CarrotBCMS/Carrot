@@ -19,7 +19,8 @@ angular
         'ngTable',
         'angular-flash.service',
         'angular-flash.flash-alert-directive',
-        'angular-loading-bar'
+        'angular-loading-bar',
+        'ui.bootstrap'
     ])
     .config(function ($routeProvider, flashProvider, cfpLoadingBarProvider) {
         // General

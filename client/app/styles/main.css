@@ -58,7 +58,7 @@ body {
 
 .side-menu-container ul li {
     width: 100%;
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 
 .logout {
@@ -113,6 +113,10 @@ footer a:hover {
 
 .table .action {
     text-align: center;
+}
+
+.ng-table-counts {
+    margin: 21px 0;
 }
 
 /** Login **/
@@ -195,7 +199,7 @@ input.ng-invalid-email, input.ng-invalid-minlength {
 }
 
 .logo {
-    z-index: 60000;
+    z-index: 5;
     position: relative;
 }
 

@@ -33,6 +33,7 @@ module.exports = function(config) {
       'bower_components/angular-flash/dist/angular-flash.js',
       'bower_components/angular-loading-bar/build/loading-bar.js',
       'bower_components/ng-table/dist/ng-table.min.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
