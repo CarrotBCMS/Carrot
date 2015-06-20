@@ -9,24 +9,17 @@
  */
 angular.module('Carrot')
     .factory('Entity', function ($modal) {
-        return {"delete": function (object, objectClass, redirect) {
+        return {"delete": function (object, objectClass, callback) {
             $modal.open({
                 templateUrl: 'views/delete.html',
                 backdrop: true,
                 windowClass: 'modal',
-                controller: function ($scope, $modalInstance, $log, $route, $location, $injector) {
+                controller: function ($scope, $modalInstance, $route, $location, $injector) {
                     $scope.submit = function () {
-                        $log.debug('Deleting object.');
-                        $log.debug(object);
                         var objectService = $injector.get(objectClass); // Retrieve service
-                        $log.debug(objectClass);
                         objectService.delete({"id": object.id}, function () {
+                            callback(object);
                             $modalInstance.dismiss('cancel');
-                            if (redirect) {
-                                $location.path("/").replace();
-                            } else {
-                                $route.reload(); // Reload data and route
-                            }
                         });
                     };
 
