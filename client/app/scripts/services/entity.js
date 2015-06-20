@@ -8,7 +8,7 @@
  * Factory in Carrot.
  */
 angular.module('Carrot')
-    .factory('EntityService', function ($modal, ngTableParams) {
+    .factory('EntityService', function ($modal, ngTableParams, $log) {
         var delFunction = function (object, factory, callback) {
             $modal.open({
                 templateUrl: 'views/delete.html',
