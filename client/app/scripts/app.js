@@ -40,23 +40,34 @@ angular
                 templateUrl: 'views/dashboard.html',
                 controller: 'DashboardController'
             })
+            .when('/apps', {
+                templateUrl: 'views/apps.html',
+                controller: 'AppController'
+            })
 
             // General
             .otherwise({
                 redirectTo: "/login"
             });
     }).run(function ($rootScope, $http, $location, $cookieStore, $log) {
+        // Route changes //
         $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
             if (next.$$route) {
                 var user = $rootScope.user;
-                $log.debug("hi " + user)
-                $log.debug(ev)
-                $log.debug(curr)
                 if (user && next.$$route.originalPath == "/login") {
                     $location.path('/')
                 }
             }
         });
+
+        // Global functions //
+        $rootScope.isActive = function (viewLocation) {
+            if (viewLocation == "/") {
+                return viewLocation === $location.path();
+            }
+
+            return $location.path().indexOf(viewLocation) > -1;
+        };
 
         $rootScope.logout = function () {
             delete $http.defaults.headers.common["x-auth-token"];
@@ -65,6 +76,7 @@ angular
             $location.path("/login");
         };
 
+        // User related //
         /* Try getting valid user session cookie or go to login page */
         var originalPath = $location.path();
         var user = $cookieStore.get("user");
