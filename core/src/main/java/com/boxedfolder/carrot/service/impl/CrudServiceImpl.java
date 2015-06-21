@@ -2,11 +2,11 @@ package com.boxedfolder.carrot.service.impl;
 
 import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
+import com.boxedfolder.carrot.repository.OrderedRepository;
 import com.boxedfolder.carrot.service.CrudService;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
-public abstract class CrudServiceImpl<T extends AbstractEntity, S extends PagingAndSortingRepository<T, Long>>
+public abstract class CrudServiceImpl<T extends AbstractEntity, S extends OrderedRepository<T>>
         implements CrudService<T>
 {
     protected S repository;
@@ -31,7 +31,7 @@ public abstract class CrudServiceImpl<T extends AbstractEntity, S extends Paging
 
     @Override
     public List<T> findAll() {
-        return (List<T>)repository.findAll();
+        return (List<T>)repository.findAllByOrderByDateCreatedDesc();
     }
 
     @Override

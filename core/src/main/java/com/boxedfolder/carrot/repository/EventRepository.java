@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Repository
-public interface EventRepository extends PagingAndSortingRepository<Event, Long> {
+public interface EventRepository extends OrderedRepository<Event> {
 }
