@@ -24,7 +24,7 @@ angular.module('Carrot')
 angular.module('Carrot')
     .controller('AppViewController', function ($scope, $location, App, EntityService) {
         EntityService.edit($scope, App, "apps", "App");
-        $scope.delete = function() {
+        $scope.delete = function () {
             EntityService.delete($scope.object, App, function () {
                 $location.path("/apps").replace();
             });

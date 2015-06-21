@@ -5,7 +5,7 @@
     <div class="col-md-10 content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <small><a href="#/apps">Apps</a> &rsaquo; {{isNew ? 'New' : object.name}}</small>
+                <small><a href="#/beacons">Beacons</a> &rsaquo; {{isNew ? 'New' : object.name}}</small>
             </div>
             <div class="panel-body">
                 <div ng-include="'views/fragments/alerts.html'"></div>
@@ -18,9 +18,19 @@
                                placeholder="Pick a name..." required/>
                     </div>
                     <div class="form-group">
-                        <label>Application Key</label>
-                        <input type="text" class="form-control" name="title" ng-model="object.applicationKey"
-                               placeholder="Save to generate a key" disabled/>
+                        <label>UUID</label>
+                        <input type="text" class="form-control" name="title" ng-model="object.uuid"
+                               placeholder="Enter UUID..." required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Major</label>
+                        <input type="text" class="form-control" name="title" ng-model="object.major"
+                               placeholder="Enter major identifier..." required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Minor</label>
+                        <input type="number" class="form-control" name="title" ng-model="object.minor"
+                               placeholder="Enter minor identifier..." required/>
                     </div>
 
                     <button type="submit" ng-disabled="form.$invalid" class="btn btn-success">

@@ -58,6 +58,14 @@ angular
                 templateUrl: 'views/beacons.html',
                 controller: 'BeaconController'
             })
+            .when('/beacons/:id', {
+                templateUrl: 'views/beacons_edit.html',
+                controller: 'BeaconViewController'
+            })
+            .when('/beacons/new', {
+                templateUrl: 'views/beacons_edit.html',
+                controller: 'BeaconViewController'
+            })
             .when('/events', {
                 templateUrl: 'views/events.html',
                 controller: 'EventController'

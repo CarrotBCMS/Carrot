@@ -11,7 +11,7 @@ angular.module('Carrot')
     .factory('EntityService', function ($modal, ngTableParams, flash, $location, $routeParams, $log) {
         var delFunction = function (object, factory, callback) {
             $modal.open({
-                templateUrl: 'views/delete.html',
+                templateUrl: 'views/fragments/delete.html',
                 backdrop: true,
                 windowClass: 'modal',
                 controller: function ($scope, $modalInstance, $route, $location, $injector) {
