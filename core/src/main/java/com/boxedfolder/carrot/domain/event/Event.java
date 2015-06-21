@@ -30,6 +30,9 @@ public abstract class Event extends AbstractEntity {
     public static final double TYPE_BOTH = 2;
 
     @JsonView(View.General.class)
+    private boolean active;
+
+    @JsonView(View.General.class)
     private float threshold;
 
     @JsonView(View.General.class)

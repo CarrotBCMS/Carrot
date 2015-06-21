@@ -28,16 +28,16 @@ public class EventTest {
     public void testEventTypeSerialization() throws Exception {
         Event event = new NotificationEvent();
         String value = mapper.writeValueAsString(event);
-        assertTrue(value.contains("\"eventType\":\"notification\""));
+        assertTrue(value.contains("\"objectType\":\"notification\""));
 
         event = new TextEvent();
         value = mapper.writeValueAsString(event);
-        assertTrue(value.contains("\"eventType\":\"text\""));
+        assertTrue(value.contains("\"objectType\":\"text\""));
     }
 
     @Test
     public void testEventTypeDeserialization() throws Exception {
-        String eventString = "{\"eventType\":\"text\",\"name\":\"test\",\"threshold\":0.0,\"eventType\":0,\"text\":\"Testtext\"}";
+        String eventString = "{\"objectType\":\"text\",\"name\":\"test\",\"threshold\":0.0,\"eventType\":0,\"text\":\"Testtext\"}";
         Event event = mapper.readValue(eventString, Event.class);
         assertTrue(event.getClass() == TextEvent.class);
         assertFalse(event.getClass() == NotificationEvent.class);

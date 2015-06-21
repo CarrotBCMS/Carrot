@@ -47,7 +47,7 @@ public class AppServiceImplTest {
 
     @Test
     public void testRetrieveAllApps() {
-        when(repository.findAll()).thenReturn(testData);
+        when(repository.findAllByOrderByDateCreatedDesc()).thenReturn(testData);
         List<App> apps = service.findAll();
         assertEquals(apps, testData);
     }

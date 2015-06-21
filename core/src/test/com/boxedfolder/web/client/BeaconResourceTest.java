@@ -64,14 +64,12 @@ public class BeaconResourceTest {
         beacon.setMinor(2);
         beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546011"));
         testData.add(beacon);
-        testData.add(beacon);
 
         beacon = new Beacon();
         beacon.setName("Beacon 3");
         beacon.setMajor(1);
         beacon.setMinor(2);
         beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546012"));
-        testData.add(beacon);
         testData.add(beacon);
     }
 

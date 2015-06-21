@@ -49,7 +49,7 @@ public class EventServiceImplTest {
 
     @Test
     public void testRetrieveAllEvents() {
-        when(repository.findAll()).thenReturn(testData);
+        when(repository.findAllByOrderByDateCreatedDesc()).thenReturn(testData);
         List<Event> events = service.findAll();
         assertEquals(events, testData);
     }

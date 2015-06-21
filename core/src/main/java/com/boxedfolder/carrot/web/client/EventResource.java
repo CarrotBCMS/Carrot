@@ -1,6 +1,7 @@
 package com.boxedfolder.carrot.web.client;
 
 import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.EventService;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,10 +20,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/client/events")
 public class EventResource extends CrudResource<EventService, Event> {
-    // This stuff is to prevent type erasure for @JsonTypeInfo
-    public class EventList extends ArrayList<Event> {
-    }
-
     @JsonView(View.Client.class)
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

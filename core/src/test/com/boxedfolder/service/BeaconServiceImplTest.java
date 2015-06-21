@@ -47,7 +47,7 @@ public class BeaconServiceImplTest {
 
     @Test
     public void testRetrieveAllBeacons() {
-        when(repository.findAll()).thenReturn(testData);
+        when(repository.findAllByOrderByDateCreatedDesc()).thenReturn(testData);
         List<Beacon> beacons = service.findAll();
         assertEquals(beacons, testData);
     }

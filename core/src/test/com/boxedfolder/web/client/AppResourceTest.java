@@ -57,11 +57,9 @@ public class AppResourceTest {
         app = new App();
         app.setName("App 2");
         testData.add(app);
-        testData.add(app);
 
         app = new App();
         app.setName("App 3");
-        testData.add(app);
         testData.add(app);
     }
 
