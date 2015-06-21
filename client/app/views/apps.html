@@ -7,9 +7,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <small><b>Apps</b></small>
-                <button type="button" ng-click="add()" class="btn btn-default btn-xs pull-right bottom15"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New App</button>
+                <button type="button" ng-click="go('/apps/new')" class="btn btn-default btn-xs pull-right bottom15"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New App</button>
             </div>
             <div class="panel-body">
+                <div ng-include="'views/fragments/alerts.html'"></div>
                 <table ng-table="tableParams" class="table">
                     <tbody>
                     <tr ng-repeat="app in $data">
@@ -20,7 +21,7 @@
                             {{app.applicationKey}}
                         </td>
                         <td data-title="'Action'" class="action">
-                            <a ng-click="edit(app)" class="list-action"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a ng-click="go('/apps/' + app.id)" class="list-action"><span class="glyphicon glyphicon-edit"></span></a>
                             <a ng-click="delete(app)" class="list-action"><span class="glyphicon glyphicon-remove"></span></a>
                         </td>
                     </tr>

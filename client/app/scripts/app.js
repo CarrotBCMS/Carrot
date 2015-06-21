@@ -46,6 +46,14 @@ angular
                 templateUrl: 'views/apps.html',
                 controller: 'AppController'
             })
+            .when('/apps/:id', {
+                templateUrl: 'views/apps_edit.html',
+                controller: 'AppViewController'
+            })
+            .when('/apps/new', {
+                templateUrl: 'views/apps_edit.html',
+                controller: 'AppViewController'
+            })
             .when('/beacons', {
                 templateUrl: 'views/beacons.html',
                 controller: 'BeaconController'
@@ -60,7 +68,7 @@ angular
                 redirectTo: "/login"
             });
     }).run(function ($rootScope, $http, $location, $cookieStore, $log) {
-        // Route changes //
+        /* Route changes */
         $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
             if (next.$$route) {
                 var user = $rootScope.user;
@@ -70,7 +78,7 @@ angular
             }
         });
 
-        // Global functions //
+        /** Global functions **/
         $rootScope.isActive = function (viewLocation) {
             if (viewLocation == "/") {
                 return viewLocation === $location.path();
@@ -79,6 +87,7 @@ angular
             return $location.path().indexOf(viewLocation) > -1;
         };
 
+
         $rootScope.logout = function () {
             delete $http.defaults.headers.common["x-auth-token"];
             delete $rootScope.user;
@@ -86,7 +95,11 @@ angular
             $location.path("/login");
         };
 
-        // User related //
+        $rootScope.go = function (path) {
+            $location.path(path);
+        };
+
+        /** User related **/
         /* Try getting valid user session cookie or go to login page */
         var originalPath = $location.path();
         var user = $cookieStore.get("user");
