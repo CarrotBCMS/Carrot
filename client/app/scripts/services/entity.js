@@ -62,15 +62,6 @@ angular.module('Carrot')
                     scope.tableParams.reload();
                 });
             };
-
-            scope.edit = function (item) {
-                $log.debug("Edit item " + item);
-                $log.debug(JSON.stringify(item))
-            };
-
-            scope.add = function () {
-                $log.debug("Add item");
-            };
         };
 
         var editFunction = function(scope, factory, categoryName) {
