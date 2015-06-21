@@ -1,6 +1,7 @@
 package com.boxedfolder.service;
 
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.BeaconRepository;
 import com.boxedfolder.carrot.service.impl.BeaconServiceImpl;
 import org.junit.Before;
@@ -11,8 +12,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 /**
@@ -65,4 +69,13 @@ public class BeaconServiceImplTest {
         Beacon beacon = service.save(testData.get(0));
         assertEquals(beacon, testData.get(0));
     }
+
+
+    @Test(expected = GeneralExceptions.AlreadyExistsException.class)
+    public void testSaveDuplicateBeacon() throws Exception {
+        when(repository.save(testData.get(0))).thenReturn(testData.get(0));
+        when(repository.countyByUuidAndMajorAndMinor((UUID)any(), anyInt(), anyInt())).thenReturn(1L);
+        Beacon beacon = service.save(testData.get(0));
+    }
+
 }
