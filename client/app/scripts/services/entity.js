@@ -8,7 +8,7 @@
  * Factory in Carrot.
  */
 angular.module('Carrot')
-    .factory('EntityService', function ($modal, ngTableParams, $log) {
+    .factory('EntityService', function ($modal, ngTableParams, flash, $location, $routeParams, $log) {
         var delFunction = function (object, factory, callback) {
             $modal.open({
                 templateUrl: 'views/delete.html',
@@ -17,7 +17,10 @@ angular.module('Carrot')
                 controller: function ($scope, $modalInstance, $route, $location, $injector) {
                     $scope.submit = function () {
                         factory.delete({"id": object.id}, function () {
-                            callback(object);
+                            if (callback) {
+                                callback(object);
+                            }
+                            flash.success = "Entry deleted.";
                             $modalInstance.dismiss('cancel');
                         });
                     };
@@ -70,8 +73,32 @@ angular.module('Carrot')
             };
         };
 
+        var editFunction = function(scope, factory, basePath, baseName) {
+            scope.isNew = $routeParams.id == 'new';
+            if (scope.isNew) {
+                scope.object = {};
+            } else {
+                scope.object = factory.get({id: $routeParams.id}, function () {
+                    // Do nothing yet
+                }, function (error) {
+                    $location.path("/").replace(); // Redirect to base path if there was an error
+                });
+            }
+
+            scope.submit = function () {
+                factory.save(scope.object, function (object) {
+                    scope.isNew = false;
+                    scope.object = object;
+                    flash.success = "Entry saved.";
+                }, function(httpResponse) {
+                    flash.error = "There was an error processing your request.";
+                });
+            };
+        };
+
         return {
             "delete": delFunction,
-            "list": listFunction
+            "list": listFunction,
+            "edit": editFunction
         }
     });

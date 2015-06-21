@@ -22,27 +22,11 @@ angular.module('Carrot')
  * Controller showing a single app
  */
 angular.module('Carrot')
-    .controller('AppViewController', function ($scope, $route, $location, $routeParams, flash, App) {
-        var basePath = "apps";
-        var baseName = "App";
-        $scope.isNew = $routeParams.id == 'new';
-        if ($scope.isNew) {
-            $scope.app = new App();
-        } else {
-            $scope.app = App.get({id: $routeParams.id}, function () {
-                // Do nothing yet
-            }, function (error) {
-                $location.path("/").replace(); // Redirect to base path if there was an error
+    .controller('AppViewController', function ($scope, $location, App, EntityService) {
+        EntityService.edit($scope, App, "apps", "App");
+        $scope.delete = function() {
+            EntityService.delete($scope.object, App, function () {
+                $location.path("/apps").replace();
             });
         }
-
-        $scope.deleteEntry = App.delete;
-        $scope.submit = function () {
-            App.save($scope.app, function (object) {
-                $scope.app = object;
-                flash.success = "Entry saved.";
-            }, function(httpResponse) {
-                flash.error = "There was an error processing your request.";
-            });
-        };
     });
