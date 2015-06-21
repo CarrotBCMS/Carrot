@@ -14,9 +14,11 @@ public class BeaconServiceImpl extends CrudServiceImpl<Beacon, BeaconRepository>
     @Override
     public Beacon save(Beacon object) {
         // Check if there is already another uuid/major/minor combination
-        if (repository.countByUuidAndMajorAndMinor(object.getUuid(),
+        Beacon oldObject = repository.findFirstByUuidAndMajorAndMinor(object.getUuid(),
                 object.getMajor(),
-                object.getMinor()) > 0) {
+                object.getMinor());
+
+        if (oldObject != null && !object.equals(oldObject)) {
             throw new GeneralExceptions.AlreadyExistsException();
         }
 

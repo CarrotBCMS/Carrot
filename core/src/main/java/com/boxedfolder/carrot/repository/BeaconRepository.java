@@ -3,6 +3,7 @@ package com.boxedfolder.carrot.repository;
 import com.boxedfolder.carrot.domain.Beacon;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -10,5 +11,5 @@ import java.util.UUID;
  */
 @Repository
 public interface BeaconRepository extends OrderedRepository<Beacon> {
-    Long countByUuidAndMajorAndMinor(UUID uuid, int major, int minor);
+    Beacon findFirstByUuidAndMajorAndMinor(UUID uuid, int major, int minor);
 }

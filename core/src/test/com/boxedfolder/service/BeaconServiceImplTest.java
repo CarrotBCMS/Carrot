@@ -38,6 +38,10 @@ public class BeaconServiceImplTest {
         // Create 3 different beacons
         Beacon beacon = new Beacon();
         beacon.setName("Beacon 1");
+        beacon.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
+        beacon.setMajor(1);
+        beacon.setMinor(1);
+        beacon.setId(1L);
         testData.add(beacon);
 
         beacon = new Beacon();
@@ -66,6 +70,7 @@ public class BeaconServiceImplTest {
     @Test
     public void testSaveBeacon() {
         when(repository.save(testData.get(0))).thenReturn(testData.get(0));
+        when(repository.findOne(1L)).thenReturn(testData.get(0));
         Beacon beacon = service.save(testData.get(0));
         assertEquals(beacon, testData.get(0));
     }
@@ -73,9 +78,15 @@ public class BeaconServiceImplTest {
 
     @Test(expected = GeneralExceptions.AlreadyExistsException.class)
     public void testSaveDuplicateBeacon() throws Exception {
-        when(repository.save(testData.get(0))).thenReturn(testData.get(0));
-        when(repository.countByUuidAndMajorAndMinor((UUID)any(), anyInt(), anyInt())).thenReturn(1L);
-        Beacon beacon = service.save(testData.get(0));
-    }
+        Beacon beacon = new Beacon();
+        beacon.setName("Beacon 2");
+        beacon.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
+        beacon.setMajor(1);
+        beacon.setMinor(1);
+        beacon.setId(2L);
 
+        when(repository.save(testData.get(0))).thenReturn(testData.get(0));
+        when(repository.findFirstByUuidAndMajorAndMinor((UUID)any(), anyInt(), anyInt())).thenReturn(testData.get(0));
+        service.save(beacon);
+    }
 }
