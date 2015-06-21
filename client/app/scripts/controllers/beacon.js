@@ -10,7 +10,7 @@
  */
 angular.module('Carrot')
     .controller('BeaconController', function ($scope, Beacon, EntityService) {
-        EntityService.list($scope, Beacon);
+        EntityService.list($scope, Beacon, "Beacon");
     });
 
 /**
@@ -23,7 +23,7 @@ angular.module('Carrot')
  */
 angular.module('Carrot')
     .controller('BeaconViewController', function ($scope, $location, Beacon, EntityService) {
-        EntityService.edit($scope, Beacon, "beacons", "Beacon");
+        EntityService.edit($scope, Beacon, "Beacon");
         $scope.delete = function () {
             EntityService.delete($scope.object, Beacon, function () {
                 $location.path("/beacons").replace();

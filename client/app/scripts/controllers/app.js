@@ -10,7 +10,7 @@
  */
 angular.module('Carrot')
     .controller('AppController', function ($scope, App, EntityService) {
-        EntityService.list($scope, App);
+        EntityService.list($scope, App, "App");
     });
 
 /**
@@ -23,7 +23,7 @@ angular.module('Carrot')
  */
 angular.module('Carrot')
     .controller('AppViewController', function ($scope, $location, App, EntityService) {
-        EntityService.edit($scope, App, "apps", "App");
+        EntityService.edit($scope, App, "App");
         $scope.delete = function () {
             EntityService.delete($scope.object, App, function () {
                 $location.path("/apps").replace();

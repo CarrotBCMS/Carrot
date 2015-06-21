@@ -20,7 +20,8 @@ angular
         'angular-flash.service',
         'angular-flash.flash-alert-directive',
         'angular-loading-bar',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'angular.validators'
     ])
     .config(function ($routeProvider, flashProvider, cfpLoadingBarProvider) {
         // General

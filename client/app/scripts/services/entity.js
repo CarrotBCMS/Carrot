@@ -20,7 +20,6 @@ angular.module('Carrot')
                             if (callback) {
                                 callback(object);
                             }
-                            flash.success = "Entry deleted.";
                             $modalInstance.dismiss('cancel');
                         });
                     };
@@ -32,7 +31,7 @@ angular.module('Carrot')
             });
         };
 
-        var listFunction = function (scope, factory) {
+        var listFunction = function (scope, factory, categoryName) {
             scope.data = factory.query(function (data) {
                 scope.tableParams = new ngTableParams({
                     page: 1,
@@ -59,7 +58,8 @@ angular.module('Carrot')
                     if (index > -1) {
                         scope.data.splice(index, 1);
                     }
-                    scope.tableParams.reload()
+                    flash.success = categoryName + " deleted.";
+                    scope.tableParams.reload();
                 });
             };
 
@@ -73,7 +73,7 @@ angular.module('Carrot')
             };
         };
 
-        var editFunction = function(scope, factory, basePath, baseName) {
+        var editFunction = function(scope, factory, categoryName) {
             scope.isNew = $routeParams.id == 'new';
             if (scope.isNew) {
                 scope.object = {};
@@ -89,7 +89,7 @@ angular.module('Carrot')
                 factory.save(scope.object, function (object) {
                     scope.isNew = false;
                     scope.object = object;
-                    flash.success = "Entry saved.";
+                    flash.success = categoryName + " saved.";
                 }, function(httpResponse) {
                     flash.error = "There was an error processing your request.";
                 });

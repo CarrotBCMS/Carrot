@@ -20,17 +20,17 @@
                     <div class="form-group">
                         <label>UUID</label>
                         <input type="text" class="form-control" name="title" ng-model="object.uuid"
-                               placeholder="Enter UUID..." required/>
+                               placeholder="Enter UUID..." is-uuid required/>
                     </div>
                     <div class="form-group">
                         <label>Major</label>
                         <input type="text" class="form-control" name="title" ng-model="object.major"
-                               placeholder="Enter major identifier..." required/>
+                               placeholder="Enter major identifier..." is-int required/>
                     </div>
                     <div class="form-group">
                         <label>Minor</label>
                         <input type="number" class="form-control" name="title" ng-model="object.minor"
-                               placeholder="Enter minor identifier..." required/>
+                               placeholder="Enter minor identifier..." is-int required/>
                     </div>
 
                     <button type="submit" ng-disabled="form.$invalid" class="btn btn-success">
