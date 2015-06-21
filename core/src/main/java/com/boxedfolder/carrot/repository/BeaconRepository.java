@@ -10,5 +10,5 @@ import java.util.UUID;
  */
 @Repository
 public interface BeaconRepository extends OrderedRepository<Beacon> {
-    Long countyByUuidAndMajorAndMinor(UUID uuid, int major, int minor);
+    Long countByUuidAndMajorAndMinor(UUID uuid, int major, int minor);
 }

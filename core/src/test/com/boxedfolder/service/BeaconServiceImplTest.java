@@ -74,7 +74,7 @@ public class BeaconServiceImplTest {
     @Test(expected = GeneralExceptions.AlreadyExistsException.class)
     public void testSaveDuplicateBeacon() throws Exception {
         when(repository.save(testData.get(0))).thenReturn(testData.get(0));
-        when(repository.countyByUuidAndMajorAndMinor((UUID)any(), anyInt(), anyInt())).thenReturn(1L);
+        when(repository.countByUuidAndMajorAndMinor((UUID)any(), anyInt(), anyInt())).thenReturn(1L);
         Beacon beacon = service.save(testData.get(0));
     }
 

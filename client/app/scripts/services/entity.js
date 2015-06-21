@@ -82,7 +82,11 @@ angular.module('Carrot')
                     scope.object = object;
                     flash.success = categoryName + " saved.";
                 }, function(httpResponse) {
-                    flash.error = "There was an error processing your request.";
+                    if (httpResponse.status == 422) {
+                        flash.error = categoryName + " already exists.";
+                    } else {
+                        flash.error = "There was an error processing your request.";
+                    }
                 });
             };
         };
