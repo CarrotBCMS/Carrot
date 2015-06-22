@@ -38,13 +38,25 @@ angular.module('Carrot')
  * Controller showing a single event
  */
 angular.module('Carrot')
-    .controller('EventViewController', function ($scope, $location, Event, EntityService, $timeout, $log) {
+    .controller('EventViewController', function ($scope, $location, Event, Beacon, App, EntityService, $timeout, $log) {
         EntityService.edit($scope, Event, "Event");
         $scope.delete = function () {
             EntityService.delete($scope.object, Event, function () {
                 $location.path("/events").replace();
             });
         };
+
+        // Multi select settings
+        Beacon.query(function(data) {
+            $log.debug(data);
+            $scope.beacons = data;
+        });
+        $scope.apps = App.query();
+        $scope.multiSettings = {
+            smartButtonMaxItems: 5,
+            displayProp: "name"
+        };
+
 
         // Assign defaults
         if ($scope.object.objectType === undefined) {
@@ -59,13 +71,20 @@ angular.module('Carrot')
             $scope.object.active = 1;
         }
 
+        if ($scope.object.beacons === undefined) {
+            $scope.object.beacons = [];
+        }
+
+        if ($scope.object.apps === undefined) {
+            $scope.object.apps = [];
+        }
+
         $scope.parseInt = function (number) {
             return parseInt(number, 10);
         };
+
         $scope.eventTypes = eventTypes;
-
         $scope.datesAreValid = true;
-
         $scope.validateDates = function () {
             var startDate = $scope.object.scheduledStartDate;
             var endDate = $scope.object.scheduledEndDate;

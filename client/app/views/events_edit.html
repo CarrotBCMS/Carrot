@@ -40,8 +40,14 @@
                                    placeholder="Enter Delay..." is-int/>
                         </div>
                     </div>
+
+                    <!-- Schedule -->
+
                     <div class="form-group">
-                        <div><label>Schedule</label><small ng-show="!datesAreValid" class="red"> (Start date must be earlier than end date)</small></div>
+                        <div><label>Schedule</label>
+                            <small ng-show="!datesAreValid" class="red"> (Start date must be earlier than end date)
+                            </small>
+                        </div>
 
                         <div class="col-sm-6 date-picker-col">
                             <div class="dropdown">
@@ -54,15 +60,17 @@
                                             class="input-group-addon">
                                             <i class="glyphicon glyphicon-remove"></i></span>
 
-                                        <input ng-class="{'invalid-dates': !datesAreValid}" date-field type="text" class="form-control"
-                                                                             placeholder="Select start date..."
-                                                                             data-ng-model="object.scheduledStartDate">
+                                        <input ng-class="{'invalid-dates': !datesAreValid}" date-field type="text"
+                                               class="form-control"
+                                               placeholder="Select start date..."
+                                               data-ng-model="object.scheduledStartDate">
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker ng-change="validateDates()" ng-required="object.scheduledEndDate != null"
+                                    <datetimepicker ng-change="validateDates()"
+                                                    ng-required="object.scheduledEndDate != null"
                                                     data-ng-model="object.scheduledStartDate"
                                                     data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
                                 </ul>
@@ -79,20 +87,35 @@
                                               class="input-group-addon">
                                             <i class="glyphicon glyphicon-remove"></i></span>
 
-                                        <input ng-class="{'invalid-dates': !datesAreValid}" date-field type="text" class="form-control"
-                                                                             placeholder="Select end date..."
-                                                                             data-ng-model="object.scheduledEndDate">
+                                        <input ng-class="{'invalid-dates': !datesAreValid}" date-field type="text"
+                                               class="form-control"
+                                               placeholder="Select end date..."
+                                               data-ng-model="object.scheduledEndDate">
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker  ng-change="validateDates()" ng-required="object.scheduledStartDate != null"
+                                    <datetimepicker ng-change="validateDates()"
+                                                    ng-required="object.scheduledStartDate != null"
                                                     data-ng-model="object.scheduledEndDate"
                                                     data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }"/>
                                 </ul>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Apps & Beacons -->
+
+                    <div class="form-group">
+                        <label class="top10">Apps</label>
+                        <div ng-dropdown-multiselect options="apps" selected-model="object.apps"
+                             extra-settings="multiSettings"></div>
+
+                        <label class="top10">Beacons</label>
+
+                        <div ng-dropdown-multiselect options="beacons" selected-model="object.beacons"
+                             extra-settings="multiSettings"></div>
                     </div>
 
                     <!-- TextEvent -->

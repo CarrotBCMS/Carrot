@@ -232,6 +232,10 @@ select.left-control {
     border-color: red;
 }
 
+.dropdown-menu li {
+    cursor: pointer;
+}
+
 /** Animations **/
 /****************/
 

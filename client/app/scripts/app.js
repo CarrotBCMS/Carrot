@@ -23,7 +23,8 @@ angular
         'ui.bootstrap',
         'angular.validators',
         'uiSwitch',
-        'ui.bootstrap.datetimepicker'
+        'ui.bootstrap.datetimepicker',
+        'angularjs-dropdown-multiselect'
     ])
     .config(function ($routeProvider, flashProvider, cfpLoadingBarProvider) {
         // General

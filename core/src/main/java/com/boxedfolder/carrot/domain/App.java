@@ -21,10 +21,10 @@ public class App extends AbstractEntity {
     private UUID applicationKey;
 
     @JsonView(View.MetaSync.class)
-    @ManyToMany(mappedBy = "apps", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "apps")
     private List<Beacon> beacons = new ArrayList<Beacon>();
 
-    @ManyToMany(mappedBy = "apps", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "apps", fetch = FetchType.EAGER)
     private List<Event> events = new ArrayList<Event>();
 
     @JsonView(View.General.class)

@@ -34,11 +34,11 @@ public class Beacon extends AbstractEntity {
     }, inverseJoinColumns = {
             @JoinColumn(name = "app_id", nullable = false, updatable = false)
     })
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany
     private List<App> apps = new ArrayList<App>();
 
     @JsonView(View.Sync.class)
-    @ManyToMany(mappedBy = "beacons", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "beacons")
     private List<Event> events = new ArrayList<Event>();
 
     public UUID getUuid() {
