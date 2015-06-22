@@ -20,6 +20,9 @@
                         <td data-title="'Type'">
                             {{typeToString(event.eventType)}}
                         </td>
+                        <td data-title="'Trigger'">
+                            {{event.objectType | capitalize}}
+                        </td>
                         <td data-title="'Scheduled'">
                             {{event.scheduledStartDate ? 'Yes' : 'No'}}
                         </td>

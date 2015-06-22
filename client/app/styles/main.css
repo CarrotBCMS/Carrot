@@ -305,7 +305,24 @@ select.left-control {
     border-left-color: #7bb344;
 }
 
-
 #loading-bar .bar {
     background: #7bb344;
+}
+
+/** Toogle switch**/
+/*************************/
+
+.switch {
+    width: 46px;
+    height: 25px;
+}
+.switch small {
+    /* button */
+    margin-top: -1px;
+    width: 26px;
+    height: 26px;
+}
+.switch.checked {
+    background: #7bb344;
+    border-color: #7bb344;
 }

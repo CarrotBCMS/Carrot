@@ -21,7 +21,8 @@ angular
         'angular-flash.flash-alert-directive',
         'angular-loading-bar',
         'ui.bootstrap',
-        'angular.validators'
+        'angular.validators',
+        'uiSwitch'
     ])
     .config(function ($routeProvider, flashProvider, cfpLoadingBarProvider) {
         // General
@@ -127,6 +128,12 @@ angular
             $location.path(originalPath);
         } else {
             $location.path("/login");
+        }
+    }).filter('capitalize', function () {
+        return function (input, scope) {
+            if (input != null)
+                input = input.toLowerCase();
+            return input.substring(0, 1).toUpperCase() + input.substring(1);
         }
     });
 

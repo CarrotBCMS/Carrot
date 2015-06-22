@@ -1,34 +1,47 @@
 <div class="container-fluid main-container">
     <div ng-include="'views/fragments/sidebar.html'" class="col-md-2 sidebar"></div>
 
+    <form name="form" role="form" novalidate
+          class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+          ng-submit="submit()">
     <!-- Content goes here -->
     <div class="col-md-10 content">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <small><a href="#/events">Events</a> &rsaquo; {{isNew ? 'New' : object.name}}</small>
+                <switch ng-model="object.active" class="green pull-right"></switch>
             </div>
             <div class="panel-body">
                 <div ng-include="'views/fragments/alerts.html'"></div>
-                <form name="form" role="form" novalidate
-                      class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
-                      ng-submit="submit()">
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" name="title" ng-model="object.name"
                                placeholder="Pick a name..." required/>
                     </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Check me out
+                        </label>
+                    </div>
                     <div class="form-group">
                         <label>Type</label>
-                        <select class="form-control" ng-init="entry.objectType = 'text'" ng-model="entry.objectType">
+                        <select class="form-control" ng-model="object.objectType">
                             <option value="text">Text</option>
                             <option value="notification">Notification</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trigger</label>
+                        <select class="form-control" ng-options="parseInt(key) as value for (key, value) in
+                                eventTypes"
+                                ng-model="object.eventType">
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Retrigger delay</label>
                         <div>
                             <input type="text" class="form-control left-control" name="title" ng-model="object.threshold"
-                                   placeholder="Enter Delay" is-int required/>
+                                   placeholder="Enter Delay" is-int/>
                             <select class="form-control left-control">
                                 <option value="minutes">Minutes</option>
                                 <option value="hours">Hours</option>
@@ -44,10 +57,10 @@
                     <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="!object.id">
                         <span class="glyphicon glyphicon-ban-circle"></span> Delete
                     </button>
-                </form>
             </div>
         </div>
     </div>
+    </form>
     <!-- End content -->
 </div>
 

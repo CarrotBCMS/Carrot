@@ -1,5 +1,7 @@
 'use strict';
 
+var eventTypes = ['On Enter', 'On Exit', 'On Exit / On Exit'];
+
 /**
  * @ngdoc function
  * @name Carrot.controller:EventController
@@ -12,16 +14,16 @@ angular.module('Carrot')
     .controller('EventController', function ($scope, Event, EntityService) {
         EntityService.list($scope, Event);
 
-        $scope.typeToString = function (eventType) {
-            switch(eventType) {
+        $scope.typeToString = function (objectType) {
+            switch(objectType) {
                 case 0:
-                    return "On Enter";
+                    return eventTypes[0];
                     break;
                 case 1:
-                    return "On Exit";
+                    return eventTypes[1];
                     break;
                 default:
-                    return "On Enter / On Exit";
+                    return eventTypes[2];
             }
         };
     });
@@ -36,11 +38,29 @@ angular.module('Carrot')
  * Controller showing a single event
  */
 angular.module('Carrot')
-    .controller('EventViewController', function ($scope, $location, Event, EntityService) {
+    .controller('EventViewController', function ($scope, $location, Event, EntityService, $log) {
         EntityService.edit($scope, Event, "Event");
         $scope.delete = function () {
             EntityService.delete($scope.object, Event, function () {
                 $location.path("/events").replace();
             });
+        };
+
+        // Assign defaults
+        if ($scope.object.objectType === undefined) {
+            $scope.object.objectType = "text";
         }
+
+        if ($scope.object.eventType == undefined) {
+            $scope.object.eventType = 0;
+        }
+
+        if ($scope.object.active === undefined) {
+            $scope.object.active = 1;
+        }
+
+        $scope.parseInt = function(number) {
+            return parseInt(number, 10);
+        };
+        $scope.eventTypes = eventTypes;
     });
