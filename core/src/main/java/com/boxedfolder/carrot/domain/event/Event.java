@@ -3,11 +3,16 @@ package com.boxedfolder.carrot.domain.event;
 import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.util.LocalDateTimeDeserializer;
+import com.boxedfolder.carrot.domain.util.LocalDateTimeSerializer;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -46,12 +51,16 @@ public abstract class Event extends AbstractEntity {
      * Sets a start date when this event is going to be active.
      */
     @JsonView(View.General.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime scheduledStartDate;
 
     /**
      * Sets an end date when this event is going to be active.
      */
     @JsonView(View.General.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime scheduledEndDate;
 
     /**

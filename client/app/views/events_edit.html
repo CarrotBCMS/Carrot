@@ -40,7 +40,7 @@
                                    placeholder="Enter Delay..." is-int/>
                         </div>
                     </div>
-
+                    <!--  date: 'EEEE, MMMM d yyyy - HH:mm' -->
                     <div class="form-group">
                         <div><label>Schedule</label></div>
 
@@ -50,7 +50,7 @@
                                    data-target="#" href="#">
                                     <div class="input-group"><input type="text" class="form-control"
                                                                              placeholder="Select start date..."
-                                                                             data-ng-model="object.scheduledStartDate | date: 'EEEE, MMMM d yyyy - HH:mm'">
+                                                                             data-ng-model="object.scheduledStartDate">
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
@@ -67,7 +67,7 @@
                                    data-target="#" href="#">
                                     <div class="input-group"><input type="text" class="form-control"
                                                                              placeholder="Select end date..."
-                                                                             data-ng-model="object.scheduledEndDate | date:'EEEE, MMMM d yyyy - HH:mm'">
+                                                                             data-ng-model="object.scheduledEndDate">
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                     </div>

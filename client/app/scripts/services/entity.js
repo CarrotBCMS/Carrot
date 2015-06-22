@@ -77,6 +77,10 @@ angular.module('Carrot')
             }
 
             scope.submit = function () {
+                if (scope.object.scheduledStartDate != undefined) {
+                    scope.object.scheduledStartDate = new Date(scope.object.scheduledStartDate);
+                    $log.debug(scope.object.scheduledStartDate);
+                }
                 factory.save(scope.object, function (object) {
                     scope.isNew = false;
                     scope.object = object;
