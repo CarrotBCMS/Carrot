@@ -29,19 +29,37 @@ public abstract class Event extends AbstractEntity {
     public static final double TYPE_EXIT = 1;
     public static final double TYPE_BOTH = 2;
 
+    /**
+     * Whether event is active or not
+     */
     @JsonView(View.General.class)
     @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private boolean active = true;
 
+    /**
+     * Retrigger threshold (in minutes)
+     */
     @JsonView(View.General.class)
     private float threshold;
 
+    /**
+     * Sets a start date when this event is going to be active.
+     */
     @JsonView(View.General.class)
     private LocalDateTime scheduledStartDate;
 
+    /**
+     * Sets an end date when this event is going to be active.
+     */
     @JsonView(View.General.class)
     private LocalDateTime scheduledEndDate;
 
+    /**
+     * Type of event. May be one of the following types:
+     * TYPE_ENTER(0)
+     * TYPE_EXIT(1)
+     * TYPE_BOTH(2)
+     */
     @JsonView(View.General.class)
     @Column(nullable = false)
     private int eventType;

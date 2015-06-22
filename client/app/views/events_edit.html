@@ -18,11 +18,6 @@
                         <input type="text" class="form-control" name="title" ng-model="object.name"
                                placeholder="Pick a name..." required/>
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> Check me out
-                        </label>
-                    </div>
                     <div class="form-group">
                         <label>Type</label>
                         <select class="form-control" ng-model="object.objectType">
@@ -38,15 +33,10 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Retrigger delay</label>
+                        <label>Retrigger delay (in minutes)</label>
                         <div>
-                            <input type="text" class="form-control left-control" name="title" ng-model="object.threshold"
-                                   placeholder="Enter Delay" is-int/>
-                            <select class="form-control left-control">
-                                <option value="minutes">Minutes</option>
-                                <option value="hours">Hours</option>
-                                <option value="days">Days</option>
-                            </select>
+                            <input type="text" class="form-control" name="title" ng-model="object.threshold"
+                                   placeholder="Enter Delay..." is-int/>
                         </div>
                     </div>
 
