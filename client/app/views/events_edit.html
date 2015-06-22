@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div><label>Schedule</label></div>
+                        <div><label>Schedule</label><small ng-show="!datesAreValid" class="red"> (Start date must be earlier than end date)</small></div>
 
                         <div class="col-sm-6 date-picker-col">
                             <div class="dropdown">
@@ -54,7 +54,7 @@
                                             class="input-group-addon">
                                             <i class="glyphicon glyphicon-remove"></i></span>
 
-                                        <input date-field type="text" class="form-control"
+                                        <input ng-class="{'invalid-dates': !datesAreValid}" date-field type="text" class="form-control"
                                                                              placeholder="Select start date..."
                                                                              data-ng-model="object.scheduledStartDate">
                                         <span class="input-group-addon"><i
@@ -62,7 +62,8 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="object.scheduledStartDate"
+                                    <datetimepicker ng-change="validateDates()" ng-required="object.scheduledEndDate != null"
+                                                    data-ng-model="object.scheduledStartDate"
                                                     data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
                                 </ul>
                             </div>
@@ -78,7 +79,7 @@
                                               class="input-group-addon">
                                             <i class="glyphicon glyphicon-remove"></i></span>
 
-                                        <input date-field type="text" class="form-control"
+                                        <input ng-class="{'invalid-dates': !datesAreValid}" date-field type="text" class="form-control"
                                                                              placeholder="Select end date..."
                                                                              data-ng-model="object.scheduledEndDate">
                                         <span class="input-group-addon"><i
@@ -86,7 +87,8 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="object.scheduledEndDate"
+                                    <datetimepicker  ng-change="validateDates()" ng-required="object.scheduledStartDate != null"
+                                                    data-ng-model="object.scheduledEndDate"
                                                     data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }"/>
                                 </ul>
                             </div>
@@ -116,7 +118,7 @@
                         <span class="glyphicon glyphicon-save"></span> Save
                     </button>
                     <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="!object.id">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Delete
+                        <span class="glyphicon glyphicon-remove"></span> Delete
                     </button>
                 </div>
             </div>

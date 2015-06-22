@@ -119,6 +119,10 @@ footer a:hover {
     margin: 21px 0;
 }
 
+input.submitted.ng-invalid {
+    border:1px solid #f00;
+}
+
 /** Login **/
 /***********/
 
@@ -220,6 +224,12 @@ select.left-control {
 
 .date-picker-col-right {
     padding-right: 0px;
+}
+
+.invalid-dates {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 4px red;
+    outline: 0 none;
+    border-color: red;
 }
 
 /** Animations **/

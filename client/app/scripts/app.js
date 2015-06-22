@@ -142,7 +142,7 @@ angular
             require: 'ngModel',
             link: function (scope, element, attrs, ngModelController) {
                 ngModelController.$parsers.push(function (data) {
-                    var date = Date.parseExact(data, parseExp);
+                    var date = Date.parse(data, parseExp);
                     ngModelController.$setValidity('date', date != null);
                     return date == null ? undefined : date;
                 });

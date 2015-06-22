@@ -15,7 +15,7 @@ angular.module('Carrot')
         EntityService.list($scope, Event);
 
         $scope.typeToString = function (objectType) {
-            switch(objectType) {
+            switch (objectType) {
                 case 0:
                     return eventTypes[0];
                     break;
@@ -38,7 +38,7 @@ angular.module('Carrot')
  * Controller showing a single event
  */
 angular.module('Carrot')
-    .controller('EventViewController', function ($scope, $location, Event, EntityService, $log) {
+    .controller('EventViewController', function ($scope, $location, Event, EntityService, $timeout, $log) {
         EntityService.edit($scope, Event, "Event");
         $scope.delete = function () {
             EntityService.delete($scope.object, Event, function () {
@@ -59,8 +59,30 @@ angular.module('Carrot')
             $scope.object.active = 1;
         }
 
-        $scope.parseInt = function(number) {
+        $scope.parseInt = function (number) {
             return parseInt(number, 10);
         };
         $scope.eventTypes = eventTypes;
+
+        $scope.datesAreValid = true;
+
+        $scope.validateDates = function () {
+            var startDate = $scope.object.scheduledStartDate;
+            var endDate = $scope.object.scheduledEndDate;
+
+            if (startDate == null || endDate == null) {
+                $scope.datesAreValid = true;
+                return;
+            }
+
+            $scope.datesAreValid = startDate.getTime() < endDate.getTime();
+
+            if (!$scope.datesAreValid) {
+                $timeout(function(){
+                    $scope.datesAreValid = true;
+                }, 4000);
+                $scope.object.scheduledEndDate = null;
+                $scope.object.scheduledStartDate = null;
+            }
+        }
     });
