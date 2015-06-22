@@ -4,15 +4,15 @@
     <form name="form" role="form" novalidate
           class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
           ng-submit="submit()">
-    <!-- Content goes here -->
-    <div class="col-md-10 content">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <small><a href="#/events">Events</a> &rsaquo; {{isNew ? 'New' : object.name}}</small>
-                <switch ng-model="object.active" class="green pull-right"></switch>
-            </div>
-            <div class="panel-body">
-                <div ng-include="'views/fragments/alerts.html'"></div>
+        <!-- Content goes here -->
+        <div class="col-md-10 content">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <small><a href="#/events">Events</a> &rsaquo; {{isNew ? 'New' : object.name}}</small>
+                    <switch ng-model="object.active" class="green pull-right"></switch>
+                </div>
+                <div class="panel-body">
+                    <div ng-include="'views/fragments/alerts.html'"></div>
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" name="title" ng-model="object.name"
@@ -34,12 +34,17 @@
                     </div>
                     <div class="form-group">
                         <label>Retrigger delay (in minutes)</label>
+
                         <div>
                             <input type="text" class="form-control" name="title" ng-model="object.threshold"
                                    placeholder="Enter Delay..." is-int/>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label>Text</label>
+                        <textarea class="form-control" name="text" ng-model="entry.text" rows="12"
+                            placeholder="Enter text here..." required></textarea>
+                    </div>
 
                     <button type="submit" ng-disabled="form.$invalid" class="btn btn-success">
                         <span class="glyphicon glyphicon-save"></span> Save
@@ -47,9 +52,9 @@
                     <button type="button" class="btn btn-danger" ng-click="delete()" ng-disabled="!object.id">
                         <span class="glyphicon glyphicon-ban-circle"></span> Delete
                     </button>
+                </div>
             </div>
         </div>
-    </div>
     </form>
     <!-- End content -->
 </div>
