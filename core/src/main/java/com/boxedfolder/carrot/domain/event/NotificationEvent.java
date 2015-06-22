@@ -18,11 +18,13 @@ import javax.validation.constraints.Size;
 public class NotificationEvent extends Event {
     @JsonView(View.General.class)
     @Column(nullable = false)
+    @NotNull
     @Size(min = 1)
     private String title;
 
     @JsonView(View.General.class)
     @NotNull
+    @Size(min = 1)
     private String message;
 
     @JsonView(View.General.class)
