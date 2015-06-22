@@ -41,22 +41,62 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div><label>Schedule</label></div>
+
+                        <div class="col-sm-6 date-picker-col">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown"
+                                   data-target="#" href="#">
+                                    <div class="input-group"><input type="text" class="form-control"
+                                                                             placeholder="Select start date..."
+                                                                             data-ng-model="object.scheduledStartDate | date: 'EEEE, MMMM d yyyy - HH:mm'">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="object.scheduledStartDate"
+                                                    data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 date-picker-col-right">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown"
+                                   data-target="#" href="#">
+                                    <div class="input-group"><input type="text" class="form-control"
+                                                                             placeholder="Select end date..."
+                                                                             data-ng-model="object.scheduledEndDate | date:'EEEE, MMMM d yyyy - HH:mm'">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="object.scheduledEndDate"
+                                                    data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }"/>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- TextEvent -->
                     <div class="form-group" ng-hide="object.objectType != 'text'">
-                        <label>Text</label>
+                        <label class="top10">Text</label>
                         <textarea class="form-control" name="text" ng-model="object.text" rows="12"
-                            placeholder="Enter text here..." ng-required="object.objectType == 'text'"></textarea>
+                                  placeholder="Enter text here..." ng-required="object.objectType == 'text'"></textarea>
                     </div>
 
                     <!-- NotificationEvent -->
                     <div class="form-group" ng-hide="object.objectType != 'notification'">
-                        <label>Title</label>
+                        <label class="top10">Title</label>
                         <input type="text" class="form-control" name="title" ng-model="object.title"
                                placeholder="Enter a title here..." ng-required="object.objectType == 'notification'"/>
 
-                        <label>Message</label>
+                        <label class="top10">Message</label>
                         <textarea class="form-control" name="text" ng-model="object.message" rows="4"
-                                  placeholder="Enter a message here..." ng-required="object.objectType == 'notification'"></textarea>
+                                  placeholder="Enter a message here..."
+                                  ng-required="object.objectType == 'notification'"></textarea>
                     </div>
 
                     <button type="submit" ng-disabled="form.$invalid" class="btn btn-success">

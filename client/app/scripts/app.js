@@ -22,7 +22,8 @@ angular
         'angular-loading-bar',
         'ui.bootstrap',
         'angular.validators',
-        'uiSwitch'
+        'uiSwitch',
+        'ui.bootstrap.datetimepicker'
     ])
     .config(function ($routeProvider, flashProvider, cfpLoadingBarProvider) {
         // General

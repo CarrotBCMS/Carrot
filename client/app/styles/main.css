@@ -214,6 +214,14 @@ select.left-control {
     padding: 2px;
 }
 
+.date-picker-col {
+    padding-left: 0px;
+}
+
+.date-picker-col-right {
+    padding-right: 0px;
+}
+
 /** Animations **/
 /****************/
 
@@ -327,7 +335,7 @@ select.left-control {
     background: #7bb344;
 }
 
-/** Toogle switch**/
+/** Toogle switch **/
 /*************************/
 
 .switch {
@@ -343,4 +351,11 @@ select.left-control {
 .switch.checked {
     background: #7bb344;
     border-color: #7bb344;
+}
+
+/** Calendar **/
+/*************************/
+
+th.switch {
+    display: table-cell;
 }
