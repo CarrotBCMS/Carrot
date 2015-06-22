@@ -40,10 +40,23 @@
                                    placeholder="Enter Delay..." is-int/>
                         </div>
                     </div>
-                    <div class="form-group">
+
+                    <!-- TextEvent -->
+                    <div class="form-group" ng-hide="object.objectType != 'text'">
                         <label>Text</label>
-                        <textarea class="form-control" name="text" ng-model="entry.text" rows="12"
-                            placeholder="Enter text here..." required></textarea>
+                        <textarea class="form-control" name="text" ng-model="object.text" rows="12"
+                            placeholder="Enter text here..." ng-required="object.objectType == 'text'"></textarea>
+                    </div>
+
+                    <!-- NotificationEvent -->
+                    <div class="form-group" ng-hide="object.objectType != 'notification'">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="title" ng-model="object.title"
+                               placeholder="Enter a title here..." ng-required="object.objectType == 'notification'"/>
+
+                        <label>Message</label>
+                        <textarea class="form-control" name="text" ng-model="object.message" rows="4"
+                                  placeholder="Enter a message here..." ng-required="object.objectType == 'notification'"></textarea>
                     </div>
 
                     <button type="submit" ng-disabled="form.$invalid" class="btn btn-success">
