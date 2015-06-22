@@ -71,6 +71,14 @@ angular
                 templateUrl: 'views/events.html',
                 controller: 'EventController'
             })
+            .when('/events/:id', {
+                templateUrl: 'views/events_edit.html',
+                controller: 'EventViewController'
+            })
+            .when('/events/new', {
+                templateUrl: 'views/events_edit.html',
+                controller: 'EventViewController'
+            })
 
             // General
             .otherwise({

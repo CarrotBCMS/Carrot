@@ -30,7 +30,7 @@ public abstract class Event extends AbstractEntity {
     public static final double TYPE_BOTH = 2;
 
     @JsonView(View.General.class)
-    @Column(columnDefinition = "BOOLEAN DEFAULT true", nullable = false)
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private boolean active = true;
 
     @JsonView(View.General.class)

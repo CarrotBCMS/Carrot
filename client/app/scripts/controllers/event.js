@@ -25,3 +25,22 @@ angular.module('Carrot')
             }
         };
     });
+
+
+/**
+ * @ngdoc function
+ * @name Carrot.controller:EventViewController
+ * @description
+ * # EventViewController
+ *
+ * Controller showing a single event
+ */
+angular.module('Carrot')
+    .controller('EventViewController', function ($scope, $location, Event, EntityService) {
+        EntityService.edit($scope, Event, "Event");
+        $scope.delete = function () {
+            EntityService.delete($scope.object, Event, function () {
+                $location.path("/events").replace();
+            });
+        }
+    });
