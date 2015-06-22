@@ -3,16 +3,17 @@ package com.boxedfolder.carrot.domain.event;
 import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.util.LocalDateTimeDeserializer;
-import com.boxedfolder.carrot.domain.util.LocalDateTimeSerializer;
+import com.boxedfolder.carrot.domain.util.DateTimeDeserializer;
+import com.boxedfolder.carrot.domain.util.DateTimeSerializer;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,17 +52,19 @@ public abstract class Event extends AbstractEntity {
      * Sets a start date when this event is going to be active.
      */
     @JsonView(View.General.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime scheduledStartDate;
+    @JsonSerialize(using = DateTimeSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer.class)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime scheduledStartDate;
 
     /**
      * Sets an end date when this event is going to be active.
      */
     @JsonView(View.General.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime scheduledEndDate;
+    @JsonSerialize(using = DateTimeSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer.class)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime scheduledEndDate;
 
     /**
      * Type of event. May be one of the following types:
@@ -87,19 +90,19 @@ public abstract class Event extends AbstractEntity {
         this.threshold = threshold;
     }
 
-    public LocalDateTime getScheduledStartDate() {
+    public DateTime getScheduledStartDate() {
         return scheduledStartDate;
     }
 
-    public void setScheduledStartDate(LocalDateTime scheduledStartDate) {
+    public void setScheduledStartDate(DateTime scheduledStartDate) {
         this.scheduledStartDate = scheduledStartDate;
     }
 
-    public LocalDateTime getScheduledEndDate() {
+    public DateTime getScheduledEndDate() {
         return scheduledEndDate;
     }
 
-    public void setScheduledEndDate(LocalDateTime scheduledEndDate) {
+    public void setScheduledEndDate(DateTime scheduledEndDate) {
         this.scheduledEndDate = scheduledEndDate;
     }
 

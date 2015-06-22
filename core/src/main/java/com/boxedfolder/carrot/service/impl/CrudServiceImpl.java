@@ -4,7 +4,7 @@ import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.OrderedRepository;
 import com.boxedfolder.carrot.service.CrudService;
-import org.joda.time.LocalDateTime;
+import org.joda.time.DateTime;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -48,14 +48,14 @@ public abstract class CrudServiceImpl<T extends AbstractEntity, S extends Ordere
     public T save(T object) {
         if (object.getId() == null) {
             // Assuming our entity is a brand new one
-            object.setDateCreated(new LocalDateTime());
+            object.setDateCreated(new DateTime());
         } else {
             // If it is already persisted - fetch it and update creation date
             T oldObject = find(object.getId());
             object.setDateCreated(oldObject.getDateCreated());
         }
 
-        object.setDateUpdated(new LocalDateTime()); // Mark as updated
+        object.setDateUpdated(new DateTime()); // Mark as updated
 
         return repository.save(object);
     }

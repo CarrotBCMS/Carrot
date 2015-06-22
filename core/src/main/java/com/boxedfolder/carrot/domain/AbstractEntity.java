@@ -1,9 +1,12 @@
 package com.boxedfolder.carrot.domain;
 
-import com.boxedfolder.carrot.domain.util.LocalDateTimeSerializer;
+import com.boxedfolder.carrot.domain.util.DateTimeSerializer;
 import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
@@ -26,28 +29,32 @@ public abstract class AbstractEntity {
     private Long id;
 
     @JsonView(View.Meta.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonSerialize(using = DateTimeSerializer.class)
     @Column(name = "date_created", nullable = false, updatable = false)
-    private LocalDateTime dateCreated;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime dateCreated;
 
     @JsonView(View.Meta.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonSerialize(using = DateTimeSerializer.class)
     @Column(name = "date_updated")
-    private LocalDateTime dateUpdated;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime dateUpdated;
 
-    public LocalDateTime getDateCreated() {
+    public DateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    @JsonIgnore
+    public void setDateCreated(DateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public LocalDateTime getDateUpdated() {
+    public DateTime getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(LocalDateTime dateUpdated) {
+    @JsonIgnore
+    public void setDateUpdated(DateTime dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
 

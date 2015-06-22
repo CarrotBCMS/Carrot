@@ -3,7 +3,7 @@ package com.boxedfolder.carrot.service.impl;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.repository.AppRepository;
 import com.boxedfolder.carrot.service.AppService;
-import org.joda.time.LocalDateTime;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -17,7 +17,7 @@ public class AppServiceImpl extends CrudServiceImpl<App, AppRepository> implemen
     @Override
     public App save(App object) {
         if (object.getId() == null) {
-            object.setDateCreated(new LocalDateTime());
+            object.setDateCreated(new DateTime());
             object.setApplicationKey(UUID.randomUUID()); // Add a random UUID
         } else {
             // If it is already persisted - fetch it and update creation date
@@ -26,7 +26,7 @@ public class AppServiceImpl extends CrudServiceImpl<App, AppRepository> implemen
             object.setApplicationKey(oldObject.getApplicationKey());
         }
 
-        object.setDateUpdated(new LocalDateTime()); // Mark as updated
+        object.setDateUpdated(new DateTime()); // Mark as updated
         return repository.save(object);
     }
 }
