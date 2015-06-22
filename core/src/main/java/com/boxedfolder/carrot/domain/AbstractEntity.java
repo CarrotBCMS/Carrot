@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

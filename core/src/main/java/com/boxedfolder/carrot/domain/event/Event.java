@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,9 +26,10 @@ import java.util.List;
         @JsonSubTypes.Type(value = NotificationEvent.class, name = "notification"),
         @JsonSubTypes.Type(value = TextEvent.class, name = "text")
 })
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
+@Table(name = "event")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity(name = "event")
 public abstract class Event extends AbstractEntity {
     public static final double TYPE_ENTER = 0;
     public static final double TYPE_EXIT = 1;
@@ -76,9 +76,19 @@ public abstract class Event extends AbstractEntity {
     @Column(nullable = false)
     private int eventType;
 
+    @JoinTable(name = "event_beacon", joinColumns = {
+            @JoinColumn(name = "event_id", nullable = false, updatable = false)
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "beacon_id", nullable = false, updatable = false)
+    })
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<Beacon> beacons = new ArrayList<Beacon>();
 
+    @JoinTable(name = "event_app", joinColumns = {
+            @JoinColumn(name = "event_id", nullable = false, updatable = false)
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "app_id", nullable = false, updatable = false)
+    })
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<App> apps = new ArrayList<App>();
 

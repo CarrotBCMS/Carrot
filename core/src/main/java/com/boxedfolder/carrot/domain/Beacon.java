@@ -13,6 +13,7 @@ import java.util.UUID;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
+@Table(name = "beacon")
 @Entity
 public class Beacon extends AbstractEntity {
     @JsonView(View.Client.class)
@@ -28,6 +29,11 @@ public class Beacon extends AbstractEntity {
     @NotNull
     private int minor;
 
+    @JoinTable(name = "beacon_app", joinColumns = {
+            @JoinColumn(name = "beacon_id", nullable = false, updatable = false)
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "app_id", nullable = false, updatable = false)
+    })
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<App> apps = new ArrayList<App>();
 

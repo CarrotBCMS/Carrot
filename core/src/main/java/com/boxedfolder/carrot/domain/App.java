@@ -13,6 +13,7 @@ import java.util.UUID;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
+@Table(name = "app")
 @Entity
 public class App extends AbstractEntity {
     @JsonIgnore
