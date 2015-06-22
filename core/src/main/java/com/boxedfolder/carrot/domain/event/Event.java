@@ -16,8 +16,8 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -84,8 +84,8 @@ public abstract class Event extends AbstractEntity {
     }, inverseJoinColumns = {
             @JoinColumn(name = "beacon_id", nullable = false, updatable = false)
     })
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private List<Beacon> beacons = new ArrayList<Beacon>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Beacon> beacons = new HashSet<Beacon>();
 
     @JsonView(View.Client.class)
     @JsonIgnoreProperties({"applicationKey", "dateUpdated", "dateCreated"})
@@ -94,8 +94,8 @@ public abstract class Event extends AbstractEntity {
     }, inverseJoinColumns = {
             @JoinColumn(name = "app_id", nullable = false, updatable = false)
     })
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private List<App> apps = new ArrayList<App>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<App> apps = new HashSet<App>();
 
     public float getThreshold() {
         return threshold;
@@ -129,19 +129,19 @@ public abstract class Event extends AbstractEntity {
         this.eventType = eventType;
     }
 
-    public List<Beacon> getBeacons() {
+    public Set<Beacon> getBeacons() {
         return beacons;
     }
 
-    public void setBeacons(List<Beacon> beacons) {
+    public void setBeacons(Set<Beacon> beacons) {
         this.beacons = beacons;
     }
 
-    public List<App> getApps() {
+    public Set<App> getApps() {
         return apps;
     }
 
-    public void setApps(List<App> apps) {
+    public void setApps(Set<App> apps) {
         this.apps = apps;
     }
 }

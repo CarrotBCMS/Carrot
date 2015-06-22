@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -21,11 +19,11 @@ public class App extends AbstractEntity {
     private UUID applicationKey;
 
     @JsonView(View.MetaSync.class)
-    @ManyToMany(mappedBy = "apps")
-    private List<Beacon> beacons = new ArrayList<Beacon>();
+    @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Beacon> beacons = new HashSet<Beacon>();
 
-    @ManyToMany(mappedBy = "apps", fetch = FetchType.EAGER)
-    private List<Event> events = new ArrayList<Event>();
+    @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Event> events = new HashSet<Event>();
 
     @JsonView(View.General.class)
     public UUID getApplicationKey() {
@@ -37,19 +35,19 @@ public class App extends AbstractEntity {
         this.applicationKey = applicationKey;
     }
 
-    public List<Beacon> getBeacons() {
+    public Set<Beacon> getBeacons() {
         return beacons;
     }
 
-    public void setBeacons(List<Beacon> beacons) {
+    public void setBeacons(Set<Beacon> beacons) {
         this.beacons = beacons;
     }
 
-    public List<Event> getEvents() {
+    public Set<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(Set<Event> events) {
         this.events = events;
     }
 }

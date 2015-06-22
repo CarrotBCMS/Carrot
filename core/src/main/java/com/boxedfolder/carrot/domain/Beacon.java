@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -35,11 +33,11 @@ public class Beacon extends AbstractEntity {
             @JoinColumn(name = "app_id", nullable = false, updatable = false)
     })
     @ManyToMany
-    private List<App> apps = new ArrayList<App>();
+    private Set<App> apps = new HashSet<App>();
 
     @JsonView(View.Sync.class)
-    @ManyToMany(mappedBy = "beacons")
-    private List<Event> events = new ArrayList<Event>();
+    @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Event> events = new HashSet<Event>();
 
     public UUID getUuid() {
         return uuid;
@@ -65,19 +63,19 @@ public class Beacon extends AbstractEntity {
         this.minor = minor;
     }
 
-    public List<App> getApps() {
+    public Set<App> getApps() {
         return apps;
     }
 
-    public void setApps(List<App> apps) {
+    public void setApps(Set<App> apps) {
         this.apps = apps;
     }
 
-    public List<Event> getEvents() {
+    public Set<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(Set<Event> events) {
         this.events = events;
     }
 }

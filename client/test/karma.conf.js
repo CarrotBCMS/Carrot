@@ -38,8 +38,7 @@ module.exports = function(config) {
       'bower_components/angular-ui-switch/angular-ui-switch.js',
       'bower_components/moment/moment.js',
       'bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
-      'bower_components/lodash/dist/lodash.compat.js',
-      'bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js',
+      'bower_components/oi.multiselect/dist/multiselect-tpls.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

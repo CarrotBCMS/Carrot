@@ -47,16 +47,8 @@ angular.module('Carrot')
         };
 
         // Multi select settings
-        Beacon.query(function(data) {
-            $log.debug(data);
-            $scope.beacons = data;
-        });
+        $scope.beacons = Beacon.query();
         $scope.apps = App.query();
-        $scope.multiSettings = {
-            smartButtonMaxItems: 5,
-            displayProp: "name"
-        };
-
 
         // Assign defaults
         if ($scope.object.objectType === undefined) {

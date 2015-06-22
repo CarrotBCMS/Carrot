@@ -109,13 +109,18 @@
 
                     <div class="form-group">
                         <label class="top10">Apps</label>
-                        <div ng-dropdown-multiselect options="apps" selected-model="object.apps"
-                             extra-settings="multiSettings"></div>
+                        <oi-multiselect ng-options="item.name for item in beacons track by item.id"
+                                ng-model="object.apps"
+                                placeholder="Select"
+                                multiple
+                                ></oi-multiselect>
 
                         <label class="top10">Beacons</label>
-
-                        <div ng-dropdown-multiselect options="beacons" selected-model="object.beacons"
-                             extra-settings="multiSettings"></div>
+                        <oi-multiselect ng-options="item.name for item in beacons track by item.id"
+                                ng-model="object.beacons"
+                                placeholder="Select"
+                                multiple
+                                ></oi-multiselect>
                     </div>
 
                     <!-- TextEvent -->
