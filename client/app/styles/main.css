@@ -407,7 +407,3 @@ span.close.multiselect-search-list-item_selection-remove {
 oi-multiselect .multiselect-search-list-item_input input {
     margin-left: 11px;
 }
-
-oi-multiselect .multiselect-search-list-item {
-    padding-right: 5px;
-}
