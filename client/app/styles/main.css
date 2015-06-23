@@ -178,10 +178,16 @@ input[type="url"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
-.uneditable-input:focus {
+.uneditable-input:focus,
+oi-multiselect .multiselect-search.focused,
+oi-multiselect .multiselect-dropdown {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 4px #ec8124;
     outline: 0 none;
     border-color: #ec8124;
+}
+
+oi-multiselect .multiselect-dropdown {
+    border:none;
 }
 
 input.ng-invalid-email, input.ng-invalid-minlength {
@@ -354,13 +360,12 @@ select.left-control {
 
 .switch {
     width: 46px;
-    height: 25px;
+    height: 24px;
 }
 .switch small {
     /* button */
-    margin-top: -1px;
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
 }
 .switch.checked {
     background: #7bb344;
@@ -392,8 +397,17 @@ oi-multiselect .multiselect-search-list-item {
     overflow: hidden;
     white-space:nowrap;
 }
+
 span.close.multiselect-search-list-item_selection-remove {
     position: absolute;
     top: -1px;
     right: 5px;
+}
+
+oi-multiselect .multiselect-search-list-item_input input {
+    margin-left: 11px;
+}
+
+oi-multiselect .multiselect-search-list-item {
+    padding-right: 5px;
 }
