@@ -13,9 +13,7 @@ import javax.validation.constraints.NotNull;
 @Component
 @ConfigurationProperties(prefix = "auth")
 public class UserProperties {
-    @NotNull
     private String username;
-    @NotNull
     private String password;
 
     public String getUsername() {

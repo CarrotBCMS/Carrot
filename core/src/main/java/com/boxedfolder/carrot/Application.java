@@ -3,6 +3,7 @@ package com.boxedfolder.carrot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
