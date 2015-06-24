@@ -3,7 +3,10 @@ package com.boxedfolder.domain;
 import com.boxedfolder.carrot.Application;
 import com.boxedfolder.carrot.config.Profiles;
 import com.boxedfolder.carrot.domain.App;
+import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.impl.AnalyticsAggregatorImpl;
+import com.boxedfolder.carrot.domain.event.NotificationEvent;
+import com.boxedfolder.carrot.domain.event.TextEvent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.xml.soap.Text;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertTrue;
@@ -46,6 +50,27 @@ public class AnalyticsAggregatorImplTest {
         secondApp.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
         entityManager.merge(secondApp);
 
+        Beacon beacon = new Beacon();
+        beacon.setName("Testbeacon");
+        beacon.setId(22L);
+        beacon.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440002"));
+        beacon.setMajor(1);
+        beacon.setMinor(2);
+        entityManager.merge(beacon);
+
+        NotificationEvent event = new NotificationEvent();
+        event.setName("Testevent");
+        event.setId(25L);
+        event.setMessage("test");
+        event.setTitle("testtitle");
+        entityManager.merge(event);
+
+        TextEvent secondEvent = new TextEvent();
+        secondEvent.setName("Testevent 2");
+        secondEvent.setId(25L);
+        secondEvent.setText("test");
+        entityManager.merge(secondEvent);
+
         analyticsAggregator = new AnalyticsAggregatorImpl();
         analyticsAggregator.setEntityManager(entityManager);
     }
@@ -54,6 +79,18 @@ public class AnalyticsAggregatorImplTest {
     public void testCountApps() {
         Long aLong = analyticsAggregator.countApps();
         assertTrue(aLong == 2);
+    }
+
+    @Test
+    public void testCountEvents() {
+        Long aLong = analyticsAggregator.countEvents();
+        assertTrue(aLong == 2);
+    }
+
+    @Test
+    public void testCountBeacons() {
+        Long aLong = analyticsAggregator.countBeacons();
+        assertTrue(aLong == 1);
     }
 
     @After
