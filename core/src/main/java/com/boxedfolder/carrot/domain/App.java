@@ -6,14 +6,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Table(name = "app")
 @Entity
-public class App extends AbstractEntity {
+public class App extends AbstractNamedEntity {
     @JsonIgnore
     @Column(columnDefinition = "BINARY(16)", name = "app_key")
     private UUID applicationKey;

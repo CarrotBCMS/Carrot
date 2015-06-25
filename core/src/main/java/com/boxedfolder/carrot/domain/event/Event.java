@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.domain.event;
 
-import com.boxedfolder.carrot.domain.AbstractEntity;
+import com.boxedfolder.carrot.domain.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.util.DateTimeDeserializer;
@@ -31,7 +31,7 @@ import java.util.Set;
 @Table(name = "event")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity(name = "event")
-public abstract class Event extends AbstractEntity {
+public abstract class Event extends AbstractNamedEntity {
     public static final double TYPE_ENTER = 0;
     public static final double TYPE_EXIT = 1;
     public static final double TYPE_BOTH = 2;

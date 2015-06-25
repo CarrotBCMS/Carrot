@@ -9,19 +9,12 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
-    @JsonView(View.General.class)
-    @Size(min = 1)
-    @NotNull
-    private String name;
-
     @JsonView(View.Meta.class)
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -29,13 +22,13 @@ public abstract class AbstractEntity {
 
     @JsonView(View.Meta.class)
     @JsonSerialize(using = DateTimeSerializer.class)
-    @Column(name = "date_created", nullable = false, updatable = false)
+    @Column(name = "date_created", nullable = false, updatable = false, length = 273)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime dateCreated;
 
     @JsonView(View.Meta.class)
     @JsonSerialize(using = DateTimeSerializer.class)
-    @Column(name = "date_updated")
+    @Column(name = "date_updated", length = 273)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime dateUpdated;
 
@@ -63,14 +56,6 @@ public abstract class AbstractEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int hashCode() {

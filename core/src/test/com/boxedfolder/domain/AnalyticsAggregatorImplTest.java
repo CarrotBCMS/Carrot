@@ -4,9 +4,11 @@ import com.boxedfolder.carrot.Application;
 import com.boxedfolder.carrot.config.Profiles;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.impl.AnalyticsAggregatorImpl;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.event.TextEvent;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,40 +40,66 @@ public class AnalyticsAggregatorImplTest {
     public void setup() {
         // Setup test data
         App app = new App();
+        app.setDateCreated(new DateTime());
+        app.setDateUpdated(new DateTime());
         app.setName("Testapp");
-        app.setId(0L);
         app.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440001"));
-        entityManager.merge(app);
+        entityManager.persist(app);
 
         App secondApp = new App();
+        secondApp.setDateCreated(new DateTime());
         secondApp.setName("Testapp 2");
-        secondApp.setId(22L);
         secondApp.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
-        entityManager.merge(secondApp);
+        entityManager.persist(secondApp);
 
         Beacon beacon = new Beacon();
+        beacon.setDateCreated(new DateTime());
+        beacon.setDateUpdated(new DateTime());
         beacon.setName("Testbeacon");
-        beacon.setId(22L);
         beacon.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440002"));
         beacon.setMajor(1);
         beacon.setMinor(2);
-        entityManager.merge(beacon);
+        entityManager.persist(beacon);
 
         NotificationEvent event = new NotificationEvent();
+        event.setDateCreated(new DateTime());
+        event.setDateUpdated(new DateTime());
         event.setName("Testevent");
-        event.setId(25L);
         event.setMessage("test");
         event.setTitle("testtitle");
-        entityManager.merge(event);
+        entityManager.persist(event);
 
         TextEvent secondEvent = new TextEvent();
+        secondEvent.setDateCreated(new DateTime());
+        secondEvent.setDateUpdated(new DateTime());
         secondEvent.setName("Testevent 2");
-        secondEvent.setId(25L);
         secondEvent.setText("test");
-        entityManager.merge(secondEvent);
+        entityManager.persist(secondEvent);
+
+        AnalyticsLog log = new AnalyticsLog();
+        log.setDateCreated(new DateTime());
+        log.setDateUpdated(new DateTime());
+        log.setBeacon(beacon);
+        log.setOccuredEvent(event);
+        log.setDateTime(new DateTime());
+        entityManager.persist(log);
+
+        AnalyticsLog logTwo = new AnalyticsLog();
+        logTwo.setDateCreated(new DateTime());
+        logTwo.setDateUpdated(new DateTime());
+        logTwo.setBeacon(beacon);
+        logTwo.setOccuredEvent(secondEvent);
+        logTwo.setDateTime(new DateTime());
+        entityManager.persist(logTwo);
+        entityManager.flush();
 
         analyticsAggregator = new AnalyticsAggregatorImpl();
         analyticsAggregator.setEntityManager(entityManager);
+    }
+
+    @After
+    public void tearDown() {
+        entityManager.clear();
     }
 
     @Test
@@ -92,8 +120,13 @@ public class AnalyticsAggregatorImplTest {
         assertTrue(aLong == 1);
     }
 
-    @After
-    public void tearDown() {
-        entityManager.clear();
+    @Test
+    public void testFindAll() {
+
+    }
+
+    @Test
+    public void testFindAllFromBeacon() {
+
     }
 }

@@ -6,14 +6,16 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Table(name = "beacon")
 @Entity
-public class Beacon extends AbstractEntity {
+public class Beacon extends AbstractNamedEntity {
     @JsonView(View.Client.class)
     @Column(columnDefinition = "BINARY(16)")
     @NotNull
