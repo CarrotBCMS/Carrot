@@ -142,7 +142,7 @@ public class AnalyticsAggregatorImplTest {
 
     @Test
     public void testFindAllFromApp() {
-       // List<AnalyticsLog> logs = analyticsAggregator.findAll(app);
-      //  assertTrue(logs.size() == 2);
+        List<AnalyticsLog> logs = analyticsAggregator.findAll(app);
+        assertTrue(logs.size() == 2);
     }
 }

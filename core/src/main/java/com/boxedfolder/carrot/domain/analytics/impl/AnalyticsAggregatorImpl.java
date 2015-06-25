@@ -54,15 +54,15 @@ public class AnalyticsAggregatorImpl implements AnalyticsAggregator, AnalyticsLo
 
     @Override
     public List<AnalyticsLog> findAll(Beacon beacon) {
-        return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.beacon LIKE :beacon", AnalyticsLog.class)
+        return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.beacon = :beacon", AnalyticsLog.class)
                             .setParameter("beacon", beacon)
                             .getResultList();
     }
 
     @Override
     public List<AnalyticsLog> findAll(App app) {
-        return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.beacon LIKE :beacon", AnalyticsLog.class)
-                            .setParameter("beacon", beacon)
+        return entityManager.createQuery("SELECT a FROM AnalyticsLog a INNER JOIN a.occuredEvent.apps b WITH b = :app", AnalyticsLog.class)
+                            .setParameter("app", app)
                             .getResultList();
     }
 
