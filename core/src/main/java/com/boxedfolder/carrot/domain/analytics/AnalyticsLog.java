@@ -18,12 +18,12 @@ public class AnalyticsLog extends AbstractEntity {
     @NotNull
     private DateTime dateTime;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @PrimaryKeyJoinColumn(name = "event")
     @NotNull
     private Event occuredEvent;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @PrimaryKeyJoinColumn(name = "beacon")
     @NotNull
     private Beacon beacon;

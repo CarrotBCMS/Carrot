@@ -29,14 +29,6 @@ public class Beacon extends AbstractNamedEntity {
     @NotNull
     private int minor;
 
-    @JoinTable(name = "beacon_app", joinColumns = {
-            @JoinColumn(name = "beacon_id", nullable = false, updatable = false)
-    }, inverseJoinColumns = {
-            @JoinColumn(name = "app_id", nullable = false, updatable = false)
-    })
-    @ManyToMany
-    private Set<App> apps = new HashSet<App>();
-
     @JsonView(View.Sync.class)
     @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Event> events = new HashSet<Event>();
@@ -63,14 +55,6 @@ public class Beacon extends AbstractNamedEntity {
 
     public void setMinor(int minor) {
         this.minor = minor;
-    }
-
-    public Set<App> getApps() {
-        return apps;
-    }
-
-    public void setApps(Set<App> apps) {
-        this.apps = apps;
     }
 
     public Set<Event> getEvents() {

@@ -20,10 +20,6 @@ public class App extends AbstractNamedEntity {
     @Column(columnDefinition = "BINARY(16)", name = "app_key")
     private UUID applicationKey;
 
-    @JsonView(View.MetaSync.class)
-    @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Beacon> beacons = new HashSet<Beacon>();
-
     @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Event> events = new HashSet<Event>();
 
@@ -35,14 +31,6 @@ public class App extends AbstractNamedEntity {
     @JsonIgnore
     public void setApplicationKey(UUID applicationKey) {
         this.applicationKey = applicationKey;
-    }
-
-    public Set<Beacon> getBeacons() {
-        return beacons;
-    }
-
-    public void setBeacons(Set<Beacon> beacons) {
-        this.beacons = beacons;
     }
 
     public Set<Event> getEvents() {

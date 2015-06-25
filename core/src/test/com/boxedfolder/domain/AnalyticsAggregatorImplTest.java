@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertTrue;
@@ -36,10 +37,13 @@ public class AnalyticsAggregatorImplTest {
     private EntityManager entityManager;
     private AnalyticsAggregatorImpl analyticsAggregator;
 
+    private App app;
+    private Beacon beacon;
+
     @Before
     public void setup() {
         // Setup test data
-        App app = new App();
+        app = new App();
         app.setDateCreated(new DateTime());
         app.setDateUpdated(new DateTime());
         app.setName("Testapp");
@@ -52,7 +56,7 @@ public class AnalyticsAggregatorImplTest {
         secondApp.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
         entityManager.persist(secondApp);
 
-        Beacon beacon = new Beacon();
+        beacon = new Beacon();
         beacon.setDateCreated(new DateTime());
         beacon.setDateUpdated(new DateTime());
         beacon.setName("Testbeacon");
@@ -67,6 +71,8 @@ public class AnalyticsAggregatorImplTest {
         event.setName("Testevent");
         event.setMessage("test");
         event.setTitle("testtitle");
+        event.getApps().add(app);
+        event.getBeacons().add(beacon);
         entityManager.persist(event);
 
         TextEvent secondEvent = new TextEvent();
@@ -74,6 +80,8 @@ public class AnalyticsAggregatorImplTest {
         secondEvent.setDateUpdated(new DateTime());
         secondEvent.setName("Testevent 2");
         secondEvent.setText("test");
+        secondEvent.getApps().add(app);
+        secondEvent.getBeacons().add(beacon);
         entityManager.persist(secondEvent);
 
         AnalyticsLog log = new AnalyticsLog();
@@ -122,11 +130,19 @@ public class AnalyticsAggregatorImplTest {
 
     @Test
     public void testFindAll() {
-
+        List<AnalyticsLog> logs = analyticsAggregator.findAll();
+        assertTrue(logs.size() == 2);
     }
 
     @Test
     public void testFindAllFromBeacon() {
+        List<AnalyticsLog> logs = analyticsAggregator.findAll(beacon);
+        assertTrue(logs.size() == 2);
+    }
 
+    @Test
+    public void testFindAllFromApp() {
+       // List<AnalyticsLog> logs = analyticsAggregator.findAll(app);
+      //  assertTrue(logs.size() == 2);
     }
 }
