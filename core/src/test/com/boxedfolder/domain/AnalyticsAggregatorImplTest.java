@@ -6,6 +6,7 @@ import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.impl.AnalyticsAggregatorImpl;
+import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.event.TextEvent;
 import org.joda.time.DateTime;
@@ -39,6 +40,7 @@ public class AnalyticsAggregatorImplTest {
 
     private App app;
     private Beacon beacon;
+    private NotificationEvent event;
 
     @Before
     public void setup() {
@@ -65,7 +67,7 @@ public class AnalyticsAggregatorImplTest {
         beacon.setMinor(2);
         entityManager.persist(beacon);
 
-        NotificationEvent event = new NotificationEvent();
+        event = new NotificationEvent();
         event.setDateCreated(new DateTime());
         event.setDateUpdated(new DateTime());
         event.setName("Testevent");
@@ -111,6 +113,19 @@ public class AnalyticsAggregatorImplTest {
     }
 
     @Test
+    public void testSaveLog() {
+        AnalyticsLog  log = new AnalyticsLog();
+        log.setDateUpdated(new DateTime());
+        log.setDateCreated(new DateTime());
+        log.setDateTime(new DateTime());
+        log.setOccuredEvent(event);
+        log.setBeacon(beacon);
+        assertTrue(analyticsAggregator.findAll().size() == 2);
+        analyticsAggregator.save(log);
+        assertTrue(analyticsAggregator.findAll().size() == 3);
+    }
+
+    @Test
     public void testCountApps() {
         Long aLong = analyticsAggregator.countApps();
         assertTrue(aLong == 2);
@@ -144,5 +159,23 @@ public class AnalyticsAggregatorImplTest {
     public void testFindAllFromApp() {
         List<AnalyticsLog> logs = analyticsAggregator.findAll(app);
         assertTrue(logs.size() == 2);
+    }
+
+    @Test
+    public void testFindAllFromEvent() {
+        List<AnalyticsLog> logs = analyticsAggregator.findAll(event);
+        assertTrue(logs.size() == 1);
+    }
+
+    @Test
+    public void testCountLogsForBeacon() {
+        Long aLong = analyticsAggregator.count(beacon);
+        assertTrue(aLong == 2);
+    }
+
+    @Test
+    public void testCountLogsForApp() {
+        Long aLong = analyticsAggregator.count(app);
+        assertTrue(aLong == 2);
     }
 }

@@ -14,9 +14,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -42,8 +40,34 @@ public class AnalyticsAggregatorImpl implements AnalyticsAggregator, AnalyticsLo
     }
 
     @Override
-    public void save(AnalyticsLog log) {
+    public long count() {
+        return getCountQuery(AnalyticsLog.class).getSingleResult();
+    }
 
+    @Override
+    public long count(Beacon beacon) {
+        return entityManager.createQuery("SELECT COUNT(a) FROM AnalyticsLog a WHERE a.beacon = :beacon", Long.class)
+                            .setParameter("beacon", beacon)
+                            .getSingleResult();
+    }
+
+    @Override
+    public long count(App app) {
+        return entityManager.createQuery("SELECT COUNT(a) FROM AnalyticsLog a INNER JOIN a.occuredEvent.apps b WITH b = :app", Long.class)
+                            .setParameter("app", app)
+                            .getSingleResult();
+    }
+
+    @Override
+    public long count(Event event) {
+        return entityManager.createQuery("SELECT COUNT(a) FROM AnalyticsLog a WHERE a.occuredEvent = :event", Long.class)
+                            .setParameter("event", event)
+                            .getSingleResult();
+    }
+
+    @Override
+    public void save(AnalyticsLog log) {
+        entityManager.merge(log);
     }
 
     @Override
@@ -63,6 +87,13 @@ public class AnalyticsAggregatorImpl implements AnalyticsAggregator, AnalyticsLo
     public List<AnalyticsLog> findAll(App app) {
         return entityManager.createQuery("SELECT a FROM AnalyticsLog a INNER JOIN a.occuredEvent.apps b WITH b = :app", AnalyticsLog.class)
                             .setParameter("app", app)
+                            .getResultList();
+    }
+
+    @Override
+    public List<AnalyticsLog> findAll(Event event) {
+        return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.occuredEvent = :event", AnalyticsLog.class)
+                            .setParameter("event", event)
                             .getResultList();
     }
 
