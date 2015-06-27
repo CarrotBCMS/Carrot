@@ -1,8 +1,7 @@
-package com.boxedfolder.carrot.domain.analytics.impl;
+package com.boxedfolder.carrot.repository.impl;
 
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.analytics.AnalyticsAggregator;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
@@ -21,23 +20,8 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class AnalyticsAggregatorImpl implements AnalyticsAggregator, AnalyticsLogRepository {
+public class AnalyticsRepositoryImpl implements AnalyticsLogRepository {
     private EntityManager entityManager;
-
-    @Override
-    public long countBeacons() {
-        return getCountQuery(Beacon.class).getSingleResult();
-    }
-
-    @Override
-    public long countEvents() {
-        return getCountQuery(Event.class).getSingleResult();
-    }
-
-    @Override
-    public long countApps() {
-        return getCountQuery(App.class).getSingleResult();
-    }
 
     @Override
     public long count() {

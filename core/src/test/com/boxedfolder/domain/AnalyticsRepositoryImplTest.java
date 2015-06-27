@@ -5,10 +5,9 @@ import com.boxedfolder.carrot.config.Profiles;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
-import com.boxedfolder.carrot.domain.analytics.impl.AnalyticsAggregatorImpl;
-import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.event.TextEvent;
+import com.boxedfolder.carrot.repository.impl.AnalyticsRepositoryImpl;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -33,10 +32,10 @@ import static junit.framework.Assert.assertTrue;
 @ActiveProfiles(Profiles.TESTING)
 @SpringApplicationConfiguration(classes = {Application.class})
 @Transactional
-public class AnalyticsAggregatorImplTest {
+public class AnalyticsRepositoryImplTest {
     @PersistenceContext
     private EntityManager entityManager;
-    private AnalyticsAggregatorImpl analyticsAggregator;
+    private AnalyticsRepositoryImpl analyticsAggregator;
 
     private App app;
     private Beacon beacon;
@@ -94,16 +93,16 @@ public class AnalyticsAggregatorImplTest {
         log.setDateTime(new DateTime());
         entityManager.persist(log);
 
-        AnalyticsLog logTwo = new AnalyticsLog();
-        logTwo.setDateCreated(new DateTime());
-        logTwo.setDateUpdated(new DateTime());
-        logTwo.setBeacon(beacon);
-        logTwo.setOccuredEvent(secondEvent);
-        logTwo.setDateTime(new DateTime());
-        entityManager.persist(logTwo);
+        AnalyticsLog secondLog = new AnalyticsLog();
+        secondLog.setDateCreated(new DateTime());
+        secondLog.setDateUpdated(new DateTime());
+        secondLog.setBeacon(beacon);
+        secondLog.setOccuredEvent(secondEvent);
+        secondLog.setDateTime(new DateTime());
+        entityManager.persist(secondLog);
         entityManager.flush();
 
-        analyticsAggregator = new AnalyticsAggregatorImpl();
+        analyticsAggregator = new AnalyticsRepositoryImpl();
         analyticsAggregator.setEntityManager(entityManager);
     }
 
@@ -114,7 +113,7 @@ public class AnalyticsAggregatorImplTest {
 
     @Test
     public void testSaveLog() {
-        AnalyticsLog  log = new AnalyticsLog();
+        AnalyticsLog log = new AnalyticsLog();
         log.setDateUpdated(new DateTime());
         log.setDateCreated(new DateTime());
         log.setDateTime(new DateTime());
@@ -123,24 +122,6 @@ public class AnalyticsAggregatorImplTest {
         assertTrue(analyticsAggregator.findAll().size() == 2);
         analyticsAggregator.save(log);
         assertTrue(analyticsAggregator.findAll().size() == 3);
-    }
-
-    @Test
-    public void testCountApps() {
-        Long aLong = analyticsAggregator.countApps();
-        assertTrue(aLong == 2);
-    }
-
-    @Test
-    public void testCountEvents() {
-        Long aLong = analyticsAggregator.countEvents();
-        assertTrue(aLong == 2);
-    }
-
-    @Test
-    public void testCountBeacons() {
-        Long aLong = analyticsAggregator.countBeacons();
-        assertTrue(aLong == 1);
     }
 
     @Test
