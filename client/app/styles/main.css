@@ -123,6 +123,21 @@ input.submitted.ng-invalid {
     border:1px solid #f00;
 }
 
+.dash-number-container {
+    text-align: center;
+    font-size: 27px;
+    font-weight: normal;
+    margin: 25px;
+    padding: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.dash-number-container .dash-number {
+    display: block;
+    font-weight: bold;
+    font-size: 72px;
+}
+
 /** Login **/
 /***********/
 
