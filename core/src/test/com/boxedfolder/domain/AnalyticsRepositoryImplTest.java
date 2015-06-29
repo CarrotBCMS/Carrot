@@ -90,15 +90,13 @@ public class AnalyticsRepositoryImplTest {
         log.setDateUpdated(new DateTime());
         log.setBeacon(beacon);
         log.setOccuredEvent(event);
-        log.setDateTime(new DateTime());
         entityManager.persist(log);
 
         AnalyticsLog secondLog = new AnalyticsLog();
-        secondLog.setDateCreated(new DateTime());
+        secondLog.setDateCreated(new DateTime().minusDays(5));
         secondLog.setDateUpdated(new DateTime());
         secondLog.setBeacon(beacon);
         secondLog.setOccuredEvent(secondEvent);
-        secondLog.setDateTime(new DateTime());
         entityManager.persist(secondLog);
         entityManager.flush();
 
@@ -116,7 +114,6 @@ public class AnalyticsRepositoryImplTest {
         AnalyticsLog log = new AnalyticsLog();
         log.setDateUpdated(new DateTime());
         log.setDateCreated(new DateTime());
-        log.setDateTime(new DateTime());
         log.setOccuredEvent(event);
         log.setBeacon(beacon);
         assertTrue(analyticsAggregator.findAll().size() == 2);
@@ -158,5 +155,13 @@ public class AnalyticsRepositoryImplTest {
     public void testCountLogsForApp() {
         Long aLong = analyticsAggregator.count(app);
         assertTrue(aLong == 2);
+    }
+
+    @Test
+    public void testFindAllFromTo() {
+        DateTime to = new DateTime();
+        DateTime from = new DateTime().minusDays(4);
+        List<AnalyticsLog> logs = analyticsAggregator.findAll(from, to);
+        assertTrue(logs.size() == 1);
     }
 }

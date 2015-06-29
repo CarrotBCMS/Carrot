@@ -4,6 +4,7 @@ import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.event.Event;
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface AnalyticsLogRepository {
     List<AnalyticsLog> findAll(Event event);
     List<AnalyticsLog> findAll(Beacon beacon);
     List<AnalyticsLog> findAll(App app);
+    List<AnalyticsLog> findAll(DateTime from, DateTime to);
 
     long count();
     long count(Beacon beacon);

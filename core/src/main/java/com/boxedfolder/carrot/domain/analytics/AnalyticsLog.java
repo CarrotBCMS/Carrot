@@ -3,9 +3,13 @@ package com.boxedfolder.carrot.domain.analytics;
 import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.event.Event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,27 +18,17 @@ import javax.validation.constraints.NotNull;
 @Table(name = "analytics_log")
 @Entity
 public class AnalyticsLog extends AbstractEntity {
-    @Column(name = "date", length = 273)
-    @NotNull
-    private DateTime dateTime;
-
+    @JsonIgnore
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "event")
     @NotNull
     private Event occuredEvent;
 
+    @JsonIgnore
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "beacon")
     @NotNull
     private Beacon beacon;
-
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
-    }
 
     public Event getOccuredEvent() {
         return occuredEvent;

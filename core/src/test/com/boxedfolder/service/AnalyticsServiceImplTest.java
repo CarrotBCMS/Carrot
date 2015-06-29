@@ -105,7 +105,6 @@ public class AnalyticsServiceImplTest {
         log.setDateUpdated(new DateTime());
         log.setBeacon(beacon);
         log.setOccuredEvent(event);
-        log.setDateTime(new DateTime());
         testAnalyticsLogData.add(log);
 
         AnalyticsLog secondLog = new AnalyticsLog();
@@ -113,7 +112,6 @@ public class AnalyticsServiceImplTest {
         secondLog.setDateUpdated(new DateTime());
         secondLog.setBeacon(beacon);
         secondLog.setOccuredEvent(secondEvent);
-        secondLog.setDateTime(new DateTime());
         testAnalyticsLogData.add(secondLog);
     }
 

@@ -5,6 +5,7 @@ import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -78,6 +79,14 @@ public class AnalyticsRepositoryImpl implements AnalyticsLogRepository {
     public List<AnalyticsLog> findAll(Event event) {
         return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.occuredEvent = :event", AnalyticsLog.class)
                             .setParameter("event", event)
+                            .getResultList();
+    }
+
+    @Override
+    public List<AnalyticsLog> findAll(DateTime from, DateTime to) {
+        return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.dateCreated BETWEEN :from AND :to", AnalyticsLog.class)
+                            .setParameter("from", from)
+                            .setParameter("to", to)
                             .getResultList();
     }
 
