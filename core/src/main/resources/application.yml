@@ -2,16 +2,6 @@ spring:
     profiles:
         active: dev
 
-    mail:
-        host: localhost
-        port: 1025
-        user:
-        password:
-        protocol: smtp
-        tls: false
-        auth: false
-        from: mail@boxedfolder.com
-
 auth:
     username: user
     password: password

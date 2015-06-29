@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @Component
 @ConfigurationProperties(prefix = "auth")
 public class UserProperties {
-    private String username;
-    private String password;
+    private String username = "username";
+    private String password = "password";
 
     public String getUsername() {
         return username;
