@@ -20,9 +20,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -131,5 +134,46 @@ public class AnalyticsServiceImplTest {
     public void testCountEvents() {
         when(eventRepository.count()).thenReturn((long)testEventData.size());
         assertTrue(service.countEvents() == 2);
+    }
+
+    @Test
+    public void testRetrieveAllApps() {
+        when(analyticsLogRepository.findAll()).thenReturn(testAnalyticsLogData);
+        List<AnalyticsLog> apps = service.findAll();
+        assertEquals(apps, testAnalyticsLogData);
+    }
+
+    @Test
+    public void testRetrieveAllAppsRanged() {
+        when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
+        List<AnalyticsLog> apps = service.findAll(new DateTime().minusDays(2), new DateTime());
+        assertEquals(apps, testAnalyticsLogData);
+    }
+
+    @Test
+    public void testAppsTriggered() {
+        when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
+        Map<App, Integer> result = service.appsTriggered(new DateTime().minusDays(5), new DateTime());
+        assertTrue(result.containsKey(testAppData.get(0)));
+        assertTrue(result.keySet().size() == 1);
+        assertTrue(result.get(testAppData.get(0)) == 2);
+    }
+
+    @Test
+    public void testBeaconsTriggered() {
+        when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
+        Map<Beacon, Integer> result = service.beaconsTriggered(new DateTime().minusDays(5), new DateTime());
+        assertTrue(result.containsKey(testBeaconData.get(0)));
+        assertTrue(result.keySet().size() == 1);
+        assertTrue(result.get(testBeaconData.get(0)) == 2);
+    }
+
+    @Test
+    public void testEventsTriggered() {
+        when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
+        Map<Event, Integer> result = service.eventsTriggered(new DateTime().minusDays(5), new DateTime());
+        assertTrue(result.containsKey(testEventData.get(0)));
+        assertTrue(result.keySet().size() == 1);
+        assertTrue(result.get(testEventData.get(0)) == 2);
     }
 }

@@ -1,7 +1,9 @@
 package com.boxedfolder.web.client;
 
+import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
+import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.AnalyticsService;
@@ -21,12 +23,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -42,6 +40,10 @@ public class AnalyticsResourceTest {
     private MockMvc restUserMockMvc;
     private ObjectMapper mapper;
     private List<AnalyticsLog> testData;
+    private App app;
+    private App secondApp;
+    private Beacon beacon;
+    private NotificationEvent event;
 
     @Before
     public void setup() {
@@ -56,15 +58,30 @@ public class AnalyticsResourceTest {
 
         testData = new ArrayList<AnalyticsLog>();
 
-        NotificationEvent event = new NotificationEvent();
+        app = new App();
+        app.setName("Testapp");
+        app.setId(5L);
+        app.setDateCreated(new DateTime());
+        app.setDateUpdated(new DateTime());
+        app.setApplicationKey(UUID.randomUUID());
+
+        secondApp = new App();
+        secondApp.setName("Testapp 2");
+        secondApp.setId(2L);
+        secondApp.setDateCreated(new DateTime());
+        secondApp.setDateUpdated(new DateTime());
+        secondApp.setApplicationKey(UUID.randomUUID());
+
+        event = new NotificationEvent();
         event.setName("Event 2");
         event.setId(1L);
         event.setMessage("Test");
         event.setTitle("test");
         event.setDateUpdated(new DateTime());
         event.setDateCreated(new DateTime());
+        event.getApps().add(app);
 
-        Beacon beacon = new Beacon();
+        beacon = new Beacon();
         beacon.setName("Event 2");
         beacon.setId(1L);
         beacon.setDateUpdated(new DateTime());
@@ -123,6 +140,58 @@ public class AnalyticsResourceTest {
         when(service.findAll(from, to)).thenReturn(sTestData);
         DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
         String requestString = "/client/analytics/logs?from=" + from.toString(formatter) + "&to=" + to.toString(formatter);
+        restUserMockMvc.perform(get(requestString)
+                .accept(MediaType.APPLICATION_JSON))
+                       .andExpect(status().isOk())
+                       .andExpect(content().string(value));
+    }
+
+    @Test
+    public void testGetAppsStatistics() throws Exception {
+        Map<App, Integer> map = new HashMap<App, Integer>();
+        map.put(app, 5);
+        map.put(secondApp, 3);
+
+        String value = mapper.writeValueAsString(map);
+        DateTime from = new DateTime().minusDays(10);
+        DateTime to = new DateTime().minusDays(3);
+        when(service.appsTriggered(from, to)).thenReturn(map);
+        DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+        String requestString = "/client/analytics/apps?from=" + from.toString(formatter) + "&to=" + to.toString(formatter);
+        restUserMockMvc.perform(get(requestString)
+                .accept(MediaType.APPLICATION_JSON))
+                       .andExpect(status().isOk())
+                       .andExpect(content().string(value));
+    }
+
+    @Test
+    public void testGetBeaconsStatistics() throws Exception {
+        Map<Beacon, Integer> map = new HashMap<Beacon, Integer>();
+        map.put(beacon, 15);
+
+        String value = mapper.writeValueAsString(map);
+        DateTime from = new DateTime().minusDays(10);
+        DateTime to = new DateTime().minusDays(3);
+        when(service.beaconsTriggered(from, to)).thenReturn(map);
+        DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+        String requestString = "/client/analytics/beacons?from=" + from.toString(formatter) + "&to=" + to.toString(formatter);
+        restUserMockMvc.perform(get(requestString)
+                .accept(MediaType.APPLICATION_JSON))
+                       .andExpect(status().isOk())
+                       .andExpect(content().string(value));
+    }
+
+    @Test
+    public void testGetEventsStatistics() throws Exception {
+        Map<Event, Integer> map = new HashMap<Event, Integer>();
+        map.put(event, 323);
+
+        String value = mapper.writeValueAsString(map);
+        DateTime from = new DateTime().minusDays(7);
+        DateTime to = new DateTime().minusDays(3);
+        when(service.eventsTriggered(from, to)).thenReturn(map);
+        DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+        String requestString = "/client/analytics/events?from=" + from.toString(formatter) + "&to=" + to.toString(formatter);
         restUserMockMvc.perform(get(requestString)
                 .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isOk())

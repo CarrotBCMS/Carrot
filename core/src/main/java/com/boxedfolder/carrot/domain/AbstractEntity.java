@@ -14,7 +14,7 @@ import javax.persistence.*;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class AbstractEntity implements Comparable<AbstractEntity> {
     @JsonView(View.Meta.class)
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -87,5 +87,10 @@ public abstract class AbstractEntity {
             return super.equals(object);
         }
         return getId().longValue() == other.getId().longValue();
+    }
+
+    @Override
+    public int compareTo(AbstractEntity o) {
+        return dateCreated.compareTo(o.getDateCreated());
     }
 }

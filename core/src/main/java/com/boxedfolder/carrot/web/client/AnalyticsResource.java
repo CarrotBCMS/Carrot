@@ -1,7 +1,12 @@
 package com.boxedfolder.carrot.web.client;
 
+import com.boxedfolder.carrot.domain.App;
+import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
+import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.AnalyticsService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -38,6 +43,36 @@ public class AnalyticsResource {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
     {
         return service.findAll(from, to);
+    }
+
+    @JsonView(View.General.class)
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/apps", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<App, Integer> getAppStatistics(
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime from,
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
+    {
+        return service.appsTriggered(from, to);
+    }
+
+    @JsonView(View.General.class)
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/beacons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<Beacon, Integer> getBeaconStatistics(
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime from,
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
+    {
+        return service.beaconsTriggered(from, to);
+    }
+
+    @JsonView(View.General.class)
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/events", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<Event, Integer> getEventStatistics(
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime from,
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
+    {
+        return service.eventsTriggered(from, to);
     }
 
     @Inject
