@@ -49,11 +49,11 @@
                     <table ng-table="tableParams" class="table statistics">
                         <tbody>
                         <tr ng-repeat="object in $data">
-                            <td data-title="'Name'">
+                            <td data-title="'Name'" style="width:85%;">
                                 {{object.name}}
                             </td>
-                            <td data-title="'Events Triggers'">
-                                {{triggerEvent(object)}}
+                            <td data-title="'Hits / Triggered'">
+                                {{object.count}}
                             </td>
                         </tr>
                         </tbody>

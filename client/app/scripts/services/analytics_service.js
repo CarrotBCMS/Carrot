@@ -24,8 +24,22 @@ angular.module('Carrot')
             return promise;
         };
 
+        var analyticsFunction = function(url, from, to) {
+            var promise = $http.get(baseURL + "/client/analytics/" + url, {
+                params: {
+                    from: from.format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+                    to: to.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+                }
+            }).then(function (response) {
+                $log.debug(response.data);
+                return response.data;
+            });
+            return promise;
+        };
+
         return {
             "count": countFunction,
+            "analytics": analyticsFunction,
             "logs": logsFunction
         }
     });

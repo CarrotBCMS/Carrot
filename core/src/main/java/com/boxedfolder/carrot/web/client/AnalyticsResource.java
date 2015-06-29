@@ -45,7 +45,6 @@ public class AnalyticsResource {
         return service.findAll(from, to);
     }
 
-    @JsonView(View.General.class)
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/apps", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<App, Integer> getAppStatistics(
@@ -55,7 +54,6 @@ public class AnalyticsResource {
         return service.appsTriggered(from, to);
     }
 
-    @JsonView(View.General.class)
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/beacons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<Beacon, Integer> getBeaconStatistics(
@@ -65,7 +63,6 @@ public class AnalyticsResource {
         return service.beaconsTriggered(from, to);
     }
 
-    @JsonView(View.General.class)
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/events", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<Event, Integer> getEventStatistics(
