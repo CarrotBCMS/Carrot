@@ -9,7 +9,7 @@
  * Controller showing the dashboard
  */
 angular.module('Carrot')
-    .controller('DashboardController', function ($scope, flash, AnalyticsService) {
+    .controller('DashboardController', function ($scope, $log, flash, AnalyticsService) {
         AnalyticsService.count().then(function(data) {
             $scope.beaconCount = data.beacons;
             $scope.appCount = data.apps;
@@ -21,4 +21,14 @@ angular.module('Carrot')
         }, function(response) {
             flash.error = "There was an error processing your request.";
         });
+
+        $scope.sections = ["Apps", "Beacons", "Events"];
+        $scope.section = $scope.sections[0];
+
+        $scope.ranges = ["Yesterday", "Last Week", "Last Month"];
+        $scope.range = $scope.ranges[0];
+
+        $scope.updateData = function() {
+
+        };
     });

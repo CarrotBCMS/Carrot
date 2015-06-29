@@ -31,12 +31,17 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="pull-right top30">
+                    <div class="pull-left top30 bottom15">
+
                         <div class="form-group form-group-sm">
-                            <select class="form-control">
-                                <option>Yesterday</option>
-                                <option>Last Week</option>
-                                <option>Last Month</option>
+                            <select class="form-control" ng-model="section" ng-options="o for o in sections" ng-change="updateData()">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="pull-right top30 bottom15">
+                        <div class="form-group form-group-sm">
+                            <select class="form-control" ng-model="range" ng-options="o for o in ranges" ng-change="updateData()">
                             </select>
                         </div>
                     </div>
