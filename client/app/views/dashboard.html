@@ -6,9 +6,10 @@
     <div class="col-md-10 content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <small><b>Dashboard</b></small>
+                <small><b>Dashboard & Statistics</b></small>
             </div>
             <div class="panel-body">
+                <div ng-include="'views/fragments/alerts.html'"></div>
                 <div class="row border-bottom bottom15">
                     <div class="col-md-4">
                         <div class="dash-number-container">
@@ -29,8 +30,33 @@
                     </div>
                 </div>
 
-                <small>Statistics</small>
-                <div class=""></div>
+                <div class="col-md-12">
+                    <div class="pull-right top30">
+                        <div class="form-group form-group-sm">
+                            <select class="form-control">
+                                <option>Yesterday</option>
+                                <option>Last Week</option>
+                                <option>Last Month</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table ng-table="tableParams" class="table statistics">
+                        <tbody>
+                        <tr ng-repeat="object in $data">
+                            <td data-title="'Name'">
+                                {{object.name}}
+                            </td>
+                            <td data-title="'Events Triggers'">
+                                {{triggerEvent(object)}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="center top30 bottom30" ng-show="!data || data.length == 0">
+                        <small>No statistics yet.</small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

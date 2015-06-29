@@ -131,7 +131,7 @@ input.submitted.ng-invalid {
     padding: 10px;
     border: 1px solid #eee;
     border-radius: 4px;
-    background-color: #F5F5F4;
+    background-color: #fafafa;
 }
 
 .dash-number-container .dash-number {
@@ -142,6 +142,10 @@ input.submitted.ng-invalid {
 
 .border-bottom {
     border-bottom: 1px solid #d9d9d9;
+}
+
+table.statistics {
+    font-size: 13px;
 }
 
 /** Login **/
