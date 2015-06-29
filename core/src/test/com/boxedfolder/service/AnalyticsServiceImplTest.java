@@ -171,6 +171,8 @@ public class AnalyticsServiceImplTest {
     @Test
     public void testEventsTriggered() {
         when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
+        DateTime bla = new DateTime();
+        DateTime blub = new DateTime().minusDays(5);
         Map<Event, Integer> result = service.eventsTriggered(new DateTime().minusDays(5), new DateTime());
         assertTrue(result.containsKey(testEventData.get(0)));
         assertTrue(result.keySet().size() == 1);

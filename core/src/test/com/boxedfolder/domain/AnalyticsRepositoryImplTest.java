@@ -35,7 +35,7 @@ import static junit.framework.Assert.assertTrue;
 public class AnalyticsRepositoryImplTest {
     @PersistenceContext
     private EntityManager entityManager;
-    private AnalyticsRepositoryImpl analyticsAggregator;
+    private AnalyticsRepositoryImpl analyticsRepository;
 
     private App app;
     private Beacon beacon;
@@ -93,15 +93,15 @@ public class AnalyticsRepositoryImplTest {
         entityManager.persist(log);
 
         AnalyticsLog secondLog = new AnalyticsLog();
-        secondLog.setDateCreated(new DateTime().minusDays(5));
+        secondLog.setDateCreated(new DateTime());
         secondLog.setDateUpdated(new DateTime());
         secondLog.setBeacon(beacon);
         secondLog.setOccuredEvent(secondEvent);
         entityManager.persist(secondLog);
         entityManager.flush();
 
-        analyticsAggregator = new AnalyticsRepositoryImpl();
-        analyticsAggregator.setEntityManager(entityManager);
+        analyticsRepository = new AnalyticsRepositoryImpl();
+        analyticsRepository.setEntityManager(entityManager);
     }
 
     @After
@@ -116,44 +116,44 @@ public class AnalyticsRepositoryImplTest {
         log.setDateCreated(new DateTime());
         log.setOccuredEvent(event);
         log.setBeacon(beacon);
-        assertTrue(analyticsAggregator.findAll().size() == 2);
-        analyticsAggregator.save(log);
-        assertTrue(analyticsAggregator.findAll().size() == 3);
+        assertTrue(analyticsRepository.findAll().size() == 2);
+        analyticsRepository.save(log);
+        assertTrue(analyticsRepository.findAll().size() == 3);
     }
 
     @Test
     public void testFindAll() {
-        List<AnalyticsLog> logs = analyticsAggregator.findAll();
+        List<AnalyticsLog> logs = analyticsRepository.findAll();
         assertTrue(logs.size() == 2);
     }
 
     @Test
     public void testFindAllFromBeacon() {
-        List<AnalyticsLog> logs = analyticsAggregator.findAll(beacon);
+        List<AnalyticsLog> logs = analyticsRepository.findAll(beacon);
         assertTrue(logs.size() == 2);
     }
 
     @Test
     public void testFindAllFromApp() {
-        List<AnalyticsLog> logs = analyticsAggregator.findAll(app);
+        List<AnalyticsLog> logs = analyticsRepository.findAll(app);
         assertTrue(logs.size() == 2);
     }
 
     @Test
     public void testFindAllFromEvent() {
-        List<AnalyticsLog> logs = analyticsAggregator.findAll(event);
+        List<AnalyticsLog> logs = analyticsRepository.findAll(event);
         assertTrue(logs.size() == 1);
     }
 
     @Test
     public void testCountLogsForBeacon() {
-        Long aLong = analyticsAggregator.count(beacon);
+        Long aLong = analyticsRepository.count(beacon);
         assertTrue(aLong == 2);
     }
 
     @Test
     public void testCountLogsForApp() {
-        Long aLong = analyticsAggregator.count(app);
+        Long aLong = analyticsRepository.count(app);
         assertTrue(aLong == 2);
     }
 
@@ -161,7 +161,7 @@ public class AnalyticsRepositoryImplTest {
     public void testFindAllFromTo() {
         DateTime to = new DateTime();
         DateTime from = new DateTime().minusDays(4);
-        List<AnalyticsLog> logs = analyticsAggregator.findAll(from, to);
-        assertTrue(logs.size() == 1);
+        List<AnalyticsLog> logs = analyticsRepository.findAll(from, to);
+        assertTrue(logs.size() == 2);
     }
 }

@@ -20,7 +20,8 @@ public class DateTimeSerializer extends JsonSerializer<DateTime> {
     @Override
     public void serialize(DateTime value, JsonGenerator generator,
                           SerializerProvider serializerProvider)
-            throws IOException {
+            throws IOException
+    {
         generator.writeString(formatter.print(value.toDateTime(DateTimeZone.UTC)));
     }
 }
