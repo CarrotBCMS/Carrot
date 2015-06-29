@@ -21,7 +21,7 @@ body {
 
 .main-container {
     border-top: 4px solid #FF9324;
-    padding-top: 25px;
+    padding: 25px 0 15px 0;
 }
 
 .navbar-brand {
@@ -120,22 +120,28 @@ footer a:hover {
 }
 
 input.submitted.ng-invalid {
-    border:1px solid #f00;
+    border: 1px solid #f00;
 }
 
 .dash-number-container {
     text-align: center;
-    font-size: 27px;
+    font-size: 31px;
     font-weight: normal;
-    margin: 25px;
-    padding: 15px;
-    border-bottom: 2px solid #eee;
+    margin: 40px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #F5F5F4;
 }
 
 .dash-number-container .dash-number {
     display: block;
     font-weight: bold;
     font-size: 72px;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #d9d9d9;
 }
 
 /** Login **/
