@@ -16,32 +16,26 @@ angular.module('Carrot')
             $scope.eventCount = data.events;
         });
 
-        AnalyticsService.logs().then(function(data) {
-          //  $scope.logs = data;
-        }, function(response) {
-            flash.error = "There was an error processing your request.";
-        });
-
         $scope.sections = ["Apps", "Beacons", "Events"];
         $scope.section = $scope.sections[0];
 
         $scope.ranges = ["Today", "This Week", "This Month"];
         $scope.range = $scope.ranges[0];
 
-        var data = [];
+        $scope.data = [];
 
         $scope.tableParams = new ngTableParams({
             page: 1,
             count: 10
         }, {
-            total: data.length,
+            total: $scope.data.length,
             getData: function ($defer, params) {
-                var pageData = data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                params.total(data.length);
+                var pageData = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                params.total($scope.data.length);
 
                 // Fix empty page after deletion
-                if (pageData.length == 0 && data.length > 0) {
-                    pageData = data.slice((params.page() - 2) * params.count(), params.page() * params.count());
+                if (pageData.length == 0 && $scope.data.length > 0) {
+                    pageData = $scope.data.slice((params.page() - 2) * params.count(), params.page() * params.count());
                 }
 
                 $defer.resolve(pageData);
@@ -65,16 +59,9 @@ angular.module('Carrot')
                 to = moment().endOf("month");
             }
 
-            AnalyticsService.analytics(url, from, to).then(function(hash) {
-                var item;
-                data = [];
-                for (var i = 0, keys = Object.keys(hash), ii = keys.length; i < ii; i++) {
-                    item = {};
-                    item.name = keys[i];
-                    item.count = hash[keys[i]];
-                    data.push(item);
-                }
-
+            AnalyticsService.analytics(url, from, to).then(function(result) {
+                $scope.data = result;
+                $log.debug(result);
                 $scope.tableParams.reload();
             }, function(response) {
                 flash.error = "There was an error processing your request.";
