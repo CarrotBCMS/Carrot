@@ -3,6 +3,7 @@ package com.boxedfolder.carrot.web.client;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
+import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.AnalyticsService;
@@ -47,7 +48,7 @@ public class AnalyticsResource {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/apps", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<App, Integer> getAppStatistics(
+    public List<AnalyticsTransfer> getAppStatistics(
             @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime from,
             @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
     {
@@ -56,7 +57,7 @@ public class AnalyticsResource {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/beacons", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<Beacon, Integer> getBeaconStatistics(
+    public List<AnalyticsTransfer> getBeaconStatistics(
             @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime from,
             @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
     {
@@ -65,7 +66,7 @@ public class AnalyticsResource {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/events", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<Event, Integer> getEventStatistics(
+    public List<AnalyticsTransfer> getEventStatistics(
             @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime from,
             @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
     {

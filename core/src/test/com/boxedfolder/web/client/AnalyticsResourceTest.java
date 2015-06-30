@@ -3,6 +3,7 @@ package com.boxedfolder.web.client;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
+import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.util.View;
@@ -53,9 +54,6 @@ public class AnalyticsResourceTest {
         restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
 
         mapper = new ObjectMapper();
-        mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
-        mapper.setConfig(mapper.getSerializationConfig().withView(View.Client.class));
-
         testData = new ArrayList<AnalyticsLog>();
 
         app = new App();
@@ -148,14 +146,17 @@ public class AnalyticsResourceTest {
 
     @Test
     public void testGetAppsStatistics() throws Exception {
-        Map<App, Integer> map = new HashMap<App, Integer>();
-        map.put(app, 5);
-        map.put(secondApp, 3);
+        List<AnalyticsTransfer> list = new ArrayList<AnalyticsTransfer>();
+        AnalyticsTransfer transfer = new AnalyticsTransfer();
+        transfer.setId(app.getId());
+        transfer.setName(app.getName());
+        transfer.setCount(22);
+        list.add(transfer);
 
-        String value = mapper.writeValueAsString(map);
+        String value = mapper.writeValueAsString(list);
         DateTime from = new DateTime().minusDays(10);
         DateTime to = new DateTime().minusDays(3);
-        when(service.appsTriggered(from, to)).thenReturn(map);
+        when(service.appsTriggered(from, to)).thenReturn(list);
         DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
         String requestString = "/client/analytics/apps?from=" + from.toString(formatter) + "&to=" + to.toString(formatter);
         restUserMockMvc.perform(get(requestString)
@@ -166,13 +167,17 @@ public class AnalyticsResourceTest {
 
     @Test
     public void testGetBeaconsStatistics() throws Exception {
-        Map<Beacon, Integer> map = new HashMap<Beacon, Integer>();
-        map.put(beacon, 15);
+        List<AnalyticsTransfer> list = new ArrayList<AnalyticsTransfer>();
+        AnalyticsTransfer transfer = new AnalyticsTransfer();
+        transfer.setId(beacon.getId());
+        transfer.setName(beacon.getName());
+        transfer.setCount(22);
+        list.add(transfer);
 
-        String value = mapper.writeValueAsString(map);
+        String value = mapper.writeValueAsString(list);
         DateTime from = new DateTime().minusDays(10);
         DateTime to = new DateTime().minusDays(3);
-        when(service.beaconsTriggered(from, to)).thenReturn(map);
+        when(service.beaconsTriggered(from, to)).thenReturn(list);
         DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
         String requestString = "/client/analytics/beacons?from=" + from.toString(formatter) + "&to=" + to.toString(formatter);
         restUserMockMvc.perform(get(requestString)
@@ -183,13 +188,17 @@ public class AnalyticsResourceTest {
 
     @Test
     public void testGetEventsStatistics() throws Exception {
-        Map<Event, Integer> map = new HashMap<Event, Integer>();
-        map.put(event, 323);
+        List<AnalyticsTransfer> list = new ArrayList<AnalyticsTransfer>();
+        AnalyticsTransfer transfer = new AnalyticsTransfer();
+        transfer.setId(event.getId());
+        transfer.setName(event.getName());
+        transfer.setCount(22);
+        list.add(transfer);
 
-        String value = mapper.writeValueAsString(map);
+        String value = mapper.writeValueAsString(list);
         DateTime from = new DateTime().minusDays(7);
         DateTime to = new DateTime().minusDays(3);
-        when(service.eventsTriggered(from, to)).thenReturn(map);
+        when(service.eventsTriggered(from, to)).thenReturn(list);
         DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
         String requestString = "/client/analytics/events?from=" + from.toString(formatter) + "&to=" + to.toString(formatter);
         restUserMockMvc.perform(get(requestString)

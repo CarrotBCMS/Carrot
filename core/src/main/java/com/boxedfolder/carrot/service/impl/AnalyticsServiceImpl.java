@@ -3,6 +3,7 @@ package com.boxedfolder.carrot.service.impl;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
+import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
 import com.boxedfolder.carrot.repository.AppRepository;
@@ -13,9 +14,8 @@ import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -69,17 +69,23 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     @Override
-    public Map<App, Integer> appsTriggered(DateTime from, DateTime to) {
-        Map<App, Integer> output = new TreeMap<App, Integer>();
+    public List<AnalyticsTransfer> appsTriggered(DateTime from, DateTime to) {
+        List<AnalyticsTransfer> output = new ArrayList<AnalyticsTransfer>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
             for (App app : log.getOccuredEvent().getApps()) {
-                if (!output.containsKey(app)) {
-                    output.put(app, 0);
+                AnalyticsTransfer transfer = new AnalyticsTransfer();
+                transfer.setId(app.getId());
+                transfer.setName(app.getName());
+                if (!output.contains(transfer)) {
+                    output.add(transfer);
+                } else {
+                    transfer = output.get(output.indexOf(transfer));
                 }
-                Integer value = output.get(app);
+                Integer value = transfer.getCount();
                 value++;
-                output.put(app, value);
+                transfer.setCount(value);
+
             }
         }
 
@@ -87,17 +93,22 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     @Override
-    public Map<Beacon, Integer> beaconsTriggered(DateTime from, DateTime to) {
-        Map<Beacon, Integer> output = new TreeMap<Beacon, Integer>();
+    public List<AnalyticsTransfer> beaconsTriggered(DateTime from, DateTime to) {
+        List<AnalyticsTransfer> output = new ArrayList<AnalyticsTransfer>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
             for (Beacon beacon : log.getOccuredEvent().getBeacons()) {
-                if (!output.containsKey(beacon)) {
-                    output.put(beacon, 0);
+                AnalyticsTransfer transfer = new AnalyticsTransfer();
+                transfer.setId(beacon.getId());
+                transfer.setName(beacon.getName());
+                if (!output.contains(transfer)) {
+                    output.add(transfer);
+                } else {
+                    transfer = output.get(output.indexOf(transfer));
                 }
-                Integer value = output.get(beacon);
+                Integer value = transfer.getCount();
                 value++;
-                output.put(beacon, value);
+                transfer.setCount(value);
             }
         }
 
@@ -105,17 +116,22 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     @Override
-    public Map<Event, Integer> eventsTriggered(DateTime from, DateTime to) {
-        Map<Event, Integer> output = new TreeMap<Event, Integer>();
+    public List<AnalyticsTransfer> eventsTriggered(DateTime from, DateTime to) {
+        List<AnalyticsTransfer> output = new ArrayList<AnalyticsTransfer>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
             Event event = log.getOccuredEvent();
-            if (!output.containsKey(event)) {
-                output.put(event, 0);
+            AnalyticsTransfer transfer = new AnalyticsTransfer();
+            transfer.setId(event.getId());
+            transfer.setName(event.getName());
+            if (!output.contains(transfer)) {
+                output.add(transfer);
+            } else {
+                transfer = output.get(output.indexOf(transfer));
             }
-            Integer value = output.get(event);
+            Integer value = transfer.getCount();
             value++;
-            output.put(event, value);
+            transfer.setCount(value);
         }
 
         return output;

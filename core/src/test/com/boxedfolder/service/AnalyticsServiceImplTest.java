@@ -3,6 +3,7 @@ package com.boxedfolder.service;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
+import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
 import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.event.TextEvent;
@@ -66,12 +67,14 @@ public class AnalyticsServiceImplTest {
         app.setDateCreated(new DateTime());
         app.setDateUpdated(new DateTime());
         app.setName("Testapp");
+        app.setId(22L);
         app.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440001"));
         testAppData.add(app);
 
         App secondApp = new App();
         secondApp.setDateCreated(new DateTime());
         secondApp.setName("Testapp 2");
+        secondApp.setId(1L);
         secondApp.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
         testAppData.add(secondApp);
 
@@ -79,6 +82,7 @@ public class AnalyticsServiceImplTest {
         beacon.setDateCreated(new DateTime());
         beacon.setDateUpdated(new DateTime());
         beacon.setName("Testbeacon");
+        beacon.setId(1L);
         beacon.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440002"));
         beacon.setMajor(1);
         beacon.setMinor(2);
@@ -92,6 +96,7 @@ public class AnalyticsServiceImplTest {
         event.setTitle("testtitle");
         event.getApps().add(app);
         event.getBeacons().add(beacon);
+        event.setId(122L);
         testEventData.add(event);
 
         TextEvent secondEvent = new TextEvent();
@@ -101,6 +106,7 @@ public class AnalyticsServiceImplTest {
         secondEvent.setText("test");
         secondEvent.getApps().add(app);
         secondEvent.getBeacons().add(beacon);
+        secondEvent.setId(1222L);
         testEventData.add(secondEvent);
 
         AnalyticsLog log = new AnalyticsLog();
@@ -153,19 +159,27 @@ public class AnalyticsServiceImplTest {
     @Test
     public void testAppsTriggered() {
         when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
-        Map<App, Integer> result = service.appsTriggered(new DateTime().minusDays(5), new DateTime());
-        assertTrue(result.containsKey(testAppData.get(0)));
-        assertTrue(result.keySet().size() == 1);
-        assertTrue(result.get(testAppData.get(0)) == 2);
+        List<AnalyticsTransfer>  result = service.appsTriggered(new DateTime().minusDays(5), new DateTime());
+
+        AnalyticsTransfer transfer = new AnalyticsTransfer();
+        transfer.setId(testAppData.get(0).getId());
+        transfer.setName(testAppData.get(0).getName());
+        transfer.setCount(2);
+
+        assertTrue(result.contains(transfer));
     }
 
     @Test
     public void testBeaconsTriggered() {
         when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
-        Map<Beacon, Integer> result = service.beaconsTriggered(new DateTime().minusDays(5), new DateTime());
-        assertTrue(result.containsKey(testBeaconData.get(0)));
-        assertTrue(result.keySet().size() == 1);
-        assertTrue(result.get(testBeaconData.get(0)) == 2);
+        List<AnalyticsTransfer> result = service.beaconsTriggered(new DateTime().minusDays(5), new DateTime());
+
+        AnalyticsTransfer transfer = new AnalyticsTransfer();
+        transfer.setId(testBeaconData.get(0).getId());
+        transfer.setName(testBeaconData.get(0).getName());
+        transfer.setCount(2);
+
+        assertTrue(result.contains(transfer));
     }
 
     @Test
@@ -173,9 +187,13 @@ public class AnalyticsServiceImplTest {
         when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
         DateTime bla = new DateTime();
         DateTime blub = new DateTime().minusDays(5);
-        Map<Event, Integer> result = service.eventsTriggered(new DateTime().minusDays(5), new DateTime());
-        assertTrue(result.containsKey(testEventData.get(0)));
-        assertTrue(result.keySet().size() == 1);
-        assertTrue(result.get(testEventData.get(0)) == 2);
+        List<AnalyticsTransfer> result = service.eventsTriggered(new DateTime().minusDays(5), new DateTime());
+
+        AnalyticsTransfer transfer = new AnalyticsTransfer();
+        transfer.setId(testEventData.get(0).getId());
+        transfer.setName(testEventData.get(0).getName());
+        transfer.setCount(2);
+
+        assertTrue(result.contains(transfer));
     }
 }

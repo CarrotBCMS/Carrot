@@ -77,15 +77,10 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity> {
 
         AbstractEntity other = (AbstractEntity)object;
 
-        if (getId() == null && other.getId() != null) {
+        if (getId() == null || other.getId() == null) {
             return false;
         }
-        if (getId() != null && other.getId() == null) {
-            return false;
-        }
-        if (getId() == null && other.getId() == null) {
-            return super.equals(object);
-        }
+
         return getId().longValue() == other.getId().longValue();
     }
 
