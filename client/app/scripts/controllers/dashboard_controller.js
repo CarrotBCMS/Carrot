@@ -19,7 +19,7 @@ angular.module('Carrot')
         $scope.sections = ["Apps", "Beacons", "Events"];
         $scope.section = $scope.sections[0];
 
-        $scope.ranges = ["Today", "This Week", "This Month"];
+        $scope.ranges = ["Today", "Last 7 days", "Last 30 days"];
         $scope.range = $scope.ranges[0];
 
         $scope.data = [];
@@ -49,14 +49,12 @@ angular.module('Carrot')
 
             // This Week
             if ($scope.range == $scope.ranges[1]) {
-                from = moment().startOf("week");
-                to = moment().endOf("week");
+                from = moment().startOf("day").subtract(7,"days");
             }
 
             // This Month
             if ($scope.range == $scope.ranges[2]) {
-                from = moment().startOf("month");
-                to = moment().endOf("month");
+                from = moment().startOf("day").subtract(30,"days");
             }
 
             AnalyticsService.analytics(url, from, to).then(function(result) {
