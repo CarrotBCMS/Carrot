@@ -38,7 +38,7 @@ angular.module('Carrot')
  * Controller showing a single event
  */
 angular.module('Carrot')
-    .controller('EventViewController', function ($scope, $location, Event, Beacon, App, EntityService, $timeout, $log) {
+    .controller('EventViewController', function ($scope, $location, Event, Beacon, App, EntityService, $timeout) {
         EntityService.edit($scope, Event, "Event");
         $scope.delete = function () {
             EntityService.delete($scope.object, Event, function () {
