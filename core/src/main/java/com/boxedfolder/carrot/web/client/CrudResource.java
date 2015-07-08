@@ -28,7 +28,7 @@ public abstract class CrudResource<T extends CrudService<S>, S extends AbstractE
     @JsonView(View.Client.class)
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public S create(@RequestBody @Valid final S object) {
+    public S create(@RequestBody @Valid S object) {
         return service.save(object);
     }
 
