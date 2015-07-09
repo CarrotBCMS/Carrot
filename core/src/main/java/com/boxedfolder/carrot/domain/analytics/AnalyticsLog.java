@@ -3,9 +3,11 @@ package com.boxedfolder.carrot.domain.analytics;
 import com.boxedfolder.carrot.domain.AbstractEntity;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -19,13 +21,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "analytics_log")
 @Entity
 public class AnalyticsLog extends AbstractEntity {
-    @JsonIgnore
+    @JsonView(View.Meta.class)
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "event")
     @NotNull
     private Event occuredEvent;
 
-    @JsonIgnore
+    @JsonView(View.Meta.class)
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "beacon")
     @NotNull

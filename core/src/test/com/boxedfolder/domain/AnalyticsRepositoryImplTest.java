@@ -7,7 +7,7 @@ import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.event.TextEvent;
-import com.boxedfolder.carrot.repository.impl.AnalyticsRepositoryImpl;
+import com.boxedfolder.carrot.repository.impl.AnalyticsLogRepositoryImpl;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -23,6 +23,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -35,7 +36,7 @@ import static junit.framework.Assert.assertTrue;
 public class AnalyticsRepositoryImplTest {
     @PersistenceContext
     private EntityManager entityManager;
-    private AnalyticsRepositoryImpl analyticsRepository;
+    private AnalyticsLogRepositoryImpl analyticsRepository;
 
     private App app;
     private Beacon beacon;
@@ -100,7 +101,7 @@ public class AnalyticsRepositoryImplTest {
         entityManager.persist(secondLog);
         entityManager.flush();
 
-        analyticsRepository = new AnalyticsRepositoryImpl();
+        analyticsRepository = new AnalyticsLogRepositoryImpl();
         analyticsRepository.setEntityManager(entityManager);
     }
 
@@ -117,8 +118,9 @@ public class AnalyticsRepositoryImplTest {
         log.setOccuredEvent(event);
         log.setBeacon(beacon);
         assertTrue(analyticsRepository.findAll().size() == 2);
-        analyticsRepository.save(log);
+        log = analyticsRepository.save(log);
         assertTrue(analyticsRepository.findAll().size() == 3);
+        assertNotNull(log);
     }
 
     @Test

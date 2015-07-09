@@ -9,8 +9,10 @@ import com.boxedfolder.carrot.domain.event.NotificationEvent;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.AnalyticsService;
 import com.boxedfolder.carrot.web.client.AnalyticsResource;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -26,8 +28,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.*;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -123,6 +129,24 @@ public class AnalyticsResourceTest {
         restUserMockMvc.perform(get("/client/analytics/logs")
                 .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isOk())
+                       .andExpect(content().string(value));
+    }
+
+    @Test
+    public void testAddAnalyticsLogs() throws Exception {
+        mapper.setConfig(mapper.getSerializationConfig().withView(View.Meta.class));
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+
+        AnalyticsLog log = testData.get(0);
+        String value = mapper.writeValueAsString(log);
+
+        when(service.save((AnalyticsLog)anyObject(), (UUID)anyObject())).thenReturn(log);
+        restUserMockMvc.perform(post("/client/analytics/logs")
+                .param("appKey", app.getApplicationKey().toString())
+                .content(value)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                       .andExpect(status().isCreated())
                        .andExpect(content().string(value));
     }
 

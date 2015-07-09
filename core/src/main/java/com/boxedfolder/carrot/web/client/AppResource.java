@@ -5,6 +5,8 @@ import com.boxedfolder.carrot.service.AppService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */

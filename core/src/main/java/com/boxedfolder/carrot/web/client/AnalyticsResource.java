@@ -1,10 +1,7 @@
 package com.boxedfolder.carrot.web.client;
 
-import com.boxedfolder.carrot.domain.App;
-import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
-import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.AnalyticsService;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -15,9 +12,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -44,6 +43,15 @@ public class AnalyticsResource {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime to)
     {
         return service.findAll(from, to);
+    }
+
+    @JsonView(View.Meta.class)
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value = "/logs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public AnalyticsLog createAnalyticsLogs(@RequestBody @Valid AnalyticsLog log,
+                                            @RequestParam(required = false) String appKey)
+    {
+        return service.save(log, UUID.fromString(appKey));
     }
 
     @ResponseStatus(HttpStatus.OK)

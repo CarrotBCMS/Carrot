@@ -14,4 +14,12 @@ public final class GeneralExceptions {
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY, reason = "Entity already exists.")
     public static class AlreadyExistsException extends RuntimeException {
     }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Application key invalid.")
+    public static class InvalidAppKey extends RuntimeException {
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY, reason = "Analytics log invalid.")
+    public static class InvalidLog extends RuntimeException {
+    }
 }

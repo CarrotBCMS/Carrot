@@ -143,10 +143,17 @@ public class AnalyticsServiceImplTest {
     }
 
     @Test
-    public void testRetrieveAllApps() {
+    public void testRetrieveAllLogs() {
         when(analyticsLogRepository.findAll()).thenReturn(testAnalyticsLogData);
         List<AnalyticsLog> apps = service.findAll();
         assertEquals(apps, testAnalyticsLogData);
+    }
+
+    @Test
+    public void testSaveLog() {
+        when(analyticsLogRepository.save(testAnalyticsLogData.get(0))).thenReturn(testAnalyticsLogData.get(0));
+        AnalyticsLog log = analyticsLogRepository.save(testAnalyticsLogData.get(0));
+        assertEquals(log, testAnalyticsLogData.get(0));
     }
 
     @Test

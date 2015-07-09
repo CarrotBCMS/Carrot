@@ -23,5 +23,5 @@ public interface AnalyticsLogRepository {
     long count(App app);
     long count(Event event);
 
-    void save(AnalyticsLog log);
+    AnalyticsLog save(AnalyticsLog log);
 }

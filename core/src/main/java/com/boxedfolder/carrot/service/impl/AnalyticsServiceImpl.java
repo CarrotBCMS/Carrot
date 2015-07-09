@@ -5,6 +5,7 @@ import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
 import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
 import com.boxedfolder.carrot.repository.AppRepository;
 import com.boxedfolder.carrot.repository.BeaconRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -66,6 +68,22 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         }
 
         return analyticsLogRepository.findAll(from, to);
+    }
+
+    @Override
+    public AnalyticsLog save(AnalyticsLog object, UUID appKey) {
+        App app = appRepository.findByApplicationKey(appKey);
+        if (app == null) {
+            throw new GeneralExceptions.InvalidAppKey();
+        }
+
+        if (!isValid(object, app)) {
+            throw new GeneralExceptions.InvalidLog();
+        }
+
+        object.setDateUpdated(new DateTime());
+        object.setDateCreated(new DateTime());
+        return analyticsLogRepository.save(object);
     }
 
     @Override
@@ -135,6 +153,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         }
 
         return output;
+    }
+
+    private boolean isValid(AnalyticsLog log, App app) {
+        return log.getOccuredEvent().getApps().contains(app);
     }
 
     @Inject

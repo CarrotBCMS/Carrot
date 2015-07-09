@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class AnalyticsRepositoryImpl implements AnalyticsLogRepository {
+public class AnalyticsLogRepositoryImpl implements AnalyticsLogRepository {
     private EntityManager entityManager;
 
     @Override
@@ -51,8 +51,8 @@ public class AnalyticsRepositoryImpl implements AnalyticsLogRepository {
     }
 
     @Override
-    public void save(AnalyticsLog log) {
-        entityManager.merge(log);
+    public AnalyticsLog save(AnalyticsLog log) {
+        return entityManager.merge(log);
     }
 
     @Override
