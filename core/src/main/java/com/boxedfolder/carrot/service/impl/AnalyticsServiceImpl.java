@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -77,12 +78,16 @@ public class AnalyticsServiceImpl implements AnalyticsService {
             throw new GeneralExceptions.InvalidAppKey();
         }
 
+        // Refresh objects
+        object.setOccuredEvent(eventRepository.findOne(object.getOccuredEvent().getId()));
+        object.setBeacon(beaconRepository.findOne(object.getBeacon().getId()));
+        object.setDateUpdated(new DateTime());
+        object.setDateCreated(new DateTime());
+
         if (!isValid(object, app)) {
             throw new GeneralExceptions.InvalidLog();
         }
 
-        object.setDateUpdated(new DateTime());
-        object.setDateCreated(new DateTime());
         return analyticsLogRepository.save(object);
     }
 

@@ -123,6 +123,8 @@ public class AnalyticsResourceTest {
 
     @Test
     public void testGetAllAnalyticsLogs() throws Exception {
+        mapper.setConfig(mapper.getSerializationConfig().withView(View.Meta.class));
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         String value = mapper.writeValueAsString(testData);
 
         when(service.findAll(null, null)).thenReturn(testData);
@@ -142,7 +144,7 @@ public class AnalyticsResourceTest {
 
         when(service.save((AnalyticsLog)anyObject(), (UUID)anyObject())).thenReturn(log);
         restUserMockMvc.perform(post("/client/analytics/logs")
-                .param("appKey", app.getApplicationKey().toString())
+                .param("app_key", app.getApplicationKey().toString())
                 .content(value)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -152,6 +154,8 @@ public class AnalyticsResourceTest {
 
     @Test
     public void testGetAllAnalyticsLogsWithRange() throws Exception {
+        mapper.setConfig(mapper.getSerializationConfig().withView(View.Meta.class));
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         List<AnalyticsLog> sTestData = new ArrayList<AnalyticsLog>();
         sTestData.add(testData.get(1));
 
