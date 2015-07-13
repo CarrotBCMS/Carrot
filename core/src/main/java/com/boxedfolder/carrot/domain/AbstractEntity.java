@@ -17,7 +17,8 @@ import javax.persistence.*;
 public abstract class AbstractEntity implements Comparable<AbstractEntity> {
     @JsonView(View.Meta.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "id_generator") // Table for portability
+    @TableGenerator(name = "id_generator", initialValue = 1, allocationSize = 1) // Avoid big allocation sizes
     private Long id;
 
     @JsonView(View.Meta.class)
