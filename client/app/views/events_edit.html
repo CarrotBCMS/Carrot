@@ -140,6 +140,10 @@
                         <textarea class="form-control" name="text" ng-model="object.message" rows="4"
                                   placeholder="Enter a message here..."
                                   ng-required="object.objectType == 'notification'"></textarea>
+
+                        <label class="top10">Payload</label>
+                        <textarea class="form-control" name="text" ng-model="object.payload" rows="2"
+                                  placeholder="Enter a payload here..."></textarea>
                     </div>
 
                     <button type="submit" ng-disabled="form.$invalid" class="btn btn-success">
