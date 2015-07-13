@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.domain.util;
 
-import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.Event;
 
 import java.util.ArrayList;
 

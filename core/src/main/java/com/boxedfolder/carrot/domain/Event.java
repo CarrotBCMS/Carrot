@@ -1,8 +1,6 @@
-package com.boxedfolder.carrot.domain.event;
+package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
-import com.boxedfolder.carrot.domain.App;
-import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.util.DateTimeDeserializer;
 import com.boxedfolder.carrot.domain.util.DateTimeSerializer;
 import com.boxedfolder.carrot.domain.util.View;

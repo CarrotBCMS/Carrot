@@ -2,7 +2,7 @@ package com.boxedfolder.carrot.domain.analytics;
 
 import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.*;
 

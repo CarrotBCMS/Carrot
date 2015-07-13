@@ -1,7 +1,7 @@
 package com.boxedfolder.carrot.aop;
 
 import com.boxedfolder.carrot.domain.general.AbstractEntity;
-import com.boxedfolder.carrot.domain.general.DeletionLog;
+import com.boxedfolder.carrot.domain.general.EntityDeletionLog;
 import com.boxedfolder.carrot.repository.DeletionLogRepository;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -33,7 +33,7 @@ public class RepositoryDeletionAspect {
 
         // Create DeletionLog for deleted repository object
         AbstractEntity entity = (AbstractEntity)args[0];
-        DeletionLog deletionLog = new DeletionLog();
+        EntityDeletionLog deletionLog = new EntityDeletionLog();
         deletionLog.setType(entity.getClass());
         deletionLog.setDateTime(new DateTime());
         deletionLog.setEntityId(entity.getId());

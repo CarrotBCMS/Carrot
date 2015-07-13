@@ -1,8 +1,7 @@
 package com.boxedfolder.carrot.service.impl;
 
-import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.BeaconRepository;
 import com.boxedfolder.carrot.repository.EventRepository;

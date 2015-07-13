@@ -3,7 +3,7 @@ package com.boxedfolder.carrot.repository;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
-import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.Event;
 import org.joda.time.DateTime;
 
 import java.util.List;

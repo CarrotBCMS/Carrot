@@ -1,8 +1,8 @@
 package com.boxedfolder.web.client;
 
-import com.boxedfolder.carrot.domain.event.Event;
-import com.boxedfolder.carrot.domain.event.NotificationEvent;
-import com.boxedfolder.carrot.domain.event.TextEvent;
+import com.boxedfolder.carrot.domain.Event;
+import com.boxedfolder.carrot.domain.NotificationEvent;
+import com.boxedfolder.carrot.domain.TextEvent;
 import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.EventService;

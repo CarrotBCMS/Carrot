@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Table(name = "deletion_log")
 @Entity
-public class DeletionLog {
+public class EntityDeletionLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

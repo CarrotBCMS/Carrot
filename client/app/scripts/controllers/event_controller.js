@@ -12,7 +12,7 @@ var eventTypes = ['On Enter', 'On Exit', 'On Exit / On Exit'];
  */
 angular.module('Carrot')
     .controller('EventController', function ($scope, Event, EntityService) {
-        EntityService.list($scope, Event);
+        EntityService.list($scope, Event, "Event");
 
         $scope.typeToString = function (objectType) {
             switch (objectType) {
@@ -40,11 +40,6 @@ angular.module('Carrot')
 angular.module('Carrot')
     .controller('EventViewController', function ($scope, $location, Event, Beacon, App, EntityService, $timeout) {
         EntityService.edit($scope, Event, "Event");
-        $scope.delete = function () {
-            EntityService.delete($scope.object, Event, function () {
-                $location.path("/events").replace();
-            });
-        };
 
         // Multi select settings
         $scope.beacons = Beacon.query();
@@ -95,5 +90,12 @@ angular.module('Carrot')
                 $scope.object.scheduledEndDate = null;
                 $scope.object.scheduledStartDate = null;
             }
-        }
+        };
+
+
+        $scope.delete = function () {
+            EntityService.delete($scope.object, Event, function () {
+                $location.path("/events").replace();
+            });
+        };
     });

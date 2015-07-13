@@ -1,7 +1,5 @@
 package com.boxedfolder.carrot.domain.analytics;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */

@@ -4,7 +4,7 @@ import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
-import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
 import com.boxedfolder.carrot.repository.AppRepository;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 /**

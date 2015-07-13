@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.service.impl;
 
-import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.repository.EventRepository;
 import com.boxedfolder.carrot.service.EventService;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,6 @@
 package com.boxedfolder.carrot.repository;
 
-import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.event.Event;
-import com.boxedfolder.carrot.domain.event.TextEvent;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import com.boxedfolder.carrot.domain.Event;
 import org.springframework.stereotype.Repository;
 
 /**

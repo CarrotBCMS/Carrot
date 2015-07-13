@@ -1,6 +1,5 @@
 package com.boxedfolder.carrot.domain;
 
-import com.boxedfolder.carrot.domain.event.Event;
 import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;

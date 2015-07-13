@@ -1,8 +1,8 @@
 package com.boxedfolder.domain;
 
-import com.boxedfolder.carrot.domain.event.Event;
-import com.boxedfolder.carrot.domain.event.NotificationEvent;
-import com.boxedfolder.carrot.domain.event.TextEvent;
+import com.boxedfolder.carrot.domain.Event;
+import com.boxedfolder.carrot.domain.NotificationEvent;
+import com.boxedfolder.carrot.domain.TextEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;

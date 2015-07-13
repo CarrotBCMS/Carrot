@@ -4,9 +4,9 @@ import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
-import com.boxedfolder.carrot.domain.event.Event;
-import com.boxedfolder.carrot.domain.event.NotificationEvent;
-import com.boxedfolder.carrot.domain.event.TextEvent;
+import com.boxedfolder.carrot.domain.Event;
+import com.boxedfolder.carrot.domain.NotificationEvent;
+import com.boxedfolder.carrot.domain.TextEvent;
 import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
 import com.boxedfolder.carrot.repository.AppRepository;
 import com.boxedfolder.carrot.repository.BeaconRepository;
@@ -21,7 +21,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;

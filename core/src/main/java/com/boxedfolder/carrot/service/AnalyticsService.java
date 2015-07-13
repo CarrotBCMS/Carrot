@@ -1,14 +1,10 @@
 package com.boxedfolder.carrot.service;
 
-import com.boxedfolder.carrot.domain.App;
-import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
-import com.boxedfolder.carrot.domain.event.Event;
 import org.joda.time.DateTime;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
