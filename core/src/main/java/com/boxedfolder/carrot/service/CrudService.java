@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.service;
 
-import com.boxedfolder.carrot.domain.AbstractEntity;
+import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import org.springframework.data.domain.Pageable;
 

@@ -1,4 +1,4 @@
-package com.boxedfolder.carrot.domain;
+package com.boxedfolder.carrot.domain.general;
 
 import com.boxedfolder.carrot.domain.util.DateTimeSerializer;
 import com.boxedfolder.carrot.domain.util.View;

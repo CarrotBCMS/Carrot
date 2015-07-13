@@ -1,6 +1,7 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -30,7 +31,7 @@ public class Beacon extends AbstractNamedEntity {
     private int minor;
 
     @JsonView(View.Sync.class)
-    @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<Event>();
 
     public UUID getUuid() {

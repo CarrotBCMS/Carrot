@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.domain.event;
 
-import com.boxedfolder.carrot.domain.AbstractNamedEntity;
+import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.util.DateTimeDeserializer;
@@ -80,9 +80,9 @@ public abstract class Event extends AbstractNamedEntity {
     @JsonView(View.Client.class)
     @JsonIgnoreProperties({"uuid", "major", "minor", "dateUpdated", "dateCreated"})
     @JoinTable(name = "event_beacon", joinColumns = {
-            @JoinColumn(name = "event_id", nullable = false, updatable = false)
+            @JoinColumn(name = "event_id", nullable = false)
     }, inverseJoinColumns = {
-            @JoinColumn(name = "beacon_id", nullable = false, updatable = false)
+            @JoinColumn(name = "beacon_id", nullable = false)
     })
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Beacon> beacons = new HashSet<Beacon>();
@@ -90,9 +90,9 @@ public abstract class Event extends AbstractNamedEntity {
     @JsonView(View.Client.class)
     @JsonIgnoreProperties({"applicationKey", "dateUpdated", "dateCreated"})
     @JoinTable(name = "event_app", joinColumns = {
-            @JoinColumn(name = "event_id", nullable = false, updatable = false)
+            @JoinColumn(name = "event_id", nullable = false)
     }, inverseJoinColumns = {
-            @JoinColumn(name = "app_id", nullable = false, updatable = false)
+            @JoinColumn(name = "app_id", nullable = false)
     })
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<App> apps = new HashSet<App>();

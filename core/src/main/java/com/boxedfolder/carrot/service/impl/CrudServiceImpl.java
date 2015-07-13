@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.service.impl;
 
-import com.boxedfolder.carrot.domain.AbstractEntity;
+import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.OrderedRepository;
 import com.boxedfolder.carrot.service.CrudService;

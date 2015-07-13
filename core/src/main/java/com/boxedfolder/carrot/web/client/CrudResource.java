@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.web.client;
 
-import com.boxedfolder.carrot.domain.AbstractEntity;
+import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.CrudService;
 import com.fasterxml.jackson.annotation.JsonView;

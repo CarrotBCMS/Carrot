@@ -1,6 +1,7 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.event.Event;
+import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -20,7 +21,7 @@ public class App extends AbstractNamedEntity {
     @Column(columnDefinition = "BINARY(16)", name = "app_key")
     private UUID applicationKey;
 
-    @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<Event>();
 
     @JsonView(View.General.class)
