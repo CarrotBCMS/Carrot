@@ -21,7 +21,7 @@ public class SyncResource {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Object> sync(@RequestParam(required = true, value = "ts")Long timestamp,
+    public Map<String, Object> sync(@RequestParam(required = false, value = "ts")Long timestamp,
                                     @RequestParam(required = true, value = "app_key") String appKey) {
         return syncService.sync(timestamp, appKey);
     }

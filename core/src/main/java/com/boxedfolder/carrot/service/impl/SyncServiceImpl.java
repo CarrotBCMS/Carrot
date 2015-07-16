@@ -1,15 +1,17 @@
 package com.boxedfolder.carrot.service.impl;
 
-import com.boxedfolder.carrot.domain.App;
+import com.boxedfolder.carrot.domain.*;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AppRepository;
+import com.boxedfolder.carrot.repository.BeaconRepository;
+import com.boxedfolder.carrot.repository.EntityDeletionLogRepository;
+import com.boxedfolder.carrot.repository.EventRepository;
 import com.boxedfolder.carrot.service.SyncService;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -17,9 +19,16 @@ import java.util.UUID;
 @Service
 public class SyncServiceImpl implements SyncService {
     private AppRepository appRepository;
+    private BeaconRepository beaconRepository;
+    private EventRepository eventRepository;
+    private EntityDeletionLogRepository logRepository;
 
     @Override
     public Map<String, Object> sync(Long timestamp, String appKey) {
+        if (timestamp == null) {
+            timestamp = 0L;
+        }
+
         // First look for Application
         App app = appRepository.findByApplicationKey(UUID.fromString(appKey));
         if (app == null) {
@@ -29,22 +38,52 @@ public class SyncServiceImpl implements SyncService {
         // Build result
         Map<String, Object> result = new HashMap<>();
         result.put("timestamp", System.currentTimeMillis() / 1000L);
-        result.put("beacons", beaconMap());
-        result.put("events", eventMap());
+        result.put("beacons", beaconMap(timestamp));
+        result.put("events", eventMap(timestamp));
 
         return result;
     }
 
-    private Map<String, Object> beaconMap() {
-        return null;
+    private Map<String, Object> beaconMap(Long timestamp) {
+        DateTime dateTime = new DateTime(timestamp * 1000L);
+        Map<String, Object> result = new HashMap<>();
+        result.put("createdOrUpdated", beaconRepository.findByDateUpdatedAfter(dateTime));
+        result.put("deleted", timestamp > 0 ? logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Beacon.class) : new ArrayList<>());
+
+        return result;
     }
 
-    private Map<String, Object> eventMap() {
-        return null;
+    private Map<String, Object> eventMap(Long timestamp) {
+        DateTime dateTime = new DateTime(timestamp * 1000L);
+        Map<String, Object> result = new HashMap<>();
+        result.put("createdOrUpdated", eventRepository.findByDateUpdatedAfter(dateTime));
+
+        // Add all possible event classes
+        List<Long> deletedEvents = logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class);
+        deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
+        deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
+        result.put("deleted", timestamp > 0 ? deletedEvents : new ArrayList<>());
+
+        return result;
     }
 
     @Inject
     public void setAppRepository(AppRepository appRepository) {
         this.appRepository = appRepository;
+    }
+
+    @Inject
+    public void setBeaconRepository(BeaconRepository beaconRepository) {
+        this.beaconRepository = beaconRepository;
+    }
+
+    @Inject
+    public void setEventRepository(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
+    @Inject
+    public void setLogRepository(EntityDeletionLogRepository logRepository) {
+        this.logRepository = logRepository;
     }
 }
