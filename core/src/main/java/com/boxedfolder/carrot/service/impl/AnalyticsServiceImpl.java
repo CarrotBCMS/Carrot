@@ -92,7 +92,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Override
     public List<AnalyticsTransfer> appsTriggered(DateTime from, DateTime to) {
-        List<AnalyticsTransfer> output = new ArrayList<AnalyticsTransfer>();
+        List<AnalyticsTransfer> output = new ArrayList<>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
             for (App app : log.getOccuredEvent().getApps()) {
