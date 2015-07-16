@@ -29,7 +29,7 @@ public class SyncServiceImpl implements SyncService {
             timestamp = 0L;
         }
 
-        // First look for Application
+        // First look for the concrete application
         App app = appRepository.findByApplicationKey(UUID.fromString(appKey));
         if (app == null) {
             throw new GeneralExceptions.InvalidAppKey();
@@ -65,7 +65,7 @@ public class SyncServiceImpl implements SyncService {
         deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
         deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
 
-        // First sync, add empty list
+        // First sync?! Add empty list...
         result.put("deleted", timestamp > 0 ? deletedEvents : new ArrayList<>());
 
         return result;
