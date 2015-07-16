@@ -26,7 +26,6 @@ import java.util.Set;
         @JsonSubTypes.Type(value = TextEvent.class, name = "text")
 })
 @DiscriminatorColumn(name = "type")
-@Table(name = "event")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity(name = "event")
 public abstract class Event extends AbstractNamedEntity {
@@ -75,7 +74,7 @@ public abstract class Event extends AbstractNamedEntity {
     @Column(nullable = false)
     private int eventType;
 
-    @JsonView(View.Client.class)
+    @JsonView(View.Sync.class)
     @JsonIgnoreProperties({"uuid", "major", "minor", "dateUpdated", "dateCreated"})
     @JoinTable(name = "event_beacon", joinColumns = {
             @JoinColumn(name = "event_id", nullable = false)

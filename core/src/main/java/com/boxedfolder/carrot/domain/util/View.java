@@ -5,8 +5,7 @@ package com.boxedfolder.carrot.domain.util;
  */
 public class View {
     public interface Meta {}
-    public interface MetaSync {}
     public interface General extends Meta {}
-    public interface Client extends General {}
-    public interface Sync extends General, MetaSync {}
+    public interface Sync extends General {}
+    public interface Client extends Sync {}
 }

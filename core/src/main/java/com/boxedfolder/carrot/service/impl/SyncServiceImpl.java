@@ -38,30 +38,34 @@ public class SyncServiceImpl implements SyncService {
         // Build result
         Map<String, Object> result = new HashMap<>();
         result.put("timestamp", System.currentTimeMillis() / 1000L);
-        result.put("beacons", beaconMap(timestamp));
-        result.put("events", eventMap(timestamp));
+        result.put("beacons", beaconMap(timestamp, app));
+        result.put("events", eventMap(timestamp, app));
 
         return result;
     }
 
-    private Map<String, Object> beaconMap(Long timestamp) {
+    private Map<String, Object> beaconMap(Long timestamp, App app) {
         DateTime dateTime = new DateTime(timestamp * 1000L);
         Map<String, Object> result = new HashMap<>();
-        result.put("createdOrUpdated", beaconRepository.findByDateUpdatedAfter(dateTime));
+        result.put("createdOrUpdated", beaconRepository.findByDateUpdatedAfter(dateTime, app));
+
+        // First sync, add empty list
         result.put("deleted", timestamp > 0 ? logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Beacon.class) : new ArrayList<>());
 
         return result;
     }
 
-    private Map<String, Object> eventMap(Long timestamp) {
+    private Map<String, Object> eventMap(Long timestamp, App app) {
         DateTime dateTime = new DateTime(timestamp * 1000L);
         Map<String, Object> result = new HashMap<>();
-        result.put("createdOrUpdated", eventRepository.findByDateUpdatedAfter(dateTime));
+        result.put("createdOrUpdated", eventRepository.findByDateUpdatedAfter(dateTime, app));
 
         // Add all possible event classes
         List<Long> deletedEvents = logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class);
         deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
         deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
+
+        // First sync, add empty list
         result.put("deleted", timestamp > 0 ? deletedEvents : new ArrayList<>());
 
         return result;

@@ -29,7 +29,6 @@ public class Beacon extends AbstractNamedEntity {
     @NotNull
     private int minor;
 
-    @JsonView(View.Sync.class)
     @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<>();
 
