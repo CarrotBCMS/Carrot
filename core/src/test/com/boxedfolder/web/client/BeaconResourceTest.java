@@ -3,7 +3,7 @@ package com.boxedfolder.web.client;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.BeaconService;
-import com.boxedfolder.carrot.web.client.BeaconResouce;
+import com.boxedfolder.carrot.web.client.BeaconResource;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -41,7 +41,7 @@ public class BeaconResourceTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        BeaconResouce resource = new BeaconResouce();
+        BeaconResource resource = new BeaconResource();
         resource.setService(service);
         restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
 

@@ -116,7 +116,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Override
     public List<AnalyticsTransfer> beaconsTriggered(DateTime from, DateTime to) {
-        List<AnalyticsTransfer> output = new ArrayList<AnalyticsTransfer>();
+        List<AnalyticsTransfer> output = new ArrayList<>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
             for (Beacon beacon : log.getOccuredEvent().getBeacons()) {
@@ -139,7 +139,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Override
     public List<AnalyticsTransfer> eventsTriggered(DateTime from, DateTime to) {
-        List<AnalyticsTransfer> output = new ArrayList<AnalyticsTransfer>();
+        List<AnalyticsTransfer> output = new ArrayList<>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
             Event event = log.getOccuredEvent();

@@ -21,7 +21,7 @@ public class App extends AbstractNamedEntity {
     private UUID applicationKey;
 
     @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private Set<Event> events = new HashSet<Event>();
+    private Set<Event> events = new HashSet<>();
 
     @JsonView(View.General.class)
     public UUID getApplicationKey() {

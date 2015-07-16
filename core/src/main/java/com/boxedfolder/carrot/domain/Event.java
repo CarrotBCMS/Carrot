@@ -83,7 +83,7 @@ public abstract class Event extends AbstractNamedEntity {
             @JoinColumn(name = "beacon_id", nullable = false)
     })
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Beacon> beacons = new HashSet<Beacon>();
+    private Set<Beacon> beacons = new HashSet<>();
 
     @JsonView(View.Client.class)
     @JsonIgnoreProperties({"applicationKey", "dateUpdated", "dateCreated"})
@@ -93,7 +93,7 @@ public abstract class Event extends AbstractNamedEntity {
             @JoinColumn(name = "app_id", nullable = false)
     })
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<App> apps = new HashSet<App>();
+    private Set<App> apps = new HashSet<>();
 
     public float getThreshold() {
         return threshold;

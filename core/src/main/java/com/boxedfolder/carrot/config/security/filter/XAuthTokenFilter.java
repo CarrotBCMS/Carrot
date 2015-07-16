@@ -34,7 +34,9 @@ public class XAuthTokenFilter extends GenericFilterBean {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException
+    {
         try {
             HttpServletRequest httpServletRequest = (HttpServletRequest)request;
             String authToken = httpServletRequest.getHeader("x-auth-token");
@@ -44,7 +46,9 @@ public class XAuthTokenFilter extends GenericFilterBean {
                 UserDetails details = detailsService.loadUserByUsername(username);
 
                 if (tokenUtils.validateToken(authToken, details)) {
-                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(details, details.getPassword(), details.getAuthorities());
+                    UsernamePasswordAuthenticationToken token =
+                            new UsernamePasswordAuthenticationToken(details, details.getPassword(),
+                                    details.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(token);
                 }
             }

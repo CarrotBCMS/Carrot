@@ -29,7 +29,7 @@ public class AnalyticsResource {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/count", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> countEntities() {
-        Map<String, String> output = new TreeMap<String, String>();
+        Map<String, String> output = new TreeMap<>();
         output.put("beacons", Long.toString(service.countBeacons()));
         output.put("apps", Long.toString(service.countApps()));
         output.put("events", Long.toString(service.countEvents()));

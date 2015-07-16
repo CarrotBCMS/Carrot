@@ -56,10 +56,10 @@ public class AnalyticsServiceImplTest {
         service.setBeaconRepository(beaconRepository);
         service.setEventRepository(eventRepository);
 
-        testAppData = new ArrayList<App>();
-        testBeaconData = new ArrayList<Beacon>();
-        testEventData = new ArrayList<Event>();
-        testAnalyticsLogData = new ArrayList<AnalyticsLog>();
+        testAppData = new ArrayList<>();
+        testBeaconData = new ArrayList<>();
+        testEventData = new ArrayList<>();
+        testAnalyticsLogData = new ArrayList<>();
 
         // Setup test data
         App app = new App();
@@ -191,8 +191,6 @@ public class AnalyticsServiceImplTest {
     @Test
     public void testEventsTriggered() {
         when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
-        DateTime bla = new DateTime();
-        DateTime blub = new DateTime().minusDays(5);
         List<AnalyticsTransfer> result = service.eventsTriggered(new DateTime().minusDays(5), new DateTime());
 
         AnalyticsTransfer transfer = new AnalyticsTransfer();

@@ -33,7 +33,7 @@ public class BeaconServiceImplTest {
     public void setUp() {
         service = new BeaconServiceImpl();
         service.setRepository(repository);
-        testData = new ArrayList<Beacon>();
+        testData = new ArrayList<>();
 
         // Create 3 different beacons
         Beacon beacon = new Beacon();

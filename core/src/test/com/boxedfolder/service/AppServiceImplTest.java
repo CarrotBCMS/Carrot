@@ -29,7 +29,7 @@ public class AppServiceImplTest {
     public void setUp() {
         service = new AppServiceImpl();
         service.setRepository(repository);
-        testData = new ArrayList<App>();
+        testData = new ArrayList<>();
 
         // Create 3 different apps
         App app = new App();

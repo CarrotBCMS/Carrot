@@ -44,19 +44,18 @@ public class UserDetailService implements UserDetailsService {
         return null;
     }
 
-    @SuppressWarnings("serial")
     static class SimpleUserDetails implements UserDetails {
         private String username;
         private String password;
         private boolean enabled = true;
-        private Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        private Set<GrantedAuthority> authorities = new HashSet<>();
 
         public SimpleUserDetails(String username, String pw, String... extraRoles) {
             this.username = username;
             this.password = pw;
 
             // setup roles
-            Set<String> roles = new HashSet<String>();
+            Set<String> roles = new HashSet<>();
             roles.addAll(Arrays.<String>asList(null == extraRoles ? new String[0] : extraRoles));
 
             // export them as part of authorities

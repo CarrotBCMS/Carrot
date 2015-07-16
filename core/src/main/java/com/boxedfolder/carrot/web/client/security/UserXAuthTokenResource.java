@@ -47,7 +47,7 @@ public class UserXAuthTokenResource {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetails details = userDetailsService.loadUserByUsername(username);
-        Map<String, Boolean> roles = new HashMap<String, Boolean>();
+        Map<String, Boolean> roles = new HashMap<>();
         for (GrantedAuthority authority : details.getAuthorities()) {
             roles.put(authority.toString(), Boolean.TRUE);
         }

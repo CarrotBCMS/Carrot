@@ -31,7 +31,7 @@ public class EventServiceImplTest {
     public void setUp() {
         service = new EventServiceImpl();
         service.setRepository(repository);
-        testData = new ArrayList<Event>();
+        testData = new ArrayList<>();
 
         // Create 3 different events
         Event event = new TextEvent();

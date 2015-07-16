@@ -31,7 +31,7 @@ public class Beacon extends AbstractNamedEntity {
 
     @JsonView(View.Sync.class)
     @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private Set<Event> events = new HashSet<Event>();
+    private Set<Event> events = new HashSet<>();
 
     public UUID getUuid() {
         return uuid;

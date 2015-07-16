@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/client/beacons")
-public class BeaconResouce extends CrudResource<BeaconService, Beacon> {
+public class BeaconResource extends CrudResource<BeaconService, Beacon> {
 }
