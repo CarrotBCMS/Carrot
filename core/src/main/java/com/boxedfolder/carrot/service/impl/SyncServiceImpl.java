@@ -1,6 +1,7 @@
 package com.boxedfolder.carrot.service.impl;
 
 import com.boxedfolder.carrot.domain.*;
+import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AppRepository;
 import com.boxedfolder.carrot.repository.BeaconRepository;
@@ -59,7 +60,9 @@ public class SyncServiceImpl implements SyncService {
     private Map<String, Object> eventMap(Long timestamp, App app) {
         DateTime dateTime = new DateTime(timestamp * 1000L);
         Map<String, Object> result = new HashMap<>();
-        result.put("createdOrUpdated", eventRepository.findByDateUpdated(dateTime, app));
+        EventList eventList = new EventList();
+        eventList.addAll(eventRepository.findByDateUpdated(dateTime, app));
+        result.put("createdOrUpdated", eventList);
 
         // Add all possible event classes
         List<Long> deletedEvents = logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class);

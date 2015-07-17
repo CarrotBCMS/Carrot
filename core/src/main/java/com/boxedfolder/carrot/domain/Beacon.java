@@ -19,16 +19,16 @@ import java.util.UUID;
 @Table(name = "beacon")
 @Entity
 public class Beacon extends AbstractNamedEntity {
-    @JsonView(View.Client.class)
+    @JsonView(View.General.class)
     @Column(columnDefinition = "BINARY(16)")
     @NotNull
     private UUID uuid;
 
-    @JsonView(View.Client.class)
+    @JsonView(View.General.class)
     @NotNull
     private int major;
 
-    @JsonView(View.Client.class)
+    @JsonView(View.General.class)
     @NotNull
     private int minor;
 
