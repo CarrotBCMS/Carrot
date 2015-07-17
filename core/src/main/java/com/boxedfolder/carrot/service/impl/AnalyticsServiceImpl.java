@@ -80,8 +80,6 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         // Refresh objects
         object.setOccuredEvent(eventRepository.findOne(object.getOccuredEvent().getId()));
         object.setBeacon(beaconRepository.findOne(object.getBeacon().getId()));
-        object.setDateUpdated(new DateTime());
-        object.setDateCreated(new DateTime());
 
         if (!isValid(object, app)) {
             throw new GeneralExceptions.InvalidLog();

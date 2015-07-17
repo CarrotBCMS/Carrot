@@ -74,7 +74,7 @@ public abstract class Event extends AbstractNamedEntity {
     @Column(nullable = false)
     private int eventType;
 
-    @JsonView(View.Client.class)
+    @JsonView(View.General.class)
     @JsonIgnoreProperties({"uuid", "major", "minor", "dateUpdated", "dateCreated"})
     @JoinTable(name = "event_beacon", joinColumns = {
             @JoinColumn(name = "event_id", nullable = false)

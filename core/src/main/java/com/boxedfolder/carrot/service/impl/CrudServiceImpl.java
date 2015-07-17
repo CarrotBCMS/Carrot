@@ -46,17 +46,6 @@ public abstract class CrudServiceImpl<T extends AbstractEntity, S extends Ordere
 
     @Override
     public T save(T object) {
-        if (object.getId() == null) {
-            // Assuming our entity is a brand new one
-            object.setDateCreated(new DateTime());
-        } else {
-            // If it is already persisted - fetch it and update creation date
-            T oldObject = find(object.getId());
-            object.setDateCreated(oldObject.getDateCreated());
-        }
-
-        object.setDateUpdated(new DateTime()); // Mark as updated
-
         return repository.save(object);
     }
 

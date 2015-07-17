@@ -51,6 +51,17 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity> {
         this.dateUpdated = dateUpdated;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        dateCreated = new DateTime();
+        dateUpdated = new DateTime();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        dateUpdated = new DateTime();
+    }
+
     public Long getId() {
         return id;
     }

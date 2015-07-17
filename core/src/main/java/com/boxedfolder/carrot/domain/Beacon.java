@@ -32,7 +32,6 @@ public class Beacon extends AbstractNamedEntity {
     @NotNull
     private int minor;
 
-    @JsonView(View.Sync.class)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
