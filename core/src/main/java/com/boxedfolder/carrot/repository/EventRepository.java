@@ -14,5 +14,5 @@ import java.util.List;
 @Repository
 public interface EventRepository extends OrderedRepository<Event> {
     @Query("SELECT DISTINCT e FROM #{#entityName} e, IN(e.apps) a WHERE e.dateUpdated > ?1 AND a = ?2")
-    List<Event> findByDateUpdatedAfter(DateTime dateTime, App app);
+    List<Event> findByDateUpdated(DateTime dateTime, App app);
 }

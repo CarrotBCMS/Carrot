@@ -17,5 +17,5 @@ public interface BeaconRepository extends OrderedRepository<Beacon> {
     Beacon findFirstByUuidAndMajorAndMinor(UUID uuid, int major, int minor);
 
     @Query("SELECT DISTINCT b FROM Beacon b, IN(b.events) e, IN(e.apps) a WHERE b.dateUpdated > ?1 AND a = ?2")
-    List<Beacon> findByDateUpdatedAfter(DateTime dateTime, App app);
+    List<Beacon> findByDateUpdated(DateTime dateTime, App app);
 }

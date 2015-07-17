@@ -2,7 +2,10 @@ package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.util.View;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,6 +32,9 @@ public class Beacon extends AbstractNamedEntity {
     @NotNull
     private int minor;
 
+    @JsonView(View.Sync.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToMany(mappedBy = "beacons", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<>();
 
