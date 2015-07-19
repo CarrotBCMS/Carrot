@@ -1,4 +1,4 @@
-package com.boxedfolder.carrot.domain.general;
+package com.boxedfolder.carrot.domain.general.logs;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
@@ -8,9 +8,8 @@ import javax.persistence.*;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
-@Table(name = "deletion_log")
-@Entity
-public class EntityDeletionLog {
+@MappedSuperclass
+public abstract class AuditLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,21 +18,12 @@ public class EntityDeletionLog {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime dateTime;
 
-    @Column(name = "entity_id")
-    private Long entityId;
-
-    private Class type;
-
     public Long getId() {
         return id;
     }
 
-    public Class getType() {
-        return type;
-    }
-
-    public void setType(Class type) {
-        this.type = type;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public DateTime getDateTime() {
@@ -42,13 +32,5 @@ public class EntityDeletionLog {
 
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public Long getEntityId() {
-        return entityId;
-    }
-
-    public void setEntityId(Long entityId) {
-        this.entityId = entityId;
     }
 }

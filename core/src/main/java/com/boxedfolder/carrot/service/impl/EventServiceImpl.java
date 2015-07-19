@@ -10,4 +10,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> implements EventService {
+
+    @Override
+    public Event save(Event object) {
+        Event oldObject = repository.findOne(object.getId());
+        if (oldObject != null) {
+            // Check if there are event-beacon relationship changes
+        }
+        return super.save(object);
+    }
 }

@@ -4,8 +4,8 @@ import com.boxedfolder.carrot.domain.*;
 import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AppRepository;
+import com.boxedfolder.carrot.repository.AuditLogRepository;
 import com.boxedfolder.carrot.repository.BeaconRepository;
-import com.boxedfolder.carrot.repository.EntityDeletionLogRepository;
 import com.boxedfolder.carrot.repository.EventRepository;
 import com.boxedfolder.carrot.service.SyncService;
 import org.joda.time.DateTime;
@@ -22,7 +22,7 @@ public class SyncServiceImpl implements SyncService {
     private AppRepository appRepository;
     private BeaconRepository beaconRepository;
     private EventRepository eventRepository;
-    private EntityDeletionLogRepository logRepository;
+    private AuditLogRepository logRepository;
 
     @Override
     public Map<String, Object> sync(Long timestamp, String appKey) {
@@ -91,7 +91,7 @@ public class SyncServiceImpl implements SyncService {
     }
 
     @Inject
-    public void setLogRepository(EntityDeletionLogRepository logRepository) {
+    public void setLogRepository(AuditLogRepository logRepository) {
         this.logRepository = logRepository;
     }
 }
