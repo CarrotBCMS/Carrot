@@ -15,5 +15,6 @@ public interface AuditLogRepository {
     void delete(AuditLog log);
 
     RemovedRelationshipLog findOne(Long id);
-    RemovedRelationshipLog findOne(Long eventId, Long beaconId);
+    RemovedRelationshipLog findOne(Long eventId, Long appId);
+    List<RemovedRelationshipLog> findAll(Long appId);
 }

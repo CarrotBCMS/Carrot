@@ -38,17 +38,24 @@ public class AudigLogRepositoryImpl implements AuditLogRepository {
     }
 
     @Override
-    public RemovedRelationshipLog findOne(Long eventId, Long beaconId) {
-        List<RemovedRelationshipLog> results = entityManager.createQuery("SELECT DISTINCT l FROM RemovedRelationshipLog " +
-                "l WHERE l.eventId = :eventId AND l.beaconId = :beaconId", RemovedRelationshipLog.class)
+    public RemovedRelationshipLog findOne(Long eventId, Long appId) {
+        List<RemovedRelationshipLog> results = entityManager.createQuery("SELECT l FROM RemovedRelationshipLog " +
+                "l WHERE l.eventId = :eventId AND l.appId = :appId", RemovedRelationshipLog.class)
                                                             .setParameter("eventId", eventId)
-                                                            .setParameter("beaconId", beaconId)
+                                                            .setParameter("appId", appId)
                                                             .getResultList();
         RemovedRelationshipLog log = null;
         if (!results.isEmpty()) {
             log = results.get(0);
         }
         return log;
+    }
+
+    @Override
+    public List<RemovedRelationshipLog> findAll(Long appId) {
+        return entityManager.createQuery("SELECT l FROM RemovedRelationshipLog l WHERE l.appId = :appId",
+                RemovedRelationshipLog.class)
+                            .setParameter("appId", appId).getResultList();
     }
 
     @Override

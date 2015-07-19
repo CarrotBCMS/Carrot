@@ -3,6 +3,8 @@ package com.boxedfolder.carrot.domain.general.logs;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -10,18 +12,18 @@ import javax.persistence.Table;
 @Table(name = "removed_relationship_log")
 @Entity
 public class RemovedRelationshipLog extends AuditLog {
-    @Column(name = "beacon_id")
-    private Long beaconId;
+    @Column(name = "app_id")
+    private Long appId;
 
     @Column(name = "event_id")
     private Long eventId;
 
-    public Long getBeaconId() {
-        return beaconId;
+    public Long getAppId() {
+        return appId;
     }
 
-    public void setBeaconId(Long beaconId) {
-        this.beaconId = beaconId;
+    public void setAppId(Long appId) {
+        this.appId = appId;
     }
 
     public Long getEventId() {
@@ -30,5 +32,13 @@ public class RemovedRelationshipLog extends AuditLog {
 
     public void setEventId(Long eventId) {
         this.eventId = eventId;
+    }
+
+    public static List<Long> asEventList(List<RemovedRelationshipLog> logs) {
+        List<Long> result = new ArrayList<>();
+        for (RemovedRelationshipLog log : logs) {
+            result.add(log.getEventId());
+        }
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.boxedfolder.carrot.service.impl;
 
 import com.boxedfolder.carrot.domain.*;
+import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AppRepository;
@@ -68,6 +69,10 @@ public class SyncServiceImpl implements SyncService {
         List<Long> deletedEvents = logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class);
         deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
         deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
+
+        // Check if there is an event with broken connection to beacons
+        List<RemovedRelationshipLog> logs = logRepository.findAll(app.getId());
+        deletedEvents.addAll(RemovedRelationshipLog.asEventList(logs));
 
         // First sync?! Add empty list...
         result.put("deleted", timestamp > 0 ? deletedEvents : new ArrayList<>());

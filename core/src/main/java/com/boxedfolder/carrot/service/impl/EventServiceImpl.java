@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.service.impl;
 
-import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.repository.AuditLogRepository;
@@ -26,14 +26,14 @@ public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> im
 
         if (oldObject != null) {
             // Check if there are event-beacon relationship changes
-            List<Beacon> difference = new ArrayList<>(oldObject.getBeacons());
-            difference.removeAll(object.getBeacons());
+            List<App> difference = new ArrayList<>(oldObject.getApps());
+            difference.removeAll(object.getApps());
 
-            for (Beacon beacon : difference) {
-                RemovedRelationshipLog log = logRepository.findOne(oldObject.getId(), beacon.getId());
+            for (App app : difference) {
+                RemovedRelationshipLog log = logRepository.findOne(oldObject.getId(), app.getId());
                 if (log == null) {
                     log = new RemovedRelationshipLog();
-                    log.setBeaconId(beacon.getId());
+                    log.setAppId(app.getId());
                     log.setEventId(oldObject.getId());
                 }
                 log.setDateTime(new DateTime());
@@ -41,11 +41,11 @@ public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> im
             }
 
             // Remove all obsolete logs
-            difference = new ArrayList<>(object.getBeacons());
-            difference.removeAll(oldObject.getBeacons());
+            difference = new ArrayList<>(object.getApps());
+            difference.removeAll(oldObject.getApps());
 
-            for (Beacon beacon : difference) {
-                RemovedRelationshipLog log = logRepository.findOne(object.getId(), beacon.getId());
+            for (App app : difference) {
+                RemovedRelationshipLog log = logRepository.findOne(object.getId(), app.getId());
                 if (log != null) {
                     logRepository.delete(log);
                 }
