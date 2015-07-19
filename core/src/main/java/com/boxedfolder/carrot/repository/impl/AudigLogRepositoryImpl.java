@@ -21,7 +21,8 @@ public class AudigLogRepositoryImpl implements AuditLogRepository {
 
     @Override
     public List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz) {
-        return entityManager.createQuery("SELECT l.entityId FROM EntityDeletionLog l WHERE l.dateTime > :dateTime AND l.type = :class", Long.class)
+        return entityManager.createQuery("SELECT l.entityId FROM EntityDeletionLog l WHERE l.dateTime > :dateTime AND " +
+                "l.type = :class", Long.class)
                             .setParameter("dateTime", dateTime)
                             .setParameter("class", clazz)
                             .getResultList();
@@ -52,10 +53,13 @@ public class AudigLogRepositoryImpl implements AuditLogRepository {
     }
 
     @Override
-    public List<RemovedRelationshipLog> findAll(Long appId) {
-        return entityManager.createQuery("SELECT l FROM RemovedRelationshipLog l WHERE l.appId = :appId",
+    public List<RemovedRelationshipLog> findAll(DateTime dateTime, Long appId) {
+        return entityManager.createQuery("SELECT l FROM RemovedRelationshipLog l WHERE l.appId = :appId AND " +
+                        "l.dateTime > :dateTime",
                 RemovedRelationshipLog.class)
-                            .setParameter("appId", appId).getResultList();
+                            .setParameter("appId", appId)
+                            .setParameter("dateTime", dateTime)
+                            .getResultList();
     }
 
     @Override

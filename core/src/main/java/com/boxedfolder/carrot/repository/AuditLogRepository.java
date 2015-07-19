@@ -16,5 +16,5 @@ public interface AuditLogRepository {
 
     RemovedRelationshipLog findOne(Long id);
     RemovedRelationshipLog findOne(Long eventId, Long appId);
-    List<RemovedRelationshipLog> findAll(Long appId);
+    List<RemovedRelationshipLog> findAll(DateTime dateTime, Long appId);
 }
