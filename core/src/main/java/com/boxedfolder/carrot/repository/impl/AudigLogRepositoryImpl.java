@@ -1,7 +1,7 @@
 package com.boxedfolder.carrot.repository.impl;
 
-import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.general.logs.AuditLog;
+import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.repository.AuditLogRepository;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
@@ -30,6 +30,31 @@ public class AudigLogRepositoryImpl implements AuditLogRepository {
     @Override
     public AuditLog save(AuditLog log) {
         return entityManager.merge(log);
+    }
+
+    @Override
+    public RemovedRelationshipLog findOne(Long id) {
+        return entityManager.find(RemovedRelationshipLog.class, id);
+    }
+
+    @Override
+    public RemovedRelationshipLog findOne(Long eventId, Long beaconId) {
+        List<RemovedRelationshipLog> results = entityManager.createQuery("SELECT DISTINCT l FROM RemovedRelationshipLog " +
+                "l WHERE l.eventId = :eventId AND l.beaconId = :beaconId", RemovedRelationshipLog.class)
+                                                            .setParameter("eventId", eventId)
+                                                            .setParameter("beaconId", beaconId)
+                                                            .getResultList();
+        RemovedRelationshipLog log = null;
+        if (!results.isEmpty()) {
+            log = results.get(0);
+        }
+        return log;
+    }
+
+    @Override
+    public void delete(AuditLog log) {
+        AuditLog aLog = findOne(log.getId());
+        entityManager.remove(aLog);
     }
 
     @PersistenceContext

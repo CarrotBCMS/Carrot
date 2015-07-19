@@ -15,4 +15,20 @@ public class RemovedRelationshipLog extends AuditLog {
 
     @Column(name = "event_id")
     private Long eventId;
+
+    public Long getBeaconId() {
+        return beaconId;
+    }
+
+    public void setBeaconId(Long beaconId) {
+        this.beaconId = beaconId;
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
 }
