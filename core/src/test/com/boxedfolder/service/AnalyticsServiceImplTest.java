@@ -112,12 +112,14 @@ public class AnalyticsServiceImplTest {
         log.setDateCreated(new DateTime());
         log.setDateUpdated(new DateTime());
         log.setBeacon(beacon);
+        log.setApp(app);
         log.setOccuredEvent(event);
         testAnalyticsLogData.add(log);
 
         AnalyticsLog secondLog = new AnalyticsLog();
         secondLog.setDateCreated(new DateTime());
         secondLog.setDateUpdated(new DateTime());
+        secondLog.setApp(app);
         secondLog.setBeacon(beacon);
         secondLog.setOccuredEvent(secondEvent);
         testAnalyticsLogData.add(secondLog);
@@ -165,7 +167,7 @@ public class AnalyticsServiceImplTest {
     @Test
     public void testAppsTriggered() {
         when(analyticsLogRepository.findAll(any(DateTime.class), any(DateTime.class))).thenReturn(testAnalyticsLogData);
-        List<AnalyticsTransfer>  result = service.appsTriggered(new DateTime().minusDays(5), new DateTime());
+        List<AnalyticsTransfer> result = service.appsTriggered(new DateTime().minusDays(5), new DateTime());
 
         AnalyticsTransfer transfer = new AnalyticsTransfer();
         transfer.setId(testAppData.get(0).getId());

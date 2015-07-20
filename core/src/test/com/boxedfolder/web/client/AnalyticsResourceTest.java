@@ -93,6 +93,7 @@ public class AnalyticsResourceTest {
         log.setDateCreated(new DateTime());
         log.setOccuredEvent(event);
         log.setBeacon(beacon);
+        log.setApp(app);
 
         AnalyticsLog secondLog = new AnalyticsLog();
         secondLog.setId(1212L);
@@ -100,6 +101,7 @@ public class AnalyticsResourceTest {
         secondLog.setDateCreated(new DateTime().minusDays(5));
         secondLog.setOccuredEvent(event);
         secondLog.setBeacon(beacon);
+        secondLog.setApp(app);
 
         testData.add(log);
         testData.add(secondLog);
@@ -139,8 +141,7 @@ public class AnalyticsResourceTest {
         String value = mapper.writeValueAsString(log);
 
         when(service.save((AnalyticsLog)anyObject(), (UUID)anyObject())).thenReturn(log);
-        restUserMockMvc.perform(post("/client/analytics/logs")
-                .param("app_key", app.getApplicationKey().toString())
+        restUserMockMvc.perform(post("/client/analytics/logs/" + app.getApplicationKey().toString())
                 .content(value)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

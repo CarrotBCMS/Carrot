@@ -1,5 +1,6 @@
 package com.boxedfolder.carrot.domain.analytics;
 
+import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.Event;
@@ -30,6 +31,11 @@ public class AnalyticsLog extends AbstractEntity {
     @NotNull
     private Beacon beacon;
 
+    @JsonView(View.Meta.class)
+    @ManyToOne
+    @PrimaryKeyJoinColumn(name = "app")
+    private App app;
+
     public Event getOccuredEvent() {
         return occuredEvent;
     }
@@ -44,5 +50,13 @@ public class AnalyticsLog extends AbstractEntity {
 
     public void setBeacon(Beacon beacon) {
         this.beacon = beacon;
+    }
+
+    public App getApp() {
+        return app;
+    }
+
+    public void setApp(App app) {
+        this.app = app;
     }
 }

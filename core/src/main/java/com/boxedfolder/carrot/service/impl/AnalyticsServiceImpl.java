@@ -2,9 +2,9 @@ package com.boxedfolder.carrot.service.impl;
 
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
-import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
 import com.boxedfolder.carrot.repository.AppRepository;
@@ -78,6 +78,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         }
 
         // Refresh objects
+        object.setApp(app);
         object.setOccuredEvent(eventRepository.findOne(object.getOccuredEvent().getId()));
         object.setBeacon(beaconRepository.findOne(object.getBeacon().getId()));
 
@@ -93,20 +94,20 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         List<AnalyticsTransfer> output = new ArrayList<>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
-            for (App app : log.getOccuredEvent().getApps()) {
-                AnalyticsTransfer transfer = new AnalyticsTransfer();
-                transfer.setId(app.getId());
-                transfer.setName(app.getName());
-                if (!output.contains(transfer)) {
-                    output.add(transfer);
-                } else {
-                    transfer = output.get(output.indexOf(transfer));
-                }
-                Integer value = transfer.getCount();
-                value++;
-                transfer.setCount(value);
-
+            if (log.getApp() == null) {
+                break;
             }
+            AnalyticsTransfer transfer = new AnalyticsTransfer();
+            transfer.setId(log.getApp().getId());
+            transfer.setName(log.getApp().getName());
+            if (!output.contains(transfer)) {
+                output.add(transfer);
+            } else {
+                transfer = output.get(output.indexOf(transfer));
+            }
+            Integer value = transfer.getCount();
+            value++;
+            transfer.setCount(value);
         }
 
         return output;

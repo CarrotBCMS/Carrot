@@ -48,9 +48,9 @@ public class AnalyticsResource {
 
     @JsonView(View.Meta.class)
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "/logs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/logs/{appKey}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public AnalyticsLog createAnalyticsLogs(@RequestBody @Valid AnalyticsLog log,
-                                            @RequestParam(required = true, value = "app_key") String appKey)
+                                            @PathVariable("appKey") String appKey)
     {
         return service.save(log, UUID.fromString(appKey));
     }
