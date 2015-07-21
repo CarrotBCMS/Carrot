@@ -9,7 +9,7 @@ import javax.persistence.Table;
  */
 @Table(name = "deletion_log")
 @Entity
-public class EntityDeletionLog extends AuditLog {
+public class EntityDeletionLog extends TransactionLog {
     @Column(name = "entity_id")
     private Long entityId;
 

@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.repository.impl;
 
-import com.boxedfolder.carrot.domain.general.logs.AuditLog;
+import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.repository.AuditLogRepository;
 import org.joda.time.DateTime;
@@ -29,7 +29,7 @@ public class AudigLogRepositoryImpl implements AuditLogRepository {
     }
 
     @Override
-    public AuditLog save(AuditLog log) {
+    public TransactionLog save(TransactionLog log) {
         return entityManager.merge(log);
     }
 
@@ -63,8 +63,8 @@ public class AudigLogRepositoryImpl implements AuditLogRepository {
     }
 
     @Override
-    public void delete(AuditLog log) {
-        AuditLog aLog = findOne(log.getId());
+    public void delete(TransactionLog log) {
+        TransactionLog aLog = findOne(log.getId());
         entityManager.remove(aLog);
     }
 

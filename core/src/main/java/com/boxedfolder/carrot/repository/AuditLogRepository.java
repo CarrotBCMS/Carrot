@@ -1,6 +1,6 @@
 package com.boxedfolder.carrot.repository;
 
-import com.boxedfolder.carrot.domain.general.logs.AuditLog;
+import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import org.joda.time.DateTime;
 
@@ -11,8 +11,8 @@ import java.util.List;
  */
 public interface AuditLogRepository {
     List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz);
-    AuditLog save(AuditLog log);
-    void delete(AuditLog log);
+    TransactionLog save(TransactionLog log);
+    void delete(TransactionLog log);
 
     RemovedRelationshipLog findOne(Long id);
     RemovedRelationshipLog findOne(Long eventId, Long appId);

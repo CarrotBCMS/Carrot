@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Table(name = "removed_relationship_log")
 @Entity
-public class RemovedRelationshipLog extends AuditLog {
+public class RemovedRelationshipLog extends TransactionLog {
     @Column(name = "app_id")
     private Long appId;
 

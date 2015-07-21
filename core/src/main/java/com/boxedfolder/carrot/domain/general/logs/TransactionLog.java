@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @MappedSuperclass
-public abstract class AuditLog {
+public abstract class TransactionLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
