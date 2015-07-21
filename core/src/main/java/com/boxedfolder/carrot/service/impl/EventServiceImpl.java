@@ -3,7 +3,7 @@ package com.boxedfolder.carrot.service.impl;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
-import com.boxedfolder.carrot.repository.AuditLogRepository;
+import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import com.boxedfolder.carrot.repository.EventRepository;
 import com.boxedfolder.carrot.service.EventService;
 import org.joda.time.DateTime;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Service
 public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> implements EventService {
-    private AuditLogRepository logRepository;
+    private TransactionLogRepository logRepository;
 
     @Override
     public Event save(Event object) {
@@ -56,7 +56,7 @@ public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> im
     }
 
     @Inject
-    public void setLogRepository(AuditLogRepository logRepository) {
+    public void setLogRepository(TransactionLogRepository logRepository) {
         this.logRepository = logRepository;
     }
 }

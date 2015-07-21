@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AnalyticsServiceImplTest {
+public class AnalyticsServiceTest {
     private AnalyticsServiceImpl service;
     @Mock
     private AppRepository appRepository;

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AppServiceImplTest {
+public class AppServiceTest {
     @Mock
     private AppRepository repository;
     private AppServiceImpl service;

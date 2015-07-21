@@ -33,7 +33,7 @@ import static junit.framework.Assert.assertTrue;
 @ActiveProfiles(Profiles.TESTING)
 @SpringApplicationConfiguration(classes = {Application.class})
 @Transactional
-public class AnalyticsRepositoryImplTest {
+public class AnalyticsLogRepositoryTest {
     @PersistenceContext
     private EntityManager entityManager;
     private AnalyticsLogRepositoryImpl analyticsRepository;

@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class EventServiceImplTest {
+public class EventServiceTest {
     @Mock
     private EventRepository repository;
     private EventServiceImpl service;

@@ -2,7 +2,7 @@ package com.boxedfolder.carrot.aop;
 
 import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.domain.general.logs.EntityDeletionLog;
-import com.boxedfolder.carrot.repository.AuditLogRepository;
+import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 @Aspect
 @Component
 public class RepositoryDeletionAspect {
-    private AuditLogRepository logRepository;
+    private TransactionLogRepository logRepository;
 
     @Pointcut("execution(* com.boxedfolder.carrot.repository.OrderedRepository+.delete(*))")
     public void deletionMethod() {
@@ -41,7 +41,7 @@ public class RepositoryDeletionAspect {
     }
 
     @Inject
-    public void setLogRepository(AuditLogRepository logRepository) {
+    public void setLogRepository(TransactionLogRepository logRepository) {
         this.logRepository = logRepository;
     }
 }

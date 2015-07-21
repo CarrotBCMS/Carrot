@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
-public interface AuditLogRepository {
+public interface TransactionLogRepository {
     List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz);
     TransactionLog save(TransactionLog log);
     void delete(TransactionLog log);

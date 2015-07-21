@@ -5,7 +5,7 @@ import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AppRepository;
-import com.boxedfolder.carrot.repository.AuditLogRepository;
+import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import com.boxedfolder.carrot.repository.BeaconRepository;
 import com.boxedfolder.carrot.repository.EventRepository;
 import com.boxedfolder.carrot.service.SyncService;
@@ -23,7 +23,7 @@ public class SyncServiceImpl implements SyncService {
     private AppRepository appRepository;
     private BeaconRepository beaconRepository;
     private EventRepository eventRepository;
-    private AuditLogRepository logRepository;
+    private TransactionLogRepository logRepository;
 
     @Override
     public Map<String, Object> sync(Long timestamp, String appKey) {
@@ -96,7 +96,7 @@ public class SyncServiceImpl implements SyncService {
     }
 
     @Inject
-    public void setLogRepository(AuditLogRepository logRepository) {
+    public void setLogRepository(TransactionLogRepository logRepository) {
         this.logRepository = logRepository;
     }
 }

@@ -2,7 +2,7 @@ package com.boxedfolder.carrot.repository.impl;
 
 import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
-import com.boxedfolder.carrot.repository.AuditLogRepository;
+import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class AudigLogRepositoryImpl implements AuditLogRepository {
+public class TransactionLogRepositoryImpl implements TransactionLogRepository {
     private EntityManager entityManager;
 
     @Override
