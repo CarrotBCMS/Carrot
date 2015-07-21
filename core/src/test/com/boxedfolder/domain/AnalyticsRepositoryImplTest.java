@@ -152,6 +152,17 @@ public class AnalyticsRepositoryImplTest {
         Long aLong = analyticsRepository.count(beacon);
         assertTrue(aLong == 2);
     }
+    @Test
+    public void testCountLogsForEvent() {
+        Long aLong = analyticsRepository.count(event);
+        assertTrue(aLong == 1);
+    }
+
+    @Test
+    public void testCountLogs() {
+        Long aLong = analyticsRepository.count();
+        assertTrue(aLong == 2);
+    }
 
     @Test
     public void testCountLogsForApp() {
