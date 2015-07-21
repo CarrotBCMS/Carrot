@@ -75,7 +75,7 @@ public class SyncServiceImpl implements SyncService {
         deletedEvents.addAll(RemovedRelationshipLog.asEventList(logs));
 
         // First sync?! Add empty list...
-        result.put("deleted", timestamp > 0 ? deletedEvents : new ArrayList<>());
+        result.put("deleted", timestamp > 0L ? deletedEvents : new ArrayList<>());
 
         return result;
     }
