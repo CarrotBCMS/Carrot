@@ -250,11 +250,16 @@ select.left-control {
 }
 
 .date-picker-col {
-    padding-left: 0px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+
 }
 
 .date-picker-col-right {
-    padding-right: 0px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-bottom: 10px;
 }
 
 .invalid-dates {
