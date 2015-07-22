@@ -35,7 +35,7 @@ public class DateTimeSerializerTest {
     }
 
     @Test
-    public void testSerializing() throws Exception {
+    public void testSerializer() throws Exception {
         Writer writer = new StringWriter();
         JsonGenerator generator = new JsonFactory().createGenerator(writer);
         serializer.serialize(dateTime, generator, mapper.getSerializerProvider());

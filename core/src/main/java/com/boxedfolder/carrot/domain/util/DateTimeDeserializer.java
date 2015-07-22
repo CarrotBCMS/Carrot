@@ -20,6 +20,7 @@ public class DateTimeDeserializer extends JsonDeserializer<DateTime> {
         DateTime dateTime = null;
         try {
             JsonToken currentToken = jsonParser.getCurrentToken();
+            System.out.println(jsonParser.getText());
             if (currentToken == JsonToken.VALUE_STRING) {
                 String dateTimeAsString = jsonParser.getText().trim();
                 DateTimeFormatter formatter = ISODateTimeFormat.dateTime().withZoneUTC();
