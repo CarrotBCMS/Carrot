@@ -32,10 +32,6 @@ body {
     width: 100%;
 }
 
-.logo {
-    height: 30px;
-}
-
 .navbar {
     margin-bottom: 10px;
 }
@@ -299,6 +295,11 @@ select.left-control {
 .logo {
     z-index: 5;
     position: relative;
+    background-image: url('../images/logo_alt.svg');
+    background-size: auto 30px;
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 100px;
 }
 
 .logo:hover {
