@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
 
         for (String endpoint : securedEndpoints) {
-           // http.authorizeRequests().antMatchers(endpoint).authenticated();
+            http.authorizeRequests().antMatchers(endpoint).authenticated();
         }
 
         SecurityConfigurer<DefaultSecurityFilterChain, HttpSecurity> securityConfigurerAdapter =
