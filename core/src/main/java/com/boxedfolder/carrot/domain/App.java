@@ -17,7 +17,7 @@ import java.util.UUID;
 @Entity
 public class App extends AbstractNamedEntity {
     @JsonIgnore
-    @Column(columnDefinition = "BINARY(16)", name = "app_key")
+    @Column(name = "app_key")
     private UUID applicationKey;
 
     @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)

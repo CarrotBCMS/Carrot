@@ -20,7 +20,6 @@ import java.util.UUID;
 @Entity
 public class Beacon extends AbstractNamedEntity {
     @JsonView(View.General.class)
-    @Column(columnDefinition = "BINARY(16)")
     @NotNull
     private UUID uuid;
 
