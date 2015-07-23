@@ -271,6 +271,14 @@ select.left-control {
 /** Animations **/
 /****************/
 
+div.ng-enter {
+    animation: fadeIn 0.15s;
+}
+
+div.ng-leave {
+    animation: fadeOut 0.15s;
+}
+
 .ng-scope.fade {
     display: none;
     opacity: 0;
