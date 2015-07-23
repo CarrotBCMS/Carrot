@@ -8,7 +8,7 @@
  * Factory in Carrot.
  */
 angular.module('Carrot')
-    .factory('EntityService', function ($modal, ngTableParams, flash, $location, $routeParams, $log) {
+    .factory('EntityService', function ($modal, ngTableParams, flash, $location, $routeParams, $timeout) {
         var delFunction = function (object, factory, callback) {
             $modal.open({
                 templateUrl: 'views/fragments/delete.html',
@@ -32,6 +32,7 @@ angular.module('Carrot')
         };
 
         var listFunction = function (scope, factory, categoryName) {
+            scope.resolved = false;
             scope.data = factory.query(function (data) {
                 scope.tableParams = new ngTableParams({
                     page: 1,
@@ -48,9 +49,14 @@ angular.module('Carrot')
                         }
 
                         $defer.resolve(pageData);
+                        $timeout(function() {
+                            scope.resolved = true;
+                        })
+
                     }
                 });
             });
+
 
             scope.delete = function (item) {
                 delFunction(item, factory, function (object) {
