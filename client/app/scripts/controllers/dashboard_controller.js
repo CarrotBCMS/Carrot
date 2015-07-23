@@ -10,10 +10,12 @@
  */
 angular.module('Carrot')
     .controller('DashboardController', function ($scope, $log, flash, ngTableParams, AnalyticsService) {
+        $scope.countsResolved = false;
         AnalyticsService.count().then(function(data) {
             $scope.beaconCount = data.beacons;
             $scope.appCount = data.apps;
             $scope.eventCount = data.events;
+            $scope.countsResolved = true;
         });
 
         $scope.sections = ["Apps", "Beacons", "Events"];
