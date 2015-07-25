@@ -148,10 +148,13 @@ table.statistics {
 /***********/
 
 .login-logo {
-    width: 275px;
+    width: 300px;
     height: 175px;
     padding: 10px 30px 5px 0px;
-    margin-left: -40px;
+    margin-left: 100px;
+    background-image: url('../images/logo.svg');
+    background-size: auto 175px;
+    background-repeat: no-repeat;
 }
 
 /** Fixes **/
@@ -452,4 +455,18 @@ span.close.multiselect-search-list-item_selection-remove {
 
 oi-multiselect .multiselect-search-list-item_input input {
     margin-left: 11px;
+}
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+    .top150 {
+        margin-top: 25px;
+    }
 }
