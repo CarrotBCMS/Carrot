@@ -148,12 +148,11 @@ table.statistics {
 /***********/
 
 .login-logo {
-    width: 300px;
+    margin-left: -55px;
     height: 175px;
-    padding: 10px 30px 5px 0px;
-    margin-left: 100px;
     background-image: url('../images/logo.svg');
     background-size: auto 175px;
+    background-position-x: center;
     background-repeat: no-repeat;
 }
 
@@ -468,5 +467,11 @@ and (min-device-width : 320px)
 and (max-device-width : 568px) {
     .top150 {
         margin-top: 25px;
+    }
+
+    .login-logo {
+        background-size: auto 125px;
+        background-position-y: 25px;
+
     }
 }
