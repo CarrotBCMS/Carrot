@@ -98,7 +98,7 @@ footer a:hover {
     color: #bfbfbf;
 }
 
-.ng-table-header  {
+.ng-table-header {
     text-align: left;
 }
 
@@ -210,7 +210,7 @@ oi-multiselect .multiselect-dropdown {
 }
 
 oi-multiselect .multiselect-dropdown {
-    border:none;
+    border: none;
 }
 
 input.ng-invalid-email, input.ng-invalid-minlength {
@@ -235,7 +235,7 @@ input.ng-invalid-email, input.ng-invalid-minlength {
 
 .left-control {
     width: 48.5%;
-    display:inline;
+    display: inline;
     margin-bottom: 10px;
 }
 
@@ -274,18 +274,18 @@ select.left-control {
 /****************/
 
 .animate-show {
-    -webkit-transition:all  0.15s;
-    transition:all linear 0.15s;
-    opacity:1;
+    -webkit-transition: all 0.15s;
+    transition: all linear 0.15s;
+    opacity: 1;
 }
 
 .animate-show.ng-hide-add,
 .animate-show.ng-hide-remove {
-    display:block !important;
+    display: block !important;
 }
 
 .animate-show.ng-hide {
-    opacity:0;
+    opacity: 0;
 }
 
 .ng-scope.fade {
@@ -395,7 +395,7 @@ select.left-control {
 }
 
 #loading-bar-spinner .spinner-icon {
-    border-top-color:  #7bb344;
+    border-top-color: #7bb344;
     border-left-color: #7bb344;
 }
 
@@ -410,11 +410,13 @@ select.left-control {
     width: 46px;
     height: 24px;
 }
+
 .switch small {
     /* button */
     width: 24px;
     height: 24px;
 }
+
 .switch.checked {
     background: #7bb344;
     border-color: #7bb344;
@@ -443,7 +445,7 @@ oi-multiselect .multiselect-search-list-item {
     padding-top: 2px;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
 span.close.multiselect-search-list-item_selection-remove {
@@ -456,15 +458,9 @@ oi-multiselect .multiselect-search-list-item_input input {
     margin-left: 11px;
 }
 
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-
-}
-
 @media only screen
-and (min-device-width : 320px)
-and (max-device-width : 568px) {
+and (min-device-width: 320px)
+and (max-device-width: 568px) {
     .top150 {
         margin-top: 25px;
     }
@@ -472,6 +468,5 @@ and (max-device-width : 568px) {
     .login-logo {
         background-size: auto 125px;
         background-position-y: 25px;
-
     }
 }
