@@ -18,7 +18,7 @@
     "angular.validators": "^3.40.0",
     "angular-ui-switch": "^0.0.7",
     "angular-bootstrap-datetimepicker": "^0.3.13",
-    "oi.multiselect": "https://github.com/bfolder/oi.multiselect.git#0.1.8",
+    "oi.multiselect": "https://github.com/bfolder/oi.multiselect.git#0.1.9",
     "angular-moment": "^0.10.1"
   },
   "devDependencies": {
