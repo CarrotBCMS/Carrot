@@ -9,7 +9,7 @@
  * Controller showing the dashboard
  */
 angular.module('Carrot')
-    .controller('DashboardController', function ($scope, $rootScope, $log, flash, ngTableParams, AnalyticsService) {
+    .controller('DashboardController', function ($scope, $log, flash, ngTableParams, AnalyticsService) {
         $scope.countsResolved = false;
         AnalyticsService.count().then(function (data) {
             $scope.beaconCount = data.beacons;
@@ -64,12 +64,6 @@ angular.module('Carrot')
                 $log.debug(result);
                 $scope.tableParams.reload();
             }, function (response) {
-                if (response.status == 403) {
-                    flash.error = "Ups, you are not logged in.";
-                    $rootScope.logout();
-                    return;
-                }
-
                 flash.error = "There was an error processing your request.";
             });
         };

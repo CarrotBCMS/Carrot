@@ -28,7 +28,7 @@ angular
         'oi.multiselect',
         'angularMoment'
     ])
-    .config(function ($routeProvider, flashProvider, cfpLoadingBarProvider) {
+    .config(function ($routeProvider, $httpProvider, flashProvider, cfpLoadingBarProvider) {
         // General
         flashProvider.errorClassnames.push('alert-danger');
         flashProvider.warnClassnames.push('alert-warning');
@@ -36,6 +36,17 @@ angular
         flashProvider.successClassnames.push('alert-success');
         cfpLoadingBarProvider.includeSpinner = true;
         //cfpLoadingBarProvider.latencyThreshold = 200;
+        $httpProvider.interceptors.push(function ($q, $rootScope) {
+            return { 'responseError': function (response) {
+                if (response.status == 403) {
+                    flash.error = "Ups, you are not logged in.";
+                    $rootScope.logout();
+                    return;
+                }
+                    return $q.reject(response);
+                }
+            };
+        });
 
         $routeProvider
             // Login

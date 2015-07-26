@@ -8,7 +8,7 @@
  * Factory in Carrot.
  */
 angular.module('Carrot')
-    .factory('EntityService', function ($rootScope, $modal, ngTableParams, flash, $location, $routeParams, $timeout) {
+    .factory('EntityService', function ($modal, ngTableParams, flash, $location, $routeParams, $timeout) {
         var delFunction = function (object, factory, callback) {
             $modal.open({
                 templateUrl: 'views/fragments/delete.html',
@@ -21,12 +21,6 @@ angular.module('Carrot')
                                 callback(object);
                             }
                             $modalInstance.dismiss('cancel');
-                        }, function(response) {
-                            if (response.status == 403) {
-                                flash.error = "Ups, you are not logged in.";
-                                $rootScope.logout();
-                                return;
-                            }
                         });
                     };
 
@@ -59,11 +53,6 @@ angular.module('Carrot')
                             scope.resolved = true;
                         })
 
-                    }
-                }, function(httpResponse) {
-                    if (httpResponse.status == 403) {
-                        flash.error = "Ups, you are not logged in.";
-                        $rootScope.logout();
                     }
                 });
             });
@@ -101,12 +90,6 @@ angular.module('Carrot')
                     scope.object = object;
                     flash.success = categoryName + " saved.";
                 }, function(response) {
-                    if (response.status == 403) {
-                        flash.error = "Ups, you are not logged in.";
-                        $rootScope.logout();
-                        return;
-                    }
-
                     if (response.status == 422) {
                         flash.error = categoryName + " already exists.";
                     } else {
