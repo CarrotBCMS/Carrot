@@ -9,9 +9,9 @@
  * Controller showing the dashboard
  */
 angular.module('Carrot')
-    .controller('DashboardController', function ($scope, $log, flash, ngTableParams, AnalyticsService) {
+    .controller('DashboardController', function ($scope, $rootScope, $log, flash, ngTableParams, AnalyticsService) {
         $scope.countsResolved = false;
-        AnalyticsService.count().then(function(data) {
+        AnalyticsService.count().then(function (data) {
             $scope.beaconCount = data.beacons;
             $scope.appCount = data.apps;
             $scope.eventCount = data.events;
@@ -44,26 +44,32 @@ angular.module('Carrot')
             }
         });
 
-        $scope.updateData = function() {
+        $scope.updateData = function () {
             var url = $scope.section.toLowerCase();
             var from = moment().startOf("day");
             var to = moment().endOf("day");
 
             // This Week
             if ($scope.range == $scope.ranges[1]) {
-                from = moment().startOf("day").subtract(7,"days");
+                from = moment().startOf("day").subtract(7, "days");
             }
 
             // This Month
             if ($scope.range == $scope.ranges[2]) {
-                from = moment().startOf("day").subtract(30,"days");
+                from = moment().startOf("day").subtract(30, "days");
             }
 
-            AnalyticsService.analytics(url, from, to).then(function(result) {
+            AnalyticsService.analytics(url, from, to).then(function (result) {
                 $scope.data = result;
                 $log.debug(result);
                 $scope.tableParams.reload();
-            }, function(response) {
+            }, function (response) {
+                if (response.status == 403) {
+                    flash.error = "Ups, you are not logged in.";
+                    $rootScope.logout();
+                    return;
+                }
+
                 flash.error = "There was an error processing your request.";
             });
         };

@@ -9,22 +9,23 @@
  */
 angular.module('Carrot')
     .factory('AnalyticsService', function ($http, $log) {
-        var countFunction = function() {
+        var countFunction = function () {
             var promise = $http.get(baseURL + "/client/analytics/count").then(function (response) {
                 return response.data;
             });
             return promise;
         };
 
-        var logsFunction = function() {
+        var logsFunction = function () {
             var promise = $http.get(baseURL + "/client/analytics/logs").then(function (response) {
                 $log.debug(response.data);
+                $log.debug("bla");
                 return response.data;
             });
             return promise;
         };
 
-        var analyticsFunction = function(url, from, to) {
+        var analyticsFunction = function (url, from, to) {
             var promise = $http.get(baseURL + "/client/analytics/" + url, {
                 params: {
                     from: from.format("YYYY-MM-DDTHH:mm:ss.SSSZ"),

@@ -8,7 +8,7 @@
  * Factory in Carrot.
  */
 angular.module('Carrot')
-    .factory('EntityService', function ($modal, ngTableParams, flash, $location, $routeParams, $timeout) {
+    .factory('EntityService', function ($rootScope, $modal, ngTableParams, flash, $location, $routeParams, $timeout) {
         var delFunction = function (object, factory, callback) {
             $modal.open({
                 templateUrl: 'views/fragments/delete.html',
@@ -21,6 +21,12 @@ angular.module('Carrot')
                                 callback(object);
                             }
                             $modalInstance.dismiss('cancel');
+                        }, function(response) {
+                            if (response.status == 403) {
+                                flash.error = "Ups, you are not logged in.";
+                                $rootScope.logout();
+                                return;
+                            }
                         });
                     };
 
@@ -54,9 +60,13 @@ angular.module('Carrot')
                         })
 
                     }
+                }, function(httpResponse) {
+                    if (httpResponse.status == 403) {
+                        flash.error = "Ups, you are not logged in.";
+                        $rootScope.logout();
+                    }
                 });
             });
-
 
             scope.delete = function (item) {
                 delFunction(item, factory, function (object) {
@@ -90,8 +100,14 @@ angular.module('Carrot')
                     scope.isNew = false;
                     scope.object = object;
                     flash.success = categoryName + " saved.";
-                }, function(httpResponse) {
-                    if (httpResponse.status == 422) {
+                }, function(response) {
+                    if (response.status == 403) {
+                        flash.error = "Ups, you are not logged in.";
+                        $rootScope.logout();
+                        return;
+                    }
+
+                    if (response.status == 422) {
                         flash.error = categoryName + " already exists.";
                     } else {
                         flash.error = "There was an error processing your request.";
