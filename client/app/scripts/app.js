@@ -28,7 +28,10 @@ angular
         'oi.multiselect',
         'angularMoment'
     ])
-    .config(function ($routeProvider, $httpProvider, flashProvider, cfpLoadingBarProvider) {
+    .config(function ($routeProvider, $httpProvider, $locationProvider, flashProvider, cfpLoadingBarProvider) {
+        // Enable html5 mode
+        $locationProvider.html5Mode(true);
+
         // General
         flashProvider.errorClassnames.push('alert-danger');
         flashProvider.warnClassnames.push('alert-warning');
@@ -36,12 +39,12 @@ angular
         flashProvider.successClassnames.push('alert-success');
         cfpLoadingBarProvider.includeSpinner = true;
         //cfpLoadingBarProvider.latencyThreshold = 200;
+
         $httpProvider.interceptors.push(function ($q, $rootScope) {
             return { 'responseError': function (response) {
                 if (response.status == 403) {
                     flash.error = "Ups, you are not logged in.";
                     $rootScope.logout();
-                    return;
                 }
                     return $q.reject(response);
                 }
@@ -119,7 +122,6 @@ angular
 
             return $location.path().indexOf(viewLocation) > -1;
         };
-
 
         $rootScope.logout = function () {
             delete $http.defaults.headers.common["x-auth-token"];
