@@ -318,7 +318,7 @@ module.exports = function (grunt) {
             '404.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'fonts/{,*/}*.*'
+            'fonts/{,*/}*.*',
           ]
         }, {
           expand: true,
@@ -335,6 +335,13 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>',
           src: 'index.html',
           dest: '<%= yeoman.distTemplate %>'
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: 'styles/fonts/**',
+          dest: '<%= yeoman.dist %>/fonts',
+		  flatten: true,
+	      filter: 'isFile'
         }]
       },
       styles: {
