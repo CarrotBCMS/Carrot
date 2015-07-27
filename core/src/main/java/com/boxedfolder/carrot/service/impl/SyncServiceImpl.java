@@ -5,9 +5,9 @@ import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.AppRepository;
-import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import com.boxedfolder.carrot.repository.BeaconRepository;
 import com.boxedfolder.carrot.repository.EventRepository;
+import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import com.boxedfolder.carrot.service.SyncService;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
@@ -65,17 +65,20 @@ public class SyncServiceImpl implements SyncService {
         eventList.addAll(eventRepository.findByDateUpdated(dateTime, app));
         result.put("createdOrUpdated", eventList);
 
-        // Add all possible event classes
-        List<Long> deletedEvents = logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class);
-        deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
-        deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
+        // First sync? Add empty list...
+        List<Long> deletedEvents = new ArrayList<>();
+        if (timestamp > 0L) {
+            // Add all possible event classes
+            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class));
+            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
+            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
 
-        // Check if there is an event with broken connection to beacons
-        List<RemovedRelationshipLog> logs = logRepository.findAll(dateTime, app.getId());
-        deletedEvents.addAll(RemovedRelationshipLog.asEventList(logs));
+            // Check if there is an event with broken connection to beacons
+            List<RemovedRelationshipLog> logs = logRepository.findAll(dateTime, app.getId());
+            deletedEvents.addAll(RemovedRelationshipLog.asEventList(logs));
+        }
 
-        // First sync?! Add empty list...
-        result.put("deleted", timestamp > 0L ? deletedEvents : new ArrayList<>());
+        result.put("deleted", deletedEvents);
 
         return result;
     }

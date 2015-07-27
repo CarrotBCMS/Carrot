@@ -22,7 +22,6 @@ public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> im
 
     @Override
     public Event save(Event object) {
-        
         Event oldObject = null;
         if (object.getId() != null) {
             oldObject = repository.findOne(object.getId());
