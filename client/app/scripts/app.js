@@ -40,7 +40,7 @@ angular
         cfpLoadingBarProvider.includeSpinner = true;
         //cfpLoadingBarProvider.latencyThreshold = 200;
 
-        $httpProvider.interceptors.push(function ($q, $rootScope) {
+        $httpProvider.interceptors.push(function ($q, $rootScope, flash) {
             return { 'responseError': function (response) {
                 if (response.status == 403) {
                     flash.error = "Ups, you are not logged in.";
