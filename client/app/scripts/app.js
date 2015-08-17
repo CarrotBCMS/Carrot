@@ -146,30 +146,6 @@ angular
         } else {
             $location.path("/login");
         }
-    }).filter('capitalize', function () {
-        return function (input, scope) {
-            if (input == null) {
-                return;
-            }
-            
-            input = input.toLowerCase();
-            return input.substring(0, 1).toUpperCase() + input.substring(1);
-        }
-    }).directive('dateField', function ($filter) {
-        var parseExp = "EEEE, MMMM d yyyy - HH:mm";
-        return {
-            require: 'ngModel',
-            link: function (scope, element, attrs, ngModelController) {
-                ngModelController.$parsers.push(function (data) {
-                    var date = Date.parse(data, parseExp);
-                    ngModelController.$setValidity('date', date != null);
-                    return date == null ? undefined : date;
-                });
-                ngModelController.$formatters.push(function (data) {
-                    return $filter('date')(data, parseExp);
-                });
-            }
-        }
     });
 
 var baseURL = "http://localhost:8080";
