@@ -83,7 +83,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity> {
         if (this == object) {
             return true;
         }
-        if (!(object instanceof AbstractEntity)) {
+        if (object.getClass() != getClass()) {
             return false;
         }
 

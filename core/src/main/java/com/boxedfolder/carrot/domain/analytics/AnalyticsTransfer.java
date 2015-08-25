@@ -45,7 +45,8 @@ public class AnalyticsTransfer {
         if (this == object) {
             return true;
         }
-        if (!(object instanceof AnalyticsTransfer)) {
+
+        if (object.getClass() != getClass()) {
             return false;
         }
 

@@ -28,7 +28,7 @@ public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> im
         }
 
         if (oldObject != null) {
-            // Check if there are event-beacon relationship changes
+            // Check if there are event-app relationship changes
             List<App> difference = new ArrayList<>(oldObject.getApps());
             difference.removeAll(object.getApps());
 
