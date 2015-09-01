@@ -73,7 +73,7 @@ public class SyncServiceImpl implements SyncService {
             deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
             deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
 
-            // Check if there is an event with broken connection to beacons
+            // Check if there is an event with broken connections
             List<RemovedRelationshipLog> logs = logRepository.findAll(dateTime, app.getId());
             deletedEvents.addAll(RemovedRelationshipLog.asEventList(logs));
         }
