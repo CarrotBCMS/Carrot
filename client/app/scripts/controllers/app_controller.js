@@ -15,14 +15,14 @@ angular.module('Carrot')
 
 /**
  * @ngdoc function
- * @name Carrot.controller:AppViewController
+ * @name Carrot.controller:AppDetailController
  * @description
- * # AppViewController
+ * # AppDetailController
  *
  * Controller showing a single app
  */
 angular.module('Carrot')
-    .controller('AppViewController', function ($scope, $location, App, EntityService) {
+    .controller('AppDetailController', function ($scope, $location, App, EntityService) {
         EntityService.edit($scope, App, "App");
         $scope.delete = function () {
             EntityService.delete($scope.object, App, function () {

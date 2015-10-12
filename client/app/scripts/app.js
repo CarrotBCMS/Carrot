@@ -68,11 +68,11 @@ angular
             })
             .when('/apps/:id', {
                 templateUrl: 'views/apps_edit.html',
-                controller: 'AppViewController'
+                controller: 'AppDetailController'
             })
             .when('/apps/new', {
                 templateUrl: 'views/apps_edit.html',
-                controller: 'AppViewController'
+                controller: 'AppDetailController'
             })
             .when('/beacons', {
                 templateUrl: 'views/beacons.html',
@@ -80,11 +80,11 @@ angular
             })
             .when('/beacons/:id', {
                 templateUrl: 'views/beacons_edit.html',
-                controller: 'BeaconViewController'
+                controller: 'BeaconDetailController'
             })
             .when('/beacons/new', {
                 templateUrl: 'views/beacons_edit.html',
-                controller: 'BeaconViewController'
+                controller: 'BeaconDetailController'
             })
             .when('/events', {
                 templateUrl: 'views/events.html',
@@ -92,11 +92,11 @@ angular
             })
             .when('/events/:id', {
                 templateUrl: 'views/events_edit.html',
-                controller: 'EventViewController'
+                controller: 'EventDetailController'
             })
             .when('/events/new', {
                 templateUrl: 'views/events_edit.html',
-                controller: 'EventViewController'
+                controller: 'EventDetailController'
             })
 
             // General

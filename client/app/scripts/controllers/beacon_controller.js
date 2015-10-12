@@ -15,14 +15,14 @@ angular.module('Carrot')
 
 /**
  * @ngdoc function
- * @name Carrot.controller:BeaconViewController
+ * @name Carrot.controller:BeaconDetailController
  * @description
- * # BeaconViewController
+ * # BeaconDetailController
  *
  * Controller showing a single beacon
  */
 angular.module('Carrot')
-    .controller('BeaconViewController', function ($scope, $location, Beacon, EntityService) {
+    .controller('BeaconDetailController', function ($scope, $location, Beacon, EntityService) {
         EntityService.edit($scope, Beacon, "Beacon");
         $scope.delete = function () {
             EntityService.delete($scope.object, Beacon, function () {

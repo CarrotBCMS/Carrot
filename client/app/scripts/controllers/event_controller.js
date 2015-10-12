@@ -31,14 +31,14 @@ angular.module('Carrot')
 
 /**
  * @ngdoc function
- * @name Carrot.controller:EventViewController
+ * @name Carrot.controller:EventDetailController
  * @description
- * # EventViewController
+ * # EventDetailController
  *
  * Controller showing a single event
  */
 angular.module('Carrot')
-    .controller('EventViewController', function ($scope, $location, Event, Beacon, App, EntityService, $timeout) {
+    .controller('EventDetailController', function ($scope, $location, Event, Beacon, App, EntityService, $timeout) {
         EntityService.edit($scope, Event, "Event");
 
         // Multi select settings
