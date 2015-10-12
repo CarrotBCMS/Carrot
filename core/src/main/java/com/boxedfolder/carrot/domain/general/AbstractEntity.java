@@ -97,7 +97,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity> {
     }
 
     @Override
-    public int compareTo(AbstractEntity o) {
-        return dateCreated.compareTo(o.getDateCreated());
+    public int compareTo(AbstractEntity object) {
+        return dateCreated.compareTo(object.getDateCreated());
     }
 }
