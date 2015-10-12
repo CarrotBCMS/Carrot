@@ -6,5 +6,5 @@ spring:
         mode: LEGACYHTML5
         
 auth:
-    username: user
-    password: password
+    username: admin
+    password: carrot
