@@ -94,6 +94,17 @@ public abstract class Event extends AbstractNamedEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<App> apps = new HashSet<>();
 
+    @PreRemove
+    protected void onRemove() {
+        for (App app : apps) {
+            app.getEvents().remove(this);
+        }
+
+        for (Beacon beacon : beacons) {
+            beacon.getEvents().remove(this);
+        }
+    }
+
     public float getThreshold() {
         return threshold;
     }
