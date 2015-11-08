@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Entity
 public class Beacon extends AbstractNamedEntity {
     @JsonView(View.General.class)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     @NotNull
     private UUID uuid;
 
