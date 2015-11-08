@@ -1,6 +1,8 @@
 ![Carrot Logo](http://temp.boxedfolder.com/smartlogo_carrot.png =476x)
 
-Carrot is the beacon management system for everyone. It's build on top of the popular Spring framework und utilizes AngularJS as a frontend component. The following popular technologies are in use:
+Carrot is the beacon management system for everyone. It's build on top of the popular Spring framework und utilizes AngularJS as a frontend component. 
+
+The following technologies are in use:
 
 + Spring Boot
 + Spring Security
@@ -28,6 +30,14 @@ To integrate the client module into the core, run the grunt command ´grunt buil
 # Example
 
 An instance of carrot is running on Heroku under http://carrotbms.heroku.com. Login with _admin_ (username) and _carrot_ (password).
+
+# What's next?
+
+The following features are still missing:
+
++ (Advanced) user management - Currently we have a single user with credentials stored inside the application settings file. This should be replaced with a user and role management in the future.
+
++ Support for binary files - Carrots current support for text and notifications should be extended to allow file attachments. The syncing process needs to be overhauled for that purpose.
 
 # License
 
