@@ -1,7 +1,6 @@
 package com.boxedfolder.carrot.service.impl;
 
 import com.boxedfolder.carrot.domain.App;
-import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
@@ -118,19 +117,17 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         List<AnalyticsTransfer> output = new ArrayList<>();
         List<AnalyticsLog> logs = findAll(from, to);
         for (AnalyticsLog log : logs) {
-            for (Beacon beacon : log.getOccuredEvent().getBeacons()) {
-                AnalyticsTransfer transfer = new AnalyticsTransfer();
-                transfer.setId(beacon.getId());
-                transfer.setName(beacon.getName());
-                if (!output.contains(transfer)) {
-                    output.add(transfer);
-                } else {
-                    transfer = output.get(output.indexOf(transfer));
-                }
-                Integer value = transfer.getCount();
-                value++;
-                transfer.setCount(value);
+            AnalyticsTransfer transfer = new AnalyticsTransfer();
+            transfer.setId(log.getBeacon().getId());
+            transfer.setName(log.getBeacon().getName());
+            if (!output.contains(transfer)) {
+                output.add(transfer);
+            } else {
+                transfer = output.get(output.indexOf(transfer));
             }
+            Integer value = transfer.getCount();
+            value++;
+            transfer.setCount(value);
         }
 
         return output;
