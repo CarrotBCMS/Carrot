@@ -1,5 +1,6 @@
 package com.boxedfolder.carrot.domain;
 
+import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -32,6 +33,9 @@ public class Beacon extends AbstractNamedEntity {
     @JsonView(View.General.class)
     @NotNull
     private int minor;
+
+    @OneToMany(mappedBy = "beacon", cascade = CascadeType.REMOVE)
+    private Set<AnalyticsLog> logs;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)

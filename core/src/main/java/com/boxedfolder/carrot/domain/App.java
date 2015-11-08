@@ -1,5 +1,6 @@
 package com.boxedfolder.carrot.domain;
 
+import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,6 +25,9 @@ public class App extends AbstractNamedEntity {
 
     @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<>();
+
+    @OneToMany(mappedBy = "app", cascade = CascadeType.REMOVE)
+    private Set<AnalyticsLog> logs;
 
     @JsonView(View.General.class)
     public UUID getApplicationKey() {

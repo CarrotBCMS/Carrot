@@ -1,5 +1,6 @@
 package com.boxedfolder.carrot.domain;
 
+import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
 import com.boxedfolder.carrot.domain.util.DateTimeDeserializer;
 import com.boxedfolder.carrot.domain.util.DateTimeSerializer;
@@ -93,6 +94,9 @@ public abstract class Event extends AbstractNamedEntity {
     })
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<App> apps = new HashSet<>();
+
+    @OneToMany(mappedBy = "occuredEvent", cascade = CascadeType.REMOVE)
+    private Set<AnalyticsLog> logs;
 
     @PreRemove
     protected void onRemove() {
