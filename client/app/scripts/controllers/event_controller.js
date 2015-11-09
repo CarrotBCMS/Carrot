@@ -1,3 +1,8 @@
+/*
+ * Carrot - beacon management
+ * Copyright (C) 2015 Heiko Dreyer
+ */
+
 'use strict';
 
 var eventTypes = ['On Enter', 'On Exit', 'On Exit / On Exit'];
