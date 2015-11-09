@@ -35,9 +35,9 @@ An instance of carrot is running on Heroku under http://carrotbms.heroku.com. Lo
 
 The following features are still missing:
 
-+ (Advanced) user management - Currently we have a single user with credentials stored inside the application settings file. This should be replaced with a user and role management in the future.
++ __(Advanced) user management__ - Currently we have a single user with credentials stored inside the application settings file. This should be replaced with a proper user and role management in the future.
 
-+ Support for binary files - Carrots current support for text and notifications should be extended to allow file attachments. The syncing process needs to be overhauled for that purpose.
++ __Support for binary files__ - Carrot's current support for text and notifications should be extended to allow file attachments. The syncing process needs to be overhauled for that purpose.
 
 # License
 
