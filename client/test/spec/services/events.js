@@ -1,3 +1,8 @@
+/*
+ * Carrot - beacon management
+ * Copyright (C) 2015 Heiko Dreyer
+ */
+
 'use strict';
 
 describe('Service: Events', function () {
