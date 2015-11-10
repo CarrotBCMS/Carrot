@@ -57,9 +57,9 @@ public class SyncServiceImpl implements SyncService {
 
         // Build result
         Map<String, Object> result = new HashMap<>();
-        result.put("timestamp", System.currentTimeMillis() / 1000L);
-        result.put("beacons", beaconMap(timestamp, app));
-        result.put("events", eventMap(timestamp, app));
+        result.put(SyncService.Keys.TIMESTAMP_KEY, System.currentTimeMillis() / 1000L);
+        result.put(SyncService.Keys.BEACONS_KEY, beaconMap(timestamp, app));
+        result.put(SyncService.Keys.EVENTS_KEY, eventMap(timestamp, app));
 
         return result;
     }
@@ -67,10 +67,10 @@ public class SyncServiceImpl implements SyncService {
     private Map<String, Object> beaconMap(Long timestamp, App app) {
         DateTime dateTime = new DateTime(timestamp * 1000L);
         Map<String, Object> result = new HashMap<>();
-        result.put("createdOrUpdated", beaconRepository.findByDateUpdated(dateTime));
+        result.put(SyncService.Keys.CREATE_UPDATE_KEY, beaconRepository.findByDateUpdated(dateTime));
 
         // First sync, add empty list
-        result.put("deleted", timestamp > 0 ?
+        result.put(SyncService.Keys.DELETED_KEY, timestamp > 0 ?
                 logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Beacon.class) : new ArrayList<>());
 
         return result;
@@ -81,7 +81,7 @@ public class SyncServiceImpl implements SyncService {
         Map<String, Object> result = new HashMap<>();
         EventList eventList = new EventList();
         eventList.addAll(eventRepository.findByDateUpdated(dateTime, app));
-        result.put("createdOrUpdated", eventList);
+        result.put(SyncService.Keys.CREATE_UPDATE_KEY, eventList);
 
         // First sync? Add empty list...
         List<Long> deletedEvents = new ArrayList<>();
@@ -91,12 +91,12 @@ public class SyncServiceImpl implements SyncService {
             deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
             deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
 
-            // Check if there is an event with broken connections
+            // Check if there is an event with dangling connections
             List<RemovedRelationshipLog> logs = logRepository.findAll(dateTime, app.getId());
             deletedEvents.addAll(RemovedRelationshipLog.asEventList(logs));
         }
 
-        result.put("deleted", deletedEvents);
+        result.put(SyncService.Keys.DELETED_KEY, deletedEvents);
 
         return result;
     }

@@ -25,4 +25,12 @@ import java.util.Map;
  */
 public interface SyncService {
     Map<String, Object> sync(Long timestamp, String appKey);
+
+    interface Keys {
+        String TIMESTAMP_KEY = "timestamp";
+        String BEACONS_KEY = "beacons";
+        String EVENTS_KEY = "events";
+        String CREATE_UPDATE_KEY = "createdOrUpdated";
+        String DELETED_KEY = "deleted";
+    }
 }
