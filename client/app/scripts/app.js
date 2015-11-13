@@ -145,6 +145,7 @@ angular
         var user = $cookies.get("user");
 
         if (user !== undefined) {
+            user = JSON.parse(user);
             $rootScope.user = user;
             $http.defaults.headers.common["x-auth-token"] = user.token;
             $location.path(originalPath);
