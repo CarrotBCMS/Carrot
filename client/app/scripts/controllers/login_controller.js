@@ -14,10 +14,12 @@
  * Controller to authorize user(s)
  */
 angular.module('Carrot')
-    .controller('LoginController', function ($scope, $http, $cookieStore, $location, $rootScope, LoginService, flash) {
+    .controller('LoginController', function ($scope, $http, $cookies, $location, $rootScope, LoginService, flash) {
         $scope.login = function () {
             LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function (user) {
-                $cookieStore.put('user', user);
+                $cookies.put('user', user, {
+                    expires: moment().add(1, "hours").toDate()
+                });
                 $rootScope.user = user;
                 $http.defaults.headers.common['x-auth-token'] = user.token;
                 $location.path("/");

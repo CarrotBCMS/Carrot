@@ -108,7 +108,7 @@ angular
             .otherwise({
                 redirectTo: "/login"
             });
-    }).run(function ($rootScope, $http, $location, $cookieStore, $log) {
+    }).run(function ($rootScope, $http, $location, $cookies, $log) {
         /* Route changes */
         $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
             if (next.$$route) {
@@ -131,7 +131,7 @@ angular
         $rootScope.logout = function () {
             delete $http.defaults.headers.common["x-auth-token"];
             delete $rootScope.user;
-            $cookieStore.remove("user");
+            $cookies.remove("user");
             $location.path("/login");
         };
 
@@ -142,7 +142,7 @@ angular
         /** User related **/
         /* Try getting valid user session cookie or go to login page */
         var originalPath = $location.path();
-        var user = $cookieStore.get("user");
+        var user = $cookies.get("user");
 
         if (user !== undefined) {
             $rootScope.user = user;
