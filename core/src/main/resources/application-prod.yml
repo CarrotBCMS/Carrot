@@ -7,9 +7,20 @@ spring:
 
     datasource:
         dataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
-        url: jdbc:mysql://localhost:3306/carrot_demo
+        url: jdbc:mysql://localhost:3306/carrot_demo?autoReconnect=true
         username: carrot
         password: carrot
+        initialSize: 34
+        maxActive: 377
+        maxIdle: 233
+        minIdle: 89
+        timeBetweenEvictionRunsMillis: 34000
+        minEvictableIdleTimeMillis: 55000
+        validationQuery: "SELECT 1"
+        validationInterval: 34000
+        testOnBorrow: true
+        removeAbandoned: true
+        removeAbandonedTimeout: 55
 
     jpa:
         database-platform: org.hibernate.dialect.MySQL5Dialect
