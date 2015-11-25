@@ -5,7 +5,7 @@
 
 'use strict';
 
-var eventTypes = ['On Enter', 'On Exit', 'On Exit / On Exit'];
+var eventTypes = ['On Enter', 'On Exit', 'On Enter / On Exit'];
 
 /**
  * @ngdoc function
