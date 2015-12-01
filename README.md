@@ -41,6 +41,8 @@ The following features are still missing:
 
 + __Support for binary files__ - Carrot's current support for text and notifications should be extended to allow file attachments. The syncing process needs to be overhauled for that purpose.
 
++ __Additional documentation__
+
 # License
 
 Carrot is released under version 3 of the [GPL](http://www.gnu.org/licenses/gpl-3.0.en.html) or any later version.
