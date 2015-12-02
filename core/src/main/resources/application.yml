@@ -4,3 +4,13 @@ spring:
 
     thymeleaf:
         mode: LEGACYHTML5
+
+    mail:
+        host: localhost
+        port: 1025
+        user:
+        password:
+        protocol: smtp
+        tls: false
+        auth: false
+        from: mail@carrot.re

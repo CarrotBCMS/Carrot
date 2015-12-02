@@ -1,3 +1,6 @@
+app:
+    baseUrl: http://app.carrot.re
+
 spring:
     profiles: prod
 
@@ -35,6 +38,12 @@ spring:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
+
+    mail:
+        smtp:
+            host: localhost
+            port: 1025
+            from: mail@carrot.re
 
 logging:
     level:

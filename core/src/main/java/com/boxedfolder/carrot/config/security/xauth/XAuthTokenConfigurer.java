@@ -18,6 +18,7 @@
 
 package com.boxedfolder.carrot.config.security.xauth;
 
+import com.boxedfolder.carrot.config.security.AuthenticationHelper;
 import com.boxedfolder.carrot.config.security.filter.XAuthTokenFilter;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,14 +35,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 public class XAuthTokenConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     private UserDetailsService detailsService;
+    private AuthenticationHelper authenticationHelper;
 
-    public XAuthTokenConfigurer(UserDetailsService detailsService) {
+    public XAuthTokenConfigurer(UserDetailsService detailsService, AuthenticationHelper authenticationHelper) {
         this.detailsService = detailsService;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        XAuthTokenFilter customFilter = new XAuthTokenFilter(detailsService);
+        XAuthTokenFilter customFilter = new XAuthTokenFilter(detailsService, authenticationHelper);
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

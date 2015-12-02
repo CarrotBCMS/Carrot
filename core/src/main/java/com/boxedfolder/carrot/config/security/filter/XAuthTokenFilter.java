@@ -18,9 +18,9 @@
 
 package com.boxedfolder.carrot.config.security.filter;
 
+import com.boxedfolder.carrot.config.security.AuthenticationHelper;
 import com.boxedfolder.carrot.config.security.xauth.TokenUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.StringUtils;
@@ -44,11 +44,13 @@ import java.io.IOException;
  * @author Heiko Dreyer
  */
 public class XAuthTokenFilter extends GenericFilterBean {
+    private AuthenticationHelper authenticationHelper;
     private final UserDetailsService detailsService;
     private final TokenUtils tokenUtils = new TokenUtils();
 
-    public XAuthTokenFilter(UserDetailsService userDetailsService) {
+    public XAuthTokenFilter(UserDetailsService userDetailsService, AuthenticationHelper authenticationHelper) {
         this.detailsService = userDetailsService;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class XAuthTokenFilter extends GenericFilterBean {
                     UsernamePasswordAuthenticationToken token =
                             new UsernamePasswordAuthenticationToken(details, details.getPassword(),
                                     details.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(token);
+                    authenticationHelper.setAuthentication(token);
                 }
             }
             filterChain.doFilter(request, response);

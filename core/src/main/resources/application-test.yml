@@ -1,3 +1,6 @@
+app:
+    baseUrl: http://app.carrot.re
+
 spring:
   profiles: test
 
