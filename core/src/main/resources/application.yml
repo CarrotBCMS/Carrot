@@ -13,4 +13,4 @@ spring:
         protocol: smtp
         tls: false
         auth: false
-        from: mail@carrot.re
+        from: noreply@carrot.re

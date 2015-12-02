@@ -43,7 +43,7 @@ spring:
         smtp:
             host: localhost
             port: 1025
-            from: mail@carrot.re
+            from: noreply@carrot.re
 
 logging:
     level:
