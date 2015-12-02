@@ -4,7 +4,3 @@ spring:
 
     thymeleaf:
         mode: LEGACYHTML5
-        
-auth:
-    username: admin
-    password: carrot
