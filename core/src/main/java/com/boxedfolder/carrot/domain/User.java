@@ -60,7 +60,7 @@ public class User extends AbstractEntity implements UserDetails {
     }
 
     public String toString() {
-        return "{email:" + getUsername() + ", enabled:'" + isEnabled() + "}";
+        return "{enabled:" + isEnabled() + ", username:'" + getUsername() + "', password:'" + getPassword() + "'}";
     }
 
     @Override
@@ -118,6 +118,10 @@ public class User extends AbstractEntity implements UserDetails {
     @JsonProperty
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     private String role(String i) {
