@@ -59,7 +59,7 @@ angular
         });
 
         $routeProvider
-        // Login
+            // Login
             .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginController'
@@ -105,6 +105,13 @@ angular
                 templateUrl: 'views/events_edit.html',
                 controller: 'EventDetailController'
             })
+
+            // User
+            .when('/activate', {
+                templateUrl: 'views/user/activation.html',
+                controller: 'ActivationController'
+            })
+
             .when('/register', {
                 templateUrl: 'views/user/register.html',
                 controller: 'RegisterController'
