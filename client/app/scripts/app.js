@@ -154,6 +154,7 @@ angular
 
     /** User related **/
     /* Try getting valid user session cookie or go to login page */
+    var allowedPaths = ["/activate", "/reset"];
     var originalPath = $location.path();
     var user = $cookies.get("user");
 
@@ -162,10 +163,12 @@ angular
         $rootScope.user = user;
         $http.defaults.headers.common["x-auth-token"] = user.token;
         $location.path(originalPath);
-    } else if (originalPath == "/register") {
-        $location.path(originalPath);
     } else {
-        $location.path("/login");
+        if (allowedPaths.indexOf(originalPath) != -1) {
+            $location.path(originalPath);
+        } else {
+            $location.path("/login");
+        }
     }
 });
 

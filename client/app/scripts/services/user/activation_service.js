@@ -27,7 +27,7 @@ angular.module('Carrot')
         return {
             activate: function (token, email, callback) {
                 // Activate account
-                $http.get(baseURL + '/rest/activate?email=' + email + '&token=' + token).
+                $http.get(baseURL + '/client/activate?email=' + email + '&token=' + token).
                     success(function (data, status, headers, config) {
                         $log.info("Successfully activated.");
                         callbackReset();
@@ -40,7 +40,7 @@ angular.module('Carrot')
                     });
             },
             forget: function (email, callback) {
-                $http.get(baseURL + '/rest/forgot?email=' + email).
+                $http.get(baseURL + '/client/forgot?email=' + email).
                     success(function (data, status, headers, config) {
                         $log.info("Successfully resetted password.");
                         callbackReset();
@@ -53,7 +53,7 @@ angular.module('Carrot')
                     });
             },
             reset: function (token, email, callback) {
-                $http.get(baseURL + '/rest/reset?email=' + email + '&token=' + token).
+                $http.get(baseURL + '/client/reset?email=' + email + '&token=' + token).
                     success(function (data, status, headers, config) {
                         $log.info("Successfully resetted password.");
                         callbackReset();
