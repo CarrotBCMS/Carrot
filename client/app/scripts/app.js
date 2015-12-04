@@ -36,7 +36,7 @@ angular
     ])
     .config(function ($routeProvider, $httpProvider, $locationProvider, flashProvider, cfpLoadingBarProvider) {
         // Enable html5 mode
-        //$locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
 
         // General
         flashProvider.errorClassnames.push('alert-danger');
