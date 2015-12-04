@@ -7,12 +7,12 @@
 
 /**
  * @ngdoc service
- * @name Carrot.Beacon
+ * @name Carrot.User
  * @description
- * # Beacon
+ * # User
  * Factory in Carrot.
  */
 angular.module('Carrot')
-    .factory('Beacon', function ($resource) {
-        return $resource(baseURL + '/client/beacons/:id');
+    .factory('User', function ($resource) {
+        return $resource(baseURL + '/rest/users/:id');
     });

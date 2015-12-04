@@ -28,6 +28,7 @@ angular
         'angular-loading-bar',
         'ui.bootstrap',
         'angular.validators',
+        'validation.match',
         'uiSwitch',
         'ui.bootstrap.datetimepicker',
         'oi.multiselect',
@@ -46,18 +47,19 @@ angular
         //cfpLoadingBarProvider.latencyThreshold = 200;
 
         $httpProvider.interceptors.push(function ($q, $rootScope, flash) {
-            return { 'responseError': function (response) {
-                if (response.status == 403) {
-                    flash.error = "Ups, you are not logged in.";
-                    $rootScope.logout();
-                }
+            return {
+                'responseError': function (response) {
+                    if (response.status == 403) {
+                        flash.error = "Ups, you are not logged in.";
+                        $rootScope.logout();
+                    }
                     return $q.reject(response);
                 }
             };
         });
 
         $routeProvider
-            // Login
+        // Login
             .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginController'
@@ -103,55 +105,61 @@ angular
                 templateUrl: 'views/events_edit.html',
                 controller: 'EventDetailController'
             })
+            .when('/register', {
+                templateUrl: 'views/user/register.html',
+                controller: 'RegisterController'
+            })
 
             // General
             .otherwise({
                 redirectTo: "/login"
             });
     }).run(function ($rootScope, $http, $location, $cookies, $log) {
-        /* Route changes */
-        $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
-            if (next.$$route) {
-                var user = $rootScope.user;
-                if (user && next.$$route.originalPath == "/login") {
-                    $location.path('/')
-                }
+    /* Route changes */
+    $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
+        if (next.$$route) {
+            var user = $rootScope.user;
+            if (user && next.$$route.originalPath == "/login") {
+                $location.path('/')
             }
-        });
-
-        /** Global functions **/
-        $rootScope.isActive = function (viewLocation) {
-            if (viewLocation == "/") {
-                return viewLocation === $location.path();
-            }
-
-            return $location.path().indexOf(viewLocation) > -1;
-        };
-
-        $rootScope.logout = function () {
-            delete $http.defaults.headers.common["x-auth-token"];
-            delete $rootScope.user;
-            $cookies.remove("user");
-            $location.path("/login");
-        };
-
-        $rootScope.go = function (path) {
-            $location.path(path);
-        };
-
-        /** User related **/
-        /* Try getting valid user session cookie or go to login page */
-        var originalPath = $location.path();
-        var user = $cookies.get("user");
-
-        if (user !== undefined) {
-            user = JSON.parse(user);
-            $rootScope.user = user;
-            $http.defaults.headers.common["x-auth-token"] = user.token;
-            $location.path(originalPath);
-        } else {
-            $location.path("/login");
         }
     });
+
+    /** Global functions **/
+    $rootScope.isActive = function (viewLocation) {
+        if (viewLocation == "/") {
+            return viewLocation === $location.path();
+        }
+
+        return $location.path().indexOf(viewLocation) > -1;
+    };
+
+    $rootScope.logout = function () {
+        delete $http.defaults.headers.common["x-auth-token"];
+        delete $rootScope.user;
+        $cookies.remove("user");
+        $location.path("/login");
+    };
+
+    $rootScope.go = function (path) {
+        $location.path(path);
+    };
+
+    /** User related **/
+    /* Try getting valid user session cookie or go to login page */
+    var originalPath = $location.path();
+    var user = $cookies.get("user");
+
+    if (user !== undefined) {
+        user = JSON.parse(user);
+        $rootScope.user = user;
+        $http.defaults.headers.common["x-auth-token"] = user.token;
+        $location.path(originalPath);
+    } else if (originalPath == "/register") {
+        $location.path(originalPath);
+    } else {
+        $location.path("/login");
+    }
+});
 
 var baseURL = "http://localhost:8080";

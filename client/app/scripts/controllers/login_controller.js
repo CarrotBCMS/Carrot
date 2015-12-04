@@ -15,6 +15,10 @@
  */
 angular.module('Carrot')
     .controller('LoginController', function ($scope, $http, $cookies, $location, $rootScope, LoginService, flash,$log) {
+        $scope.register = function() {
+            $location.path("/register");
+        };
+
         $scope.login = function () {
             LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function (user) {
                 $cookies.put('user', JSON.stringify(user), {
