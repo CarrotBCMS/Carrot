@@ -34,7 +34,9 @@ public class Routes {
             "/events/{id:\\w+}",
             "/apps",
             "/apps/{id:\\w+}",
-            "/login"
+            "/login",
+            "/activate",
+            "/register"
     })
     public String index() {
         return "index";
