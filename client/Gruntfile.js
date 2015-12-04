@@ -7,13 +7,16 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function (grunt) {                        
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
   // Time how long tasks take. Can help when optimizing build times
-  require('time-grunt')(grunt);
+  require('time-grunt')(grunt);          
+
+  // Define this for live reloading of different paths
+  var modRewrite = require('connect-modrewrite');
 
   // Configurable paths for the application
   var appConfig = {
@@ -76,7 +79,8 @@ module.exports = function (grunt) {
         options: {
           open: true,
           middleware: function (connect) {
-            return [
+            return [  
+			  modRewrite(['^[^\\.]*$ /index.html [L]']),
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
