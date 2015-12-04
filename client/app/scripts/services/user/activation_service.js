@@ -12,7 +12,7 @@
  * # ActivationService
  * Factory in Carrot.
  */
-angular.module('papayaApp')
+angular.module('Carrot')
     .factory('ActivationService', function ($http, $location, $log) {
         var callbackReset = function () {
             // Clear params

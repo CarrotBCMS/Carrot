@@ -30,7 +30,7 @@ angular.module('Carrot')
             }, function (httpResponse) {
                 flash.error = "There was an error processing your request.";
                 if (httpResponse.status == 403 || httpResponse.status == 401) {
-                    flash.error = "Wrong username or password.";
+                    flash.error = "Your email and password combination has not been found.";
                 }
             });
         };
