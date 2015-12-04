@@ -42,9 +42,8 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserRepository> imple
     private AuthenticationHelper authenticationHelper;
     private Mailer mailer;
 
-    @NotNull
-    @Value("${app.baseUrl}")
-    private String baseUrl = "http://app.carrot.re";
+    @Value("${app.baseUrl:}")
+    private String baseUrl;
 
     @Override
     public User findByEmail(String email) {
