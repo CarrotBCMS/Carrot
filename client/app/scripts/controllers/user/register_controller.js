@@ -15,8 +15,8 @@
  */
 angular.module('Carrot')
     .controller('RegisterController', function ($scope, $rootScope, $location, flash, User) {
+        $scope.user = {};
         $scope.registerUser = function() {
-            $scope.user = {};
             User.save($scope.user, function () {
                 $location.path("/login");
                 $rootScope.$on('$routeChangeSuccess', function () {

@@ -14,5 +14,5 @@
  */
 angular.module('Carrot')
     .factory('User', function ($resource) {
-        return $resource(baseURL + '/rest/users/:id');
+        return $resource(baseURL + '/client/users/:id');
     });

@@ -20,6 +20,7 @@ package com.boxedfolder.carrot.config.security;
 
 import com.boxedfolder.carrot.config.security.service.UserDetailService;
 import com.boxedfolder.carrot.config.security.xauth.XAuthTokenConfigurer;
+import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +57,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // Allow posting logs
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/client/analytics/logs/**").permitAll();
+
+        // There should be a special role for user specific actions
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/client/users").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/client/users/**").denyAll();
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/client/users/**").denyAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/client/users/**").hasRole(User.ROLE_USER);
 
         // Define secured routes here
         String[] securedEndpoints = {
@@ -64,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/client/beacons/**",
                 "/client/apps/**",
                 "/client/events/**",
-                "/client/analytics/**"
+                "/client/analytics/**",
         };
 
         for (String endpoint : securedEndpoints) {
