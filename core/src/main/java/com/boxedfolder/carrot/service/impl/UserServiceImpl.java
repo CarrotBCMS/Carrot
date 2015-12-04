@@ -165,7 +165,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserRepository> imple
             return;
         }
 
-        String subject = "Your Papaya Activation Link";
+        String subject = "Your Carrot Activation Link";
         String activationLink = getActivationLink(user.getEmail(), user.getActivationToken(), getBaseUrl());
         mailer.sendActivationMail(user.getEmail(), subject, activationLink);
     }
@@ -175,7 +175,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserRepository> imple
             return;
         }
 
-        String subject = "Reset your Papaya Password";
+        String subject = "Reset your Carrot Password";
         String link = getResetPasswordLink(user.getEmail(), user.getResetToken(), getBaseUrl());
         mailer.sendResetPasswordMail(user.getEmail(), subject, link);
     }
@@ -186,7 +186,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserRepository> imple
         }
 
         // Generate random token, link and mail them to the user
-        String subject = "Your Papaya Password";
+        String subject = "Your Carrot Password";
         mailer.sendNewPasswordEmail(user.getEmail(), subject, newPassword);
     }
 
