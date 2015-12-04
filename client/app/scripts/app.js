@@ -36,7 +36,7 @@ angular
     ])
     .config(function ($routeProvider, $httpProvider, $locationProvider, flashProvider, cfpLoadingBarProvider) {
         // Enable html5 mode
-        $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
 
         // General
         flashProvider.errorClassnames.push('alert-danger');
@@ -117,6 +117,16 @@ angular
                 controller: 'RegisterController'
             })
 
+            .when('/reset', {
+                templateUrl: 'views/user/reset.html',
+                controller: 'ResetController'
+            })
+
+            .when('/forgot', {
+                templateUrl: 'views/user/forget.html',
+                controller: 'ForgetController'
+            })
+
             // General
             .otherwise({
                 redirectTo: "/login"
@@ -154,7 +164,7 @@ angular
 
     /** User related **/
     /* Try getting valid user session cookie or go to login page */
-    var allowedPaths = ["/activate", "/reset"];
+    var allowedPaths = ["/activate", "/reset", "/forgot"];
     var originalPath = $location.path();
     var user = $cookies.get("user");
 
