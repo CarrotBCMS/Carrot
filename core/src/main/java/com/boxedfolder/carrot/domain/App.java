@@ -19,7 +19,7 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
-import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
+import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -35,10 +35,10 @@ import java.util.UUID;
  */
 @Table(name = "app")
 @Entity
-public class App extends AbstractNamedEntity {
+public class App extends AbstractUserRelatedEntity {
     @JsonIgnore
     @Column(name = "app_key")
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID applicationKey;
 
     @ManyToMany(mappedBy = "apps", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)

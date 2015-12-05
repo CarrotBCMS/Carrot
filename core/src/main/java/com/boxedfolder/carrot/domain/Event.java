@@ -19,7 +19,7 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
-import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
+import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
 import com.boxedfolder.carrot.domain.util.DateTimeDeserializer;
 import com.boxedfolder.carrot.domain.util.DateTimeSerializer;
 import com.boxedfolder.carrot.domain.util.View;
@@ -47,7 +47,7 @@ import java.util.Set;
 @DiscriminatorColumn(name = "type")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity(name = "event")
-public abstract class Event extends AbstractNamedEntity {
+public abstract class Event extends AbstractUserRelatedEntity {
     public static final double TYPE_ENTER = 0;
     public static final double TYPE_EXIT = 1;
     public static final double TYPE_BOTH = 2;

@@ -19,7 +19,7 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
-import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
+import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -38,7 +38,7 @@ import java.util.UUID;
  */
 @Table(name = "beacon")
 @Entity
-public class Beacon extends AbstractNamedEntity {
+public class Beacon extends AbstractUserRelatedEntity {
     @JsonView(View.General.class)
     @Type(type = "org.hibernate.type.UUIDCharType")
     @NotNull
