@@ -44,6 +44,9 @@ public class InitialDataSeeder {
         if (userService.count() == 0) {
             log.info("Seeding database with initial data -> email: mail@carrot.re, password: password");
             userService.createUser("mail@carrot.re", "password", true);
+
+            log.info("Seeding database with initial data -> email: test@carrot.re, password: password");
+            userService.createUser("test@carrot.re", "password", true);
         }
     }
 

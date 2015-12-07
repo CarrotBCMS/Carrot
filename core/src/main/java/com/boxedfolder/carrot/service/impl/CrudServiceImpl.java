@@ -22,7 +22,6 @@ import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.exceptions.GeneralExceptions;
 import com.boxedfolder.carrot.repository.OrderedRepository;
 import com.boxedfolder.carrot.service.CrudService;
-import org.joda.time.DateTime;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 

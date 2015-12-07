@@ -18,8 +18,13 @@
 
 package com.boxedfolder.carrot;
 
+import com.boxedfolder.carrot.aop.UserDataInterceptor;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.hibernate.EmptyInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -28,6 +33,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+
+import javax.persistence.EntityManagerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -35,6 +45,8 @@ import org.springframework.http.HttpStatus;
 @EnableConfigurationProperties
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
+    private EntityManagerFactory entityManagerFactory;
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class); // This is necessary for war deployment
@@ -56,5 +68,23 @@ public class Application extends SpringBootServletInitializer {
                 container.addErrorPages(error401Page, error404Page, error500Page);
             }
         };
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            EntityManagerFactoryBuilder factory,
+            DataSource dataSource,
+            JpaProperties properties)
+    {
+        Map<String, Object> jpaProperties = new HashMap<String, Object>();
+        jpaProperties.putAll(properties.getHibernateProperties(dataSource));
+        jpaProperties.put("hibernate.ejb.interceptor", hibernateInterceptor());
+        return factory.dataSource(dataSource).packages("com.boxedfolder.carrot")
+                      .properties((Map)jpaProperties).build();
+    }
+
+    @Bean
+    public EmptyInterceptor hibernateInterceptor() {
+        return new UserDataInterceptor();
     }
 }

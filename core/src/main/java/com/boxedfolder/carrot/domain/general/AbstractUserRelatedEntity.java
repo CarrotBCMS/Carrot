@@ -22,13 +22,14 @@ import com.boxedfolder.carrot.domain.User;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @MappedSuperclass
 public class AbstractUserRelatedEntity extends AbstractNamedEntity {
-    @OneToMany
+    @OneToOne
     private User user;
 
     public User getUser() {
