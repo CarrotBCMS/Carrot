@@ -22,7 +22,7 @@ spring:
         database-platform: org.hibernate.dialect.MySQL5Dialect
         database: MYSQL
         openInView: false
-        show_sql: false
+        show_sql: true
         generate-ddl: false
         hibernate:
             ddl-auto: update

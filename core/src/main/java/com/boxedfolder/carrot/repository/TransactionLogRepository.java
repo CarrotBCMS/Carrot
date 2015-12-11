@@ -18,8 +18,8 @@
 
 package com.boxedfolder.carrot.repository;
 
-import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
+import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import org.joda.time.DateTime;
 
 import java.util.List;

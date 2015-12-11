@@ -18,9 +18,6 @@
 
 package com.boxedfolder.carrot;
 
-import org.hibernate.Filter;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,18 +28,15 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @EnableConfigurationProperties
 @SpringBootApplication
+@EnableTransactionManagement
 public class Application extends SpringBootServletInitializer {
-    private EntityManagerFactory entityManagerFactory;
-
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class); // This is necessary for war deployment
@@ -64,18 +58,5 @@ public class Application extends SpringBootServletInitializer {
                 container.addErrorPages(error401Page, error404Page, error500Page);
             }
         };
-    }
-
-    @Bean
-    public SessionFactory getSessionFactory() {
-        if (entityManagerFactory.unwrap(SessionFactory.class) == null) {
-            throw new NullPointerException("factory is not a hibernate factory");
-        }
-        return entityManagerFactory.unwrap(SessionFactory.class);
-    }
-
-    @Inject
-    public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
     }
 }

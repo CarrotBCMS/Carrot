@@ -19,10 +19,6 @@
 package com.boxedfolder.carrot.domain.general;
 
 import com.boxedfolder.carrot.domain.User;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.Filters;
-import org.hibernate.annotations.ParamDef;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
@@ -31,10 +27,6 @@ import javax.persistence.OneToOne;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @MappedSuperclass
-@FilterDef(name = "filterByEmail", parameters = @ParamDef(name = "email", type = "string"))
-@Filters({
-        @Filter(name = "filterByEmail", condition = "user.email = :email"),
-})
 public class AbstractUserRelatedEntity extends AbstractNamedEntity {
     @OneToOne
     private User user;

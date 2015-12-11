@@ -70,9 +70,6 @@ public class XAuthTokenFilter extends GenericFilterBean {
                             new UsernamePasswordAuthenticationToken(details, details.getPassword(),
                                     details.getAuthorities());
                     authenticationHelper.setAuthentication(token);
-
-                    // Add Hibernate filter
-                    authenticationHelper.setupHibernateFilter(details.getUsername());
                 }
             }
             filterChain.doFilter(request, response);

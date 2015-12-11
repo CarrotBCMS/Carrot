@@ -18,7 +18,6 @@
 
 package com.boxedfolder.carrot.repository;
 
-import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.Query;
