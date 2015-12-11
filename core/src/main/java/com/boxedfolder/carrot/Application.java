@@ -18,13 +18,11 @@
 
 package com.boxedfolder.carrot;
 
-import com.boxedfolder.carrot.aop.UserDataInterceptor;
-import org.apache.tomcat.jdbc.pool.DataSource;
-import org.hibernate.EmptyInterceptor;
+import org.hibernate.Filter;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.orm.jpa.EntityManagerFactoryBuilder;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -33,11 +31,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -71,20 +67,15 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            EntityManagerFactoryBuilder factory,
-            DataSource dataSource,
-            JpaProperties properties)
-    {
-        Map<String, Object> jpaProperties = new HashMap<String, Object>();
-        jpaProperties.putAll(properties.getHibernateProperties(dataSource));
-        jpaProperties.put("hibernate.ejb.interceptor", hibernateInterceptor());
-        return factory.dataSource(dataSource).packages("com.boxedfolder.carrot")
-                      .properties((Map)jpaProperties).build();
+    public SessionFactory getSessionFactory() {
+        if (entityManagerFactory.unwrap(SessionFactory.class) == null) {
+            throw new NullPointerException("factory is not a hibernate factory");
+        }
+        return entityManagerFactory.unwrap(SessionFactory.class);
     }
 
-    @Bean
-    public EmptyInterceptor hibernateInterceptor() {
-        return new UserDataInterceptor();
+    @Inject
+    public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 }
