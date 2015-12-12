@@ -27,6 +27,6 @@ import java.util.UUID;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Repository
-public interface AppRepository extends OrderedRepository<App> {
+public interface AppRepository extends UserRelatedRepository<App> {
     App findByApplicationKey(UUID appKey);
 }

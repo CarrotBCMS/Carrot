@@ -28,6 +28,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -58,5 +59,10 @@ public class Application extends SpringBootServletInitializer {
                 container.addErrorPages(error401Page, error404Page, error500Page);
             }
         };
+    }
+
+    @Bean
+    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
     }
 }

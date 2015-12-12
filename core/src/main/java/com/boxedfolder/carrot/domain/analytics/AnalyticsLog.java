@@ -22,6 +22,7 @@ import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.domain.general.AbstractEntity;
+import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -35,7 +36,7 @@ import javax.persistence.Table;
  */
 @Table(name = "analytics_log")
 @Entity
-public class AnalyticsLog extends AbstractEntity {
+public class AnalyticsLog extends AbstractUserRelatedEntity {
     @JsonView(View.Meta.class)
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "event")

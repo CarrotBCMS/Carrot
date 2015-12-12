@@ -30,7 +30,7 @@ import java.util.UUID;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Repository
-public interface BeaconRepository extends OrderedRepository<Beacon> {
+public interface BeaconRepository extends UserRelatedRepository<Beacon> {
     Beacon findFirstByUuidAndMajorAndMinor(UUID uuid, int major, int minor);
 
     @Query("SELECT DISTINCT b FROM Beacon b WHERE b.dateUpdated > ?1")

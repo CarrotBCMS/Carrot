@@ -18,6 +18,7 @@
 
 package com.boxedfolder.carrot.repository.impl;
 
+import com.boxedfolder.carrot.config.security.AuthenticationHelper;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
@@ -26,6 +27,7 @@ import com.boxedfolder.carrot.repository.AnalyticsLogRepository;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -41,6 +43,7 @@ import java.util.List;
 @Transactional
 public class AnalyticsLogRepositoryImpl implements AnalyticsLogRepository {
     private EntityManager entityManager;
+    private AuthenticationHelper authenticationHelper;
 
     @Override
     public long count() {
@@ -102,15 +105,21 @@ public class AnalyticsLogRepositoryImpl implements AnalyticsLogRepository {
 
     @Override
     public List<AnalyticsLog> findAll(DateTime from, DateTime to) {
-        return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.dateCreated BETWEEN :from AND :to", AnalyticsLog.class)
+        return entityManager.createQuery("SELECT a FROM AnalyticsLog a WHERE a.user = :user AND (a.dateCreated BETWEEN :from AND :to)", AnalyticsLog.class)
                             .setParameter("from", from)
                             .setParameter("to", to)
+                            .setParameter("user", authenticationHelper.getCurrentUser())
                             .getResultList();
     }
 
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
+    }
+
+    @Inject
+    public void setAuthenticationHelper(AuthenticationHelper authenticationHelper) {
+        this.authenticationHelper = authenticationHelper;
     }
 
     private TypedQuery<Long> getCountQuery(Class clazz) {

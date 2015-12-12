@@ -20,7 +20,6 @@ package com.boxedfolder.carrot.aop;
 
 import com.boxedfolder.carrot.config.security.AuthenticationHelper;
 import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
-import com.boxedfolder.carrot.repository.UserRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -42,19 +41,14 @@ public class RepositoryUserFilterAspect {
     private static final Logger logger = LoggerFactory.getLogger(RepositoryUserFilterAspect.class);
     private AuthenticationHelper authenticationHelper;
 
-    @Pointcut("execution(* com.boxedfolder.carrot.repository.OrderedRepository+.find*(..))")
+    @Pointcut("execution(* com.boxedfolder.carrot.repository.UserRelatedRepository+.find*(..))")
     public void findMethod() {
     }
 
     @Around("findMethod()")
     public Object aroundFindMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Object returnValue = proceedingJoinPoint.proceed();
-        // Bail out if this is a call from UserRepository
-        if (proceedingJoinPoint.getSignature().getDeclaringType() == UserRepository.class) {
-            return returnValue;
-        }
-
         logger.debug("Starting find method: " + proceedingJoinPoint.toString());
+        Object returnValue = proceedingJoinPoint.proceed();
         AbstractUserRelatedEntity entity = null;
         String userEmail = authenticationHelper.getCurrentUser().getEmail();
 
