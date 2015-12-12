@@ -20,6 +20,7 @@ package com.boxedfolder.carrot.aop;
 
 import com.boxedfolder.carrot.config.security.AuthenticationHelper;
 import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
+import com.boxedfolder.carrot.repository.UserRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -46,43 +47,46 @@ public class RepositoryUserFilterAspect {
     }
 
     @Around("findMethod()")
-    public Object aroundFindMethod(ProceedingJoinPoint proceedingJoinPoint) {
-        logger.info("Starting find method: " + proceedingJoinPoint.toString());
-        Object returnValue = null;
-        try {
-            AbstractUserRelatedEntity entity = null;
-            returnValue = proceedingJoinPoint.proceed();
-            String userEmail = authenticationHelper.getCurrentUser().getEmail();
+    public Object aroundFindMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        Object returnValue = proceedingJoinPoint.proceed();
+        // Bail out if this is a call from UserRepository
+        if (proceedingJoinPoint.getSignature().getDeclaringType() == UserRepository.class) {
+            return returnValue;
+        }
 
-            if (returnValue instanceof AbstractUserRelatedEntity) {
-                logger.info("Return value is single entity");
-                entity = (AbstractUserRelatedEntity)returnValue;
-                if (entity.getUser() != authenticationHelper.getCurrentUser()) {
-                    return null;
-                }
+        logger.debug("Starting find method: " + proceedingJoinPoint.toString());
+        AbstractUserRelatedEntity entity = null;
+        String userEmail = authenticationHelper.getCurrentUser().getEmail();
+
+        // This is a single entity
+        if (returnValue instanceof AbstractUserRelatedEntity) {
+            logger.debug("Return value is single entity");
+            entity = (AbstractUserRelatedEntity)returnValue;
+            if (entity.getUser() == null ||
+                    !entity.getUser().getEmail().equals(userEmail)) {
+                return null;
             }
+        }
 
-            if (returnValue instanceof Iterable) {
-                logger.info("Return value is List or Iterator");
-                List returnEntites = new ArrayList();
-                Iterable entities = (Iterable)returnValue;
-                for (Object object : entities) {
-                    if (object instanceof AbstractUserRelatedEntity) {
-                        entity = (AbstractUserRelatedEntity)object;
-                        if (entity.getUser() != null &&
-                                entity.getUser().getEmail().equals(userEmail)) {
-                            returnEntites.add(entity);
-                        }
+        // This is a collection
+        if (returnValue instanceof Iterable) {
+            logger.debug("Return value is List or Iterator");
+            List returnEntites = new ArrayList();
+            Iterable entities = (Iterable)returnValue;
+            for (Object object : entities) {
+                if (object instanceof AbstractUserRelatedEntity) {
+                    entity = (AbstractUserRelatedEntity)object;
+                    if (entity.getUser() != null &&
+                            entity.getUser().getEmail().equals(userEmail)) {
+                        returnEntites.add(entity);
                     }
                 }
-
-                return returnEntites;
             }
 
-            logger.info("Return value: " + returnValue.toString());
-        } catch (Throwable e) {
-            e.toString();
+            return returnEntites;
         }
+
+        logger.debug("Return value: " + returnValue.toString());
 
         return returnValue;
     }
