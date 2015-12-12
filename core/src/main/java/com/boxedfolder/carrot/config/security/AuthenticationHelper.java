@@ -20,9 +20,6 @@ package com.boxedfolder.carrot.config.security;
 
 import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.service.UserService;
-import org.hibernate.Filter;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +32,6 @@ import javax.inject.Inject;
  */
 @Component
 public class AuthenticationHelper {
-    private SessionFactory sessionFactory;
     private UserService userService;
     private AuthenticationManager authenticationManager;
 
@@ -64,10 +60,5 @@ public class AuthenticationHelper {
     @Inject
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    @Inject
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
     }
 }

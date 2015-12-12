@@ -21,7 +21,6 @@ package com.boxedfolder.carrot.aop;
 import com.boxedfolder.carrot.config.security.AuthenticationHelper;
 import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
-import com.mysql.jdbc.log.Log;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -37,8 +36,8 @@ import javax.inject.Inject;
  */
 @Aspect
 @Component
-public class RepositorySaveAspect {
-    private static final Logger logger = LoggerFactory.getLogger(RepositorySaveAspect.class);
+public class RepositoryUserSaveAspect {
+    private static final Logger logger = LoggerFactory.getLogger(RepositoryUserSaveAspect.class);
     private AuthenticationHelper authenticationHelper;
 
     @Pointcut("execution(* com.boxedfolder.carrot.repository.OrderedRepository+.save(*))")
@@ -48,7 +47,7 @@ public class RepositorySaveAspect {
     @Before("saveMethod()")
     public void addUserToSave(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
-        logger.info("Adding user to saved entity...");
+        logger.info("Adding current user to saved entity...");
 
         if (args[0] == null) {
             return;
