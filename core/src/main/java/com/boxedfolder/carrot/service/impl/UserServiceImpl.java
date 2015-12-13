@@ -66,6 +66,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserRepository> imple
             repository.save(user);
             sendActivationMail(user);
         }
+
         return user;
     }
 
@@ -121,10 +122,14 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserRepository> imple
     @Override
     public void requestResetPassword(String email) {
         User user = findByEmail(email);
-        if (user != null && user.isEnabled()) {
-            user.setResetToken(tokenGenerator.getRandomToken());
-            save(user);
-            sendResetEmail(user);
+        if (user != null) {
+            if (user.isEnabled()) {
+                user.setResetToken(tokenGenerator.getRandomToken());
+                save(user);
+                sendResetEmail(user);
+            } else if (user.getActivationToken() != null){
+                resendActivationMail(email);
+            }
             return;
         }
 
