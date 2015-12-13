@@ -535,8 +535,12 @@ oi-multiselect .multiselect-search-list-item_input input {
 @media only screen
 and (min-device-width: 320px)
 and (max-device-width: 568px) {
+
+    .register-form h2, .login-form h2 {
+        font-size: 20px;
+    }
     .top150 {
-        margin-top: 25px;
+        margin-top: 75px;
     }
 
     .top200 {
@@ -546,5 +550,11 @@ and (max-device-width: 568px) {
     .login-logo {
         background-size: auto 125px;
         background-position-y: 25px;
+    }
+
+    .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+        background-color: transparent;
+        border:0;
+        color: #ec8124;
     }
 }
