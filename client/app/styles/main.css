@@ -527,15 +527,17 @@ oi-multiselect .multiselect-search-list-item_input input {
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
+    .register-form h2, .login-form h2 {
+        font-size: 20px;
+    }
     div.ng-table-counts.btn-group {
         margin-right: 0;
     }
 }
 
 @media only screen
-and (min-device-width: 320px)
-and (max-device-width: 568px) {
-
+and (max-device-width : 768px)
+and (min-device-width: 320px) {
     .register-form h2, .login-form h2 {
         font-size: 20px;
     }
