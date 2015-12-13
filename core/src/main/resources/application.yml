@@ -13,14 +13,14 @@ spring:
 
     mail:
         host: localhost
-        port: 1025
-        user:
-        password:
+        port: 25
+        username: noreply@carrot.re
+        password: xxxxx
         protocol: smtp
         tls: false
-        auth: false
+        auth: true
         from: noreply@carrot.re
         smtp:
             host: localhost
-            port: 1025
+            port: 25
             from: noreply@carrot.re

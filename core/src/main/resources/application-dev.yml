@@ -35,9 +35,8 @@ spring:
                     use_query_cache: false
     mail:
         smtp:
-            host: localhost
             port: 1025
-            from: noreply@carrot.re
+        port: 1025
 
 logging:
     level:

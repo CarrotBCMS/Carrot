@@ -40,14 +40,13 @@ public class RepositoryUserSaveAspect {
     private static final Logger logger = LoggerFactory.getLogger(RepositoryUserSaveAspect.class);
     private AuthenticationHelper authenticationHelper;
 
-    @Pointcut("execution(* com.boxedfolder.carrot.repository.OrderedRepository+.save(*))")
+    @Pointcut("execution(* com.boxedfolder.carrot.repository.UserRelatedRepository+.save(*))")
     public void saveMethod() {
     }
 
     @Before("saveMethod()")
     public void addUserToSave(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
-        logger.info("Adding current user to saved entity...");
 
         if (args[0] == null) {
             return;
@@ -73,6 +72,7 @@ public class RepositoryUserSaveAspect {
         logger.info("User: " + currentUser.getUsername());
         logger.info("Entity: " + object.toString());
         if (currentUser != null) {
+            logger.info("Adding current user to saved entity...");
             object.setUser(currentUser);
         }
     }

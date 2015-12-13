@@ -10,9 +10,9 @@ spring:
 
     datasource:
         dataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
-        url: jdbc:mysql://localhost:3306/carrot_demo?autoReconnect=true
-        username: carrot
-        password: carrot
+        url: jdbc:mysql://localhost:3306/carrot_production?autoReconnect=true
+        username: carrot_prod
+        password: xxxx
         initialSize: 34
         maxActive: 377
         maxIdle: 233
@@ -40,12 +40,6 @@ spring:
                 cache:
                     use_second_level_cache: true
                     use_query_cache: false
-
-    mail:
-        smtp:
-            host: localhost
-            port: 1025
-            from: noreply@carrot.re
 
 logging:
     level:

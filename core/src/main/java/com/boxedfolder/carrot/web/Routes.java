@@ -35,6 +35,7 @@ public class Routes {
             "/apps",
             "/apps/{id:\\w+}",
             "/login",
+            "/reset",
             "/activate",
             "/register"
     })
