@@ -127,7 +127,7 @@ public class UserServiceImpl extends CrudServiceImpl<User, UserRepository> imple
                 user.setResetToken(tokenGenerator.getRandomToken());
                 save(user);
                 sendResetEmail(user);
-            } else if (user.getActivationToken() != null){
+            } else if (user.getActivationToken() != null) {
                 resendActivationMail(email);
             }
             return;
