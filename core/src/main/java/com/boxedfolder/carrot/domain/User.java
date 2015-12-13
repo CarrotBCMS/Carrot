@@ -91,6 +91,8 @@ public class User extends AbstractEntity implements UserDetails {
         return authorities;
     }
 
+    @JsonIgnore
+    @JsonProperty
     @Override
     public String getPassword() {
         return password;

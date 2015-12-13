@@ -19,6 +19,7 @@
 package com.boxedfolder.carrot.web.client.security;
 
 import com.boxedfolder.carrot.config.security.xauth.TokenUtils;
+import com.boxedfolder.carrot.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This generates the token that must be present in subsequent REST
@@ -59,7 +59,7 @@ public class UserXAuthTokenResource {
     }
 
     @RequestMapping(value = "/client/authenticate", method = {RequestMethod.POST})
-    public UserTransfer authorize(@RequestParam String username, @RequestParam String password) {
+    public User authorize(@RequestParam String username, @RequestParam String password) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -70,38 +70,8 @@ public class UserXAuthTokenResource {
             roles.put(authority.toString(), Boolean.TRUE);
         }
 
-        return new UserTransfer(details.getUsername(), roles, tokenUtils.createToken(details));
-    }
-
-    /**
-     * Class which wraps user data into a json compatible transfer object.
-     */
-    public static class UserTransfer {
-        private final String name;
-        private final Map<String, Boolean> roles;
-        private final String token;
-
-        public UserTransfer(String userName, Map<String, Boolean> roles, String token) {
-            Map<String, Boolean> mapOfRoles = new ConcurrentHashMap<String, Boolean>();
-            for (String key : roles.keySet()) {
-                mapOfRoles.put(key, roles.get(key));
-            }
-
-            this.roles = mapOfRoles;
-            this.token = token;
-            this.name = userName;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public Map<String, Boolean> getRoles() {
-            return this.roles;
-        }
-
-        public String getToken() {
-            return this.token;
-        }
+        User user = (User)userDetailsService.loadUserByUsername(username);
+        user.setToken(tokenUtils.createToken(user));
+        return user;
     }
 }

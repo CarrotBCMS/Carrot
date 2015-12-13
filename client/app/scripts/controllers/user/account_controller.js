@@ -9,13 +9,13 @@
  * Controller managing the account
  */
 angular.module('Carrot')
-    .controller('AccountController', function ($scope, $rootScope, $location, $cookieStore, $log, flash, User) {
-        $scope.user = {};
-        $scope.user.name = $rootScope.user.name;
-        $scope.user.role = $rootScope.user.role;
+    .controller('AccountController', function ($scope, $rootScope, $location, $cookies, $log, flash, User) {
+        $scope.user = $rootScope.user;
+        $scope.user.password = "";
+        $log.debug(JSON.stringify($rootScope.user));
         $scope.updateAccount = function () {
             User.save({id: $scope.user.id}, $scope.user, function () {
-                flash.success = "Account updated.";
+                flash.success = "Account updated. Use your new password on next login.";
                 $rootScope.user =  $scope.user;
                 $cookies.put('user', JSON.stringify($scope.user), {
                     expires: moment().add(1, "hours").toDate()
