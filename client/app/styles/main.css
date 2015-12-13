@@ -535,9 +535,7 @@ oi-multiselect .multiselect-search-list-item_input input {
     }
 }
 
-@media only screen
-and (max-device-width : 768px)
-and (min-device-width: 320px) {
+@media only screen and (max-device-width : 768px) {
     .register-form h2, .login-form h2 {
         font-size: 20px;
     }
