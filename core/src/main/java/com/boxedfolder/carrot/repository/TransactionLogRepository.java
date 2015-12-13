@@ -18,6 +18,7 @@
 
 package com.boxedfolder.carrot.repository;
 
+import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import org.joda.time.DateTime;
@@ -28,7 +29,7 @@ import java.util.List;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 public interface TransactionLogRepository {
-    List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz);
+    List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz, Long userId);
     TransactionLog save(TransactionLog log);
     void delete(TransactionLog log);
 

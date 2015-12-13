@@ -56,6 +56,7 @@ public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> im
                     log = new RemovedRelationshipLog();
                     log.setAppId(app.getId());
                     log.setEventId(oldObject.getId());
+                    log.setUserId(app.getUser().getId());
                 }
                 log.setDateTime(new DateTime());
                 logRepository.save(log);

@@ -36,6 +36,9 @@ public abstract class TransactionLog {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime dateTime;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     public Long getId() {
         return id;
     }
@@ -50,5 +53,9 @@ public abstract class TransactionLog {
 
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
