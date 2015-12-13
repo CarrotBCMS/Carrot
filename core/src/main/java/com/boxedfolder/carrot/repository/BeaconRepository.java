@@ -19,6 +19,7 @@
 package com.boxedfolder.carrot.repository;
 
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.User;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -35,4 +36,7 @@ public interface BeaconRepository extends UserRelatedRepository<Beacon> {
 
     @Query("SELECT DISTINCT b FROM Beacon b WHERE b.dateUpdated > ?1")
     List<Beacon> findByDateUpdated(DateTime dateTime);
+
+    @Query("SELECT DISTINCT b FROM Beacon b WHERE b.dateUpdated > ?1 AND b.user = ?2")
+    List<Beacon> findByDateUpdatedAndUser(DateTime dateTime, User user);
 }

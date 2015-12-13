@@ -19,6 +19,7 @@
 package com.boxedfolder.carrot.aop;
 
 import com.boxedfolder.carrot.config.security.AuthenticationHelper;
+import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -50,14 +51,17 @@ public class RepositoryUserFilterAspect {
         logger.debug("Starting find method: " + proceedingJoinPoint.toString());
         Object returnValue = proceedingJoinPoint.proceed();
         AbstractUserRelatedEntity entity = null;
-        String userEmail = authenticationHelper.getCurrentUser().getEmail();
+        User currentUser = authenticationHelper.getCurrentUser();
+        if (currentUser == null) {
+            return returnValue;
+        }
 
         // This is a single entity
         if (returnValue instanceof AbstractUserRelatedEntity) {
             logger.debug("Return value is single entity");
             entity = (AbstractUserRelatedEntity)returnValue;
             if (entity.getUser() == null ||
-                    !entity.getUser().getEmail().equals(userEmail)) {
+                    !entity.getUser().getEmail().equals(currentUser.getEmail())) {
                 return null;
             }
         }
@@ -71,7 +75,7 @@ public class RepositoryUserFilterAspect {
                 if (object instanceof AbstractUserRelatedEntity) {
                     entity = (AbstractUserRelatedEntity)object;
                     if (entity.getUser() != null &&
-                            entity.getUser().getEmail().equals(userEmail)) {
+                            entity.getUser().getEmail().equals(currentUser.getEmail())) {
                         returnEntites.add(entity);
                     }
                 }

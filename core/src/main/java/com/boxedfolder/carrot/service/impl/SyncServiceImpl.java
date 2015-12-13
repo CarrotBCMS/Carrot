@@ -67,7 +67,8 @@ public class SyncServiceImpl implements SyncService {
     private Map<String, Object> beaconMap(Long timestamp, App app) {
         DateTime dateTime = new DateTime(timestamp * 1000L);
         Map<String, Object> result = new HashMap<>();
-        result.put(SyncService.Keys.CREATE_UPDATE_KEY, beaconRepository.findByDateUpdated(dateTime));
+        result.put(SyncService.Keys.CREATE_UPDATE_KEY, beaconRepository.findByDateUpdatedAndUser(dateTime,
+                app.getUser()));
 
         // First sync, add empty list
         result.put(SyncService.Keys.DELETED_KEY, timestamp > 0 ?
