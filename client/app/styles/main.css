@@ -152,13 +152,13 @@ table.statistics {
 /** General Header **/
 /*********************/
 
-.navbar .logo {
+header .logo {
     background-image: url('../images/logo_alt.svg');
     background-size: auto 30px;
     background-repeat: no-repeat;
     margin: 15px;
     margin-top: 8px;
-    margin-left: 25px;
+    margin-left: 20px;
     height: 30px;
     width: 100px;
 }
