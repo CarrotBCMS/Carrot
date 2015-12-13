@@ -29,24 +29,24 @@ body {
     padding: 25px 0 15px 0;
 }
 
-.navbar-brand {
+.side-menu .navbar-brand {
     margin: 0px 0px 10px 2px;
 }
 
-.navbar-header {
+.side-menu .navbar-header {
     width: 100%;
 }
 
-.navbar {
+.side-menu .navbar {
     margin-bottom: 10px;
 }
 
-.navbar-nav {
+.side-menu .navbar-nav {
     margin: 7px 0;
     width: 100%;
 }
 
-.navbar-default .navbar-nav li.border {
+.side-menu .navbar-default .navbar-nav li.border {
     border-top: 1px solid #d9d9d9;
     padding-top: 10px;
     cursor: pointer;
@@ -78,7 +78,7 @@ body {
     padding-right: 10px;
 }
 
-.side-menu .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+.side-menu .navbar-default .navbar-nav > .active > a, .side-menu .navbar-default .navbar-nav > .active > a:hover,.side-menu .navbar-default .navbar-nav > .active > a:focus {
     background-color: transparent;
     border-left: 3px solid #FF9324;
     color: #ec8124;
@@ -149,6 +149,30 @@ table.statistics {
     font-size: 13px;
 }
 
+/** General Header **/
+/*********************/
+
+.navbar .logo {
+    background-image: url('../images/logo_alt.svg');
+    background-size: auto 30px;
+    background-repeat: no-repeat;
+    margin: 15px;
+    margin-top: 8px;
+    margin-left: 25px;
+    height: 30px;
+    width: 100px;
+}
+
+header .navbar-header{
+    float: none;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: transparent;
+    border-bottom: 3px solid #FF9324;
+    color: #ec8124;
+}
+
 /** Login **/
 /***********/
 
@@ -161,9 +185,11 @@ table.statistics {
     background-repeat: no-repeat;
 }
 
-.register-form h3 {
-    text-align: center;
+.register-form h2, .login-form h2 {
+    font-weight: normal;
+    text-align: left;
     color: grey;
+    padding-left: 5px;
 }
 
 .register-form .logo {
@@ -177,6 +203,11 @@ table.statistics {
 }
 
 .forgot-link a {
+    color: #b4b4b4;
+}
+
+.small-bottom {
+    font-size: 13px;
     color: #b4b4b4;
 }
 
@@ -340,7 +371,8 @@ select.left-control {
     background-size: auto 30px;
     background-repeat: no-repeat;
     height: 30px;
-    width: 100px;
+    width: 100px;;
+    cursor: pointer;
 }
 
 .logo:hover {

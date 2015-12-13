@@ -135,7 +135,7 @@ angular
             .otherwise({
                 redirectTo: "/login"
             });
-    }).run(function ($rootScope, $http, $location, $cookies) {
+    }).run(function ($rootScope, $http, $location, $cookies, $window) {
     /* Route changes */
     $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
         if (next.$$route) {
@@ -147,6 +147,10 @@ angular
     });
 
     /** Global functions **/
+    $rootScope.home = function() {
+        $window.location.href = "http://www.carrot.re"
+    };
+
     $rootScope.isActive = function (viewLocation) {
         if (viewLocation == "/") {
             return viewLocation === $location.path();
