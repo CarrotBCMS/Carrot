@@ -14,7 +14,7 @@
  * Controller showing the dashboard
  */
 angular.module('Carrot')
-    .controller('DashboardController', function ($scope, $log, flash, ngTableParams, AnalyticsService) {
+    .controller('DashboardController', function ($scope, flash, ngTableParams, AnalyticsService) {
         $scope.countsResolved = false;
         AnalyticsService.count().then(function (data) {
             $scope.beaconCount = data.beacons;
@@ -66,7 +66,6 @@ angular.module('Carrot')
 
             AnalyticsService.analytics(url, from, to).then(function (result) {
                 $scope.data = result;
-                $log.debug(result);
                 $scope.tableParams.reload();
             }, function (response) {
                 flash.error = "There was an error processing your request.";

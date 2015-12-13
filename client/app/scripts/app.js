@@ -135,7 +135,7 @@ angular
             .otherwise({
                 redirectTo: "/login"
             });
-    }).run(function ($rootScope, $http, $location, $cookies, $log) {
+    }).run(function ($rootScope, $http, $location, $cookies) {
     /* Route changes */
     $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
         if (next.$$route) {

@@ -10,7 +10,9 @@
  */
 angular.module('Carrot')
     .controller('AccountController', function ($scope, $rootScope, $location, $cookieStore, $log, flash, User) {
-        $scope.user = $rootScope.user;
+        $scope.user = {};
+        $scope.user.name = $rootScope.user.name;
+        $scope.user.role = $rootScope.user.role;
         $scope.updateAccount = function () {
             User.save({id: $scope.user.id}, $scope.user, function () {
                 flash.success = "Account updated.";

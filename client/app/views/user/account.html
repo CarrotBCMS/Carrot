@@ -4,16 +4,35 @@
     <!-- Content goes here -->
 
     <div class="col-md-10 content">
-        <div class="panel panel-default animate-show" ng-show="resolved">
+        <div class="panel panel-default animate-show">
             <div class="panel-heading">
-                <small><b>Apps</b></small>
-                <button type="button" ng-click="go('/apps/new')" class="btn btn-default btn-xs pull-right bottom15">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account
-                </button>
+                <small><b>Account</b></small>
             </div>
             <div class="panel-body">
                 <div ng-include="'views/fragments/alerts.html'"></div>
-                    Account can be updated here.
+                <form name="form" role="form" novalidate
+                      class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                      ng-submit="updateAccount()">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="title" ng-model="user.name" disabled/>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-control" name="title" ng-model="user.password"
+                               placeholder="Enter a password..." required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Retype new Password</label>
+                        <input data-minlength="6" type="password" class="form-control" name="passwordConfirm" id="passwordConfirm"
+                               ng-model="user.passwordConfirm" data-match="user.password"
+                               placeholder="Reenter the password..." required/>
+                    </div>
+
+                    <button data-minlength="6" type="submit" ng-disabled="form.$invalid" class="btn btn-success">
+                        <span class="glyphicon glyphicon-save"></span> Save
+                    </button>
+                </form>
             </div>
         </div>
     </div>
