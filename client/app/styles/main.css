@@ -46,7 +46,7 @@ body {
     width: 100%;
 }
 
-.navbar-default .navbar-nav li:last-child {
+.navbar-default .navbar-nav li.border {
     border-top: 1px solid #d9d9d9;
     padding-top: 10px;
     cursor: pointer;

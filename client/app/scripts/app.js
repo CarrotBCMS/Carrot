@@ -69,6 +69,10 @@ angular
                 templateUrl: 'views/dashboard.html',
                 controller: 'DashboardController'
             })
+            .when('/account', {
+                templateUrl: 'views/user/account.html',
+                controller: 'AccountController'
+            })
             .when('/apps', {
                 templateUrl: 'views/apps.html',
                 controller: 'AppController'
