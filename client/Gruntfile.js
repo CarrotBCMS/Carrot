@@ -13,10 +13,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   // Time how long tasks take. Can help when optimizing build times
-  require('time-grunt')(grunt);          
-
-  // Define this for live reloading of different paths
-  var modRewrite = require('connect-modrewrite');
+  require('time-grunt')(grunt);
 
   // Configurable paths for the application
   var appConfig = {
