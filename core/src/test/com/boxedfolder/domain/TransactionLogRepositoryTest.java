@@ -23,6 +23,7 @@ import com.boxedfolder.carrot.config.Profiles;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.NotificationEvent;
+import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.domain.general.logs.EntityDeletionLog;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
 import com.boxedfolder.carrot.repository.impl.TransactionLogRepositoryImpl;
@@ -62,10 +63,18 @@ public class TransactionLogRepositoryTest {
     private Beacon beacon;
     private NotificationEvent event;
 
+    private User user;
+
     @Before
     public void setup() {
         logRepository = new TransactionLogRepositoryImpl();
         logRepository.setEntityManager(entityManager);
+
+        user = new User();
+        user.setEmail("test@test.com");
+        user.setDateCreated(new DateTime());
+        user.setDateCreated(new DateTime());
+        entityManager.persist(user);
 
         prevDate = DateTime.now().minus(1000);
 
@@ -74,12 +83,14 @@ public class TransactionLogRepositoryTest {
         app.setDateUpdated(new DateTime());
         app.setName("Testapp");
         app.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440001"));
+        app.setUser(user);
         entityManager.persist(app);
 
         App secondApp = new App();
         secondApp.setDateCreated(new DateTime());
         secondApp.setName("Testapp 2");
         secondApp.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
+        secondApp.setUser(user);
         entityManager.persist(secondApp);
 
         beacon = new Beacon();
@@ -89,6 +100,7 @@ public class TransactionLogRepositoryTest {
         beacon.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440002"));
         beacon.setMajor(1);
         beacon.setMinor(2);
+        beacon.setUser(user);
         entityManager.persist(beacon);
 
         event = new NotificationEvent();
@@ -99,30 +111,35 @@ public class TransactionLogRepositoryTest {
         event.setTitle("testtitle");
         event.getApps().add(app);
         event.getBeacons().add(beacon);
+        event.setUser(user);
         entityManager.persist(event);
 
         EntityDeletionLog deletionLog = new EntityDeletionLog();
         deletionLog.setType(event.getClass());
         deletionLog.setDateTime(new DateTime());
         deletionLog.setEntityId(event.getId());
+        deletionLog.setUserId(user.getId());
         entityManager.persist(deletionLog);
 
         deletionLog = new EntityDeletionLog();
         deletionLog.setType(event.getClass());
         deletionLog.setDateTime(new DateTime());
         deletionLog.setEntityId(3L);
+        deletionLog.setUserId(user.getId());
         entityManager.persist(deletionLog);
 
         RemovedRelationshipLog arLog = new RemovedRelationshipLog();
         arLog.setAppId(app.getId());
         arLog.setEventId(2L);
         arLog.setDateTime(new DateTime());
+        arLog.setUserId(user.getId());
         entityManager.persist(arLog);
 
         arLog = new RemovedRelationshipLog();
         arLog.setAppId(app.getId());
         arLog.setEventId(3L);
         arLog.setDateTime(new DateTime());
+        arLog.setUserId(user.getId());
         entityManager.persist(arLog);
         entityManager.flush();
     }
@@ -147,7 +164,7 @@ public class TransactionLogRepositoryTest {
 
     @Test
     public void testFindDeletedIDsByDateTimeAndClassTest() {
-        List<Long> data = logRepository.findDeletedIDsByDateTimeAndClass(prevDate, event.getClass());
+        List<Long> data = logRepository.findDeletedIDsByDateTimeAndClass(prevDate, event.getClass(), user.getId());
         assertTrue(data.size() == 2);
     }
 

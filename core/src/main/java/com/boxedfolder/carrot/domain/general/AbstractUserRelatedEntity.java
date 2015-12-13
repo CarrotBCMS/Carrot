@@ -19,6 +19,7 @@
 package com.boxedfolder.carrot.domain.general;
 
 import com.boxedfolder.carrot.domain.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
@@ -28,6 +29,7 @@ import javax.persistence.OneToOne;
  */
 @MappedSuperclass
 public class AbstractUserRelatedEntity extends AbstractNamedEntity {
+    @JsonIgnore
     @OneToOne
     private User user;
 

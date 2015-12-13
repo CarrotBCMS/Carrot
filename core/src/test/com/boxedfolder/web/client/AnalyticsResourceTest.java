@@ -20,6 +20,7 @@ package com.boxedfolder.web.client;
 
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsTransfer;
 import com.boxedfolder.carrot.domain.NotificationEvent;
@@ -65,6 +66,7 @@ public class AnalyticsResourceTest {
     private App secondApp;
     private Beacon beacon;
     private NotificationEvent event;
+    private User user;
 
     @Before
     public void setup() {
@@ -76,12 +78,19 @@ public class AnalyticsResourceTest {
         mapper = new ObjectMapper();
         testData = new ArrayList<AnalyticsLog>();
 
+        user = new User();
+        user.setId(100L);
+        user.setEmail("test@test.com");
+        user.setDateCreated(new DateTime());
+        user.setDateUpdated(new DateTime());
+
         app = new App();
         app.setName("Testapp");
         app.setId(5L);
         app.setDateCreated(new DateTime());
         app.setDateUpdated(new DateTime());
         app.setApplicationKey(UUID.randomUUID());
+        app.setUser(user);
 
         secondApp = new App();
         secondApp.setName("Testapp 2");
@@ -89,6 +98,7 @@ public class AnalyticsResourceTest {
         secondApp.setDateCreated(new DateTime());
         secondApp.setDateUpdated(new DateTime());
         secondApp.setApplicationKey(UUID.randomUUID());
+        secondApp.setUser(user);
 
         event = new NotificationEvent();
         event.setName("Event 2");
@@ -98,12 +108,14 @@ public class AnalyticsResourceTest {
         event.setDateUpdated(new DateTime());
         event.setDateCreated(new DateTime());
         event.getApps().add(app);
+        event.setUser(user);
 
         beacon = new Beacon();
         beacon.setName("Event 2");
         beacon.setId(1L);
         beacon.setDateUpdated(new DateTime());
         beacon.setDateCreated(new DateTime());
+        beacon.setUser(user);
 
         AnalyticsLog log = new AnalyticsLog();
         log.setId(11L);
@@ -112,6 +124,7 @@ public class AnalyticsResourceTest {
         log.setOccuredEvent(event);
         log.setBeacon(beacon);
         log.setApp(app);
+        log.setUser(user);
 
         AnalyticsLog secondLog = new AnalyticsLog();
         secondLog.setId(1212L);
@@ -120,6 +133,7 @@ public class AnalyticsResourceTest {
         secondLog.setOccuredEvent(event);
         secondLog.setBeacon(beacon);
         secondLog.setApp(app);
+        secondLog.setUser(user);
 
         testData.add(log);
         testData.add(secondLog);

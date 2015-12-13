@@ -18,32 +18,24 @@
 
 package com.boxedfolder.service;
 
-import com.boxedfolder.carrot.domain.App;
-import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.Event;
-import com.boxedfolder.carrot.domain.NotificationEvent;
+import com.boxedfolder.carrot.domain.*;
 import com.boxedfolder.carrot.repository.AppRepository;
 import com.boxedfolder.carrot.repository.BeaconRepository;
 import com.boxedfolder.carrot.repository.EventRepository;
 import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import com.boxedfolder.carrot.service.impl.SyncServiceImpl;
-import com.boxedfolder.carrot.web.sync.SyncResource;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.*;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Matchers.any;
+import static junit.framework.Assert.assertEquals;;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -57,6 +49,7 @@ public class SyncServiceTest {
     private Beacon beacon;
     private NotificationEvent event;
     private SyncServiceImpl syncService;
+    private User user;
 
     @Mock
     private BeaconRepository beaconRepository;
@@ -75,6 +68,12 @@ public class SyncServiceTest {
         syncService.setEventRepository(eventRepository);
         syncService.setLogRepository(logRepository);
 
+        user = new User();
+        user.setId(100L);
+        user.setDateCreated(new DateTime());
+        user.setDateUpdated(new DateTime());
+        user.setEmail("test@test.com");
+
         testData = new HashMap<>();
         app = new App();
         app.setName("Testapp");
@@ -82,6 +81,7 @@ public class SyncServiceTest {
         app.setDateCreated(new DateTime());
         app.setDateUpdated(new DateTime());
         app.setApplicationKey(UUID.randomUUID());
+        app.setUser(user);
 
         event = new NotificationEvent();
         event.setName("Event 1");
@@ -90,6 +90,7 @@ public class SyncServiceTest {
         event.setTitle("test");
         event.setDateUpdated(new DateTime());
         event.setDateCreated(new DateTime());
+        event.setUser(user);
         event.getApps().add(app);
 
         beacon = new Beacon();
@@ -100,6 +101,7 @@ public class SyncServiceTest {
         beacon.setUuid(UUID.randomUUID());
         beacon.setDateUpdated(new DateTime());
         beacon.setDateCreated(new DateTime());
+        beacon.setUser(user);
 
         timestamp = 0L;
         testData.put("timestamp", System.currentTimeMillis() / 1000L);
@@ -120,13 +122,18 @@ public class SyncServiceTest {
 
     @Test
     public void testSync() {
+        app.setUser(user);
         when(appRepository.findByApplicationKey((UUID)anyObject())).thenReturn(app);
-        when(beaconRepository.findByDateUpdated((DateTime)anyObject())).thenReturn(Arrays.asList(beacon));
-        when(logRepository.findDeletedIDsByDateTimeAndClass((DateTime)anyObject(), (Class)anyObject())).thenReturn(new ArrayList<Long>());
+        when(beaconRepository.findByDateUpdatedAndUser((DateTime)anyObject(), (User)anyObject()))
+                .thenReturn(Arrays.asList(beacon));
+        when(logRepository.findDeletedIDsByDateTimeAndClass((DateTime)anyObject(), (Class)anyObject(),
+                anyLong()))
+                .thenReturn(new ArrayList<Long>());
 
         List<Event> eList = new ArrayList<>();
         eList.add(event);
         when(eventRepository.findByDateUpdated((DateTime)anyObject(), (App)anyObject())).thenReturn(eList);
+
         Map<String, Object> result = syncService.sync(timestamp, app.getApplicationKey().toString());
         assertEquals(result, testData);
     }

@@ -18,6 +18,7 @@
 
 package com.boxedfolder.carrot.domain.general.logs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -36,6 +37,7 @@ public abstract class TransactionLog {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime dateTime;
 
+    @JsonIgnore
     @Column(name = "user_id")
     private Long userId;
 
