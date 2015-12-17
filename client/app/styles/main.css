@@ -202,8 +202,9 @@ header .navbar-header{
     padding-right: 20px;
 }
 
-.forgot-link a {
-    color: #b4b4b4;
+.forgot-link a, .small-bottom a {
+    font-size: 13px;
+    color: #969696;
 }
 
 .small-bottom {
