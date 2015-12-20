@@ -78,9 +78,10 @@ body {
     padding-right: 10px;
 }
 
-.side-menu .navbar-default .navbar-nav > .active > a, .side-menu .navbar-default .navbar-nav > .active > a:hover,.side-menu .navbar-default .navbar-nav > .active > a:focus {
+.side-menu .navbar-default .navbar-nav > .active > a, .side-menu .navbar-default .navbar-nav > .active > a:hover, .side-menu .navbar-default .navbar-nav > .active > a:focus {
     background-color: transparent;
     border-left: 3px solid #FF9324;
+    border-bottom: 0px;
     color: #ec8124;
 }
 
