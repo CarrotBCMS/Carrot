@@ -37,7 +37,8 @@ public class Routes {
             "/login",
             "/reset",
             "/activate",
-            "/register"
+            "/register",
+            "/forgot"
     })
     public String index() {
         return "index";

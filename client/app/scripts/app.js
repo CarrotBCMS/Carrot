@@ -172,7 +172,7 @@ angular
 
     /** User related **/
     /* Try getting valid user session cookie or go to login page */
-    var allowedPaths = ["/activate", "/reset", "/forgot"];
+    var allowedPaths = ["/activate", "/reset", "/forgot", "/register"];
     var originalPath = $location.path();
     var user = $cookies.get("user");
 
