@@ -62,7 +62,7 @@ angular.module('Carrot')
                     error(function (data, status, headers, config) {
                         $log.info("Error. Password not resetted.");
                         callbackReset();
-                        callback(false);
+                        callback(false, status);
                     });
             }
         }

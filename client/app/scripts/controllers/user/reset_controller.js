@@ -18,10 +18,12 @@ angular.module('Carrot')
         var email = $routeParams.email;
         var token = $routeParams.token;
         if (token != null && email != null) {
-            ActivationService.reset(token, email, function (success) {
+            ActivationService.reset(token, email, function (success, status) {
                 $rootScope.$on('$routeChangeSuccess', function () {
                     if (success) {
                         flash.success = "Password reset. Check your emails for a new password.";
+                    } else if (parseInt(status) === 404) {
+                        flash.success = "There is no account with this email address";
                     } else {
                         flash.error = "There was an error resetting your password.";
                     }
