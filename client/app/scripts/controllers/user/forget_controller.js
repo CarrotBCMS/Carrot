@@ -21,7 +21,7 @@ angular.module('Carrot')
                     if (success) {
                         flash.success = "Check your emails to reset your password.";
                     } else {
-                        flash.error = "There was an error while trying to generate your reset link.";
+                        flash.error = "There was an error while trying to reset your password.";
                     }
                     $rootScope.$$listeners['$routeChangeSuccess'].pop();
                 });
