@@ -20,7 +20,7 @@ angular.module('Carrot')
                 $rootScope.$on('$routeChangeSuccess', function () {
                     if (success) {
                         flash.success = "Check your emails to reset your password.";
-                    } if (parseInt(status) === 404) {
+                    } else if (parseInt(status) === 404) {
                         flash.error = "There is no account registered with that email address.";
                     } else {
                         flash.error = "There was an error while trying to reset your password.";
