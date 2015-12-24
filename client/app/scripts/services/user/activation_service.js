@@ -42,27 +42,27 @@ angular.module('Carrot')
             forget: function (email, callback) {
                 $http.get(baseURL + '/client/forgot?email=' + email).
                     success(function (data, status, headers, config) {
-                        $log.info("Successfully resetted password.");
+                        $log.info("Successfully reset password.");
                         callbackReset();
                         callback(true);
                     }).
                     error(function (data, status, headers, config) {
-                        $log.info("Error. Password not resetted.");
+                        $log.info("Error. Password not reset.");
                         callbackReset();
-                        callback(false);
+                        callback(false, status);
                     });
             },
             reset: function (token, email, callback) {
                 $http.get(baseURL + '/client/reset?email=' + email + '&token=' + token).
                     success(function (data, status, headers, config) {
-                        $log.info("Successfully resetted password.");
+                        $log.info("Successfully reset password.");
                         callbackReset();
                         callback(true);
                     }).
                     error(function (data, status, headers, config) {
-                        $log.info("Error. Password not resetted.");
+                        $log.info("Error. Password not reset.");
                         callbackReset();
-                        callback(false, status);
+                        callback(false);
                     });
             }
         }
