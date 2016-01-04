@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,37 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.boxedfolder.carrot.config.security;
+package com.boxedfolder.carrot.domain.util.impl;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.boxedfolder.carrot.domain.util.RandomTokenGenerator;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 /**
- * Load username and password from configuration.
- *
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Component
-@ConfigurationProperties(prefix = "auth")
-public class UserProperties {
-    private String username = "admin";
-    private String password = "carrot";
+public class RandomTokenGeneratorImpl implements RandomTokenGenerator {
+    private SecureRandom random = new SecureRandom();
 
-    public String getUsername() {
-        return username;
+    @Override
+    public String getRandomToken() {
+        return getRandomToken(130);
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String getRandomToken(int numBits) {
+        return new BigInteger(numBits, random).toString(32);
     }
 }

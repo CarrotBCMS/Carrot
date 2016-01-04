@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  */
 
 'use strict';
@@ -13,7 +13,7 @@
  * Factory in Carrot.
  */
 angular.module('Carrot')
-    .factory('AnalyticsService', function ($http, $log) {
+    .factory('AnalyticsService', function ($http) {
         var countFunction = function () {
             var promise = $http.get(baseURL + "/client/analytics/count").then(function (response) {
                 return response.data;
@@ -23,8 +23,6 @@ angular.module('Carrot')
 
         var logsFunction = function () {
             var promise = $http.get(baseURL + "/client/analytics/logs").then(function (response) {
-                $log.debug(response.data);
-                $log.debug("bla");
                 return response.data;
             });
             return promise;
@@ -37,7 +35,6 @@ angular.module('Carrot')
                     to: to.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
                 }
             }).then(function (response) {
-                $log.debug(response.data);
                 return response.data;
             });
             return promise;

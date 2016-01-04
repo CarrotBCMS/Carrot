@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 
 package com.boxedfolder.carrot.repository.impl;
 
-import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
+import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import com.boxedfolder.carrot.repository.TransactionLogRepository;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
@@ -38,11 +38,12 @@ public class TransactionLogRepositoryImpl implements TransactionLogRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz) {
+    public List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz, Long userId) {
         return entityManager.createQuery("SELECT l.entityId FROM EntityDeletionLog l WHERE l.dateTime > :dateTime AND " +
-                "l.type = :class", Long.class)
+                "l.type = :class AND l.userId = :user", Long.class)
                             .setParameter("dateTime", dateTime)
                             .setParameter("class", clazz)
+                            .setParameter("user", userId)
                             .getResultList();
     }
 

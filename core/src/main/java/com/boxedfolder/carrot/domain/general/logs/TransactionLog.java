@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package com.boxedfolder.carrot.domain.general.logs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -36,6 +37,10 @@ public abstract class TransactionLog {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime dateTime;
 
+    @JsonIgnore
+    @Column(name = "user_id")
+    private Long userId;
+
     public Long getId() {
         return id;
     }
@@ -50,5 +55,9 @@ public abstract class TransactionLog {
 
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

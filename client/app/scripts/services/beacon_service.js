@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  */
 
 'use strict';
@@ -9,7 +9,7 @@
  * @ngdoc service
  * @name Carrot.Beacon
  * @description
- * # Carrot
+ * # Beacon
  * Factory in Carrot.
  */
 angular.module('Carrot')

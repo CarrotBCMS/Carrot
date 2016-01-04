@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ public class EventServiceImpl extends CrudServiceImpl<Event, EventRepository> im
                     log = new RemovedRelationshipLog();
                     log.setAppId(app.getId());
                     log.setEventId(oldObject.getId());
+                    log.setUserId(app.getUser().getId());
                 }
                 log.setDateTime(new DateTime());
                 logRepository.save(log);

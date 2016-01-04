@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,11 +67,13 @@ public class SyncServiceImpl implements SyncService {
     private Map<String, Object> beaconMap(Long timestamp, App app) {
         DateTime dateTime = new DateTime(timestamp * 1000L);
         Map<String, Object> result = new HashMap<>();
-        result.put(SyncService.Keys.CREATE_UPDATE_KEY, beaconRepository.findByDateUpdated(dateTime));
+        result.put(SyncService.Keys.CREATE_UPDATE_KEY, beaconRepository.findByDateUpdatedAndUser(dateTime,
+                app.getUser()));
 
         // First sync, add empty list
         result.put(SyncService.Keys.DELETED_KEY, timestamp > 0 ?
-                logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Beacon.class) : new ArrayList<>());
+                logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Beacon.class,
+                        app.getUser().getId()) : new ArrayList<>());
 
         return result;
     }
@@ -87,9 +89,10 @@ public class SyncServiceImpl implements SyncService {
         List<Long> deletedEvents = new ArrayList<>();
         if (timestamp > 0L) {
             // Add all possible event classes
-            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class));
-            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class));
-            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class));
+            Long userId = app.getUser().getId();
+            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, Event.class, userId));
+            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, TextEvent.class, userId));
+            deletedEvents.addAll(logRepository.findDeletedIDsByDateTimeAndClass(dateTime, NotificationEvent.class, userId));
 
             // Check if there is an event with dangling connections
             List<RemovedRelationshipLog> logs = logRepository.findAll(dateTime, app.getId());

@@ -1,0 +1,31 @@
+<div ng-include="'views/fragments/header.html'" class="header"></div>
+
+<div class="container">
+    <div class="row top150">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form name="form" role="form" novalidate
+                  class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                  ng-submit="forget()" ng-controller="ForgetController">
+                <fieldset class="register-form">
+                    <h2 class="bottom30">Reset password.</h2>
+                    <div class="form-group">
+                        <input type="email" ng-model="email" name="email" id="email" class="form-control input-lg"
+                               placeholder="Email Address" required/>
+                    </div>
+                    <div class="row top30">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <button type="submit" ng-disabled="form.$invalid"
+                                    class="btn btn-primary btn-lg btn-block">
+                                 Reset
+                            </button>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 sm-btns">
+                            or go <a href="/login" title="Login">back to login</a>.
+                        </div>
+                    </div>
+                    <p class="top30 small-bottom">Your new password will be active after you clicked on the activation link.</p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

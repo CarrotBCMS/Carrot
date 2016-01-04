@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package com.boxedfolder.carrot.aop;
 
+import com.boxedfolder.carrot.config.security.AuthenticationHelper;
 import com.boxedfolder.carrot.domain.general.AbstractEntity;
 import com.boxedfolder.carrot.domain.general.logs.EntityDeletionLog;
 import com.boxedfolder.carrot.repository.TransactionLogRepository;
@@ -37,6 +38,7 @@ import javax.inject.Inject;
 @Component
 public class RepositoryDeletionAspect {
     private TransactionLogRepository logRepository;
+    private AuthenticationHelper authenticationHelper;
 
     @Pointcut("execution(* com.boxedfolder.carrot.repository.OrderedRepository+.delete(*))")
     public void deletionMethod() {
@@ -55,11 +57,17 @@ public class RepositoryDeletionAspect {
         deletionLog.setType(entity.getClass());
         deletionLog.setDateTime(new DateTime());
         deletionLog.setEntityId(entity.getId());
+        deletionLog.setUserId(authenticationHelper.getCurrentUser().getId());
         logRepository.save(deletionLog);
     }
 
     @Inject
     public void setLogRepository(TransactionLogRepository logRepository) {
         this.logRepository = logRepository;
+    }
+
+    @Inject
+    public void setAuthenticationHelper(AuthenticationHelper authenticationHelper) {
+        this.authenticationHelper = authenticationHelper;
     }
 }

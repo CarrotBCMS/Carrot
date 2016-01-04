@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,9 @@
 
 package com.boxedfolder.carrot.repository;
 
-import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
+import com.boxedfolder.carrot.domain.User;
 import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
+import com.boxedfolder.carrot.domain.general.logs.TransactionLog;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 public interface TransactionLogRepository {
-    List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz);
+    List<Long> findDeletedIDsByDateTimeAndClass(DateTime dateTime, Class clazz, Long userId);
     TransactionLog save(TransactionLog log);
     void delete(TransactionLog log);
 

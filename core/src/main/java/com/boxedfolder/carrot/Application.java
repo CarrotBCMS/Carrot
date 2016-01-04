@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,12 +28,15 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @EnableConfigurationProperties
 @SpringBootApplication
+@EnableTransactionManagement
 public class Application extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -56,5 +59,10 @@ public class Application extends SpringBootServletInitializer {
                 container.addErrorPages(error401Page, error404Page, error500Page);
             }
         };
+    }
+
+    @Bean
+    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
     }
 }

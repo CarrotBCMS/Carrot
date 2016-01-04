@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  */
 
 'use strict';
@@ -15,6 +15,10 @@
  */
 angular.module('Carrot')
     .controller('LoginController', function ($scope, $http, $cookies, $location, $rootScope, LoginService, flash,$log) {
+        $scope.register = function() {
+            $location.path("/register");
+        };
+
         $scope.login = function () {
             LoginService.authenticate($.param({username: $scope.username, password: $scope.password}), function (user) {
                 $cookies.put('user', JSON.stringify(user), {
@@ -26,7 +30,7 @@ angular.module('Carrot')
             }, function (httpResponse) {
                 flash.error = "There was an error processing your request.";
                 if (httpResponse.status == 403 || httpResponse.status == 401) {
-                    flash.error = "Wrong username or password.";
+                    flash.error = "Your email and password combination has not been found.";
                 }
             });
         };

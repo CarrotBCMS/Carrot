@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,6 @@ import java.util.UUID;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Repository
-public interface AppRepository extends OrderedRepository<App> {
+public interface AppRepository extends UserRelatedRepository<App> {
     App findByApplicationKey(UUID appKey);
 }

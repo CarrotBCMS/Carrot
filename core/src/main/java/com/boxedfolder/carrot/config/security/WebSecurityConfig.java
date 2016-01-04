@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +20,23 @@ package com.boxedfolder.carrot.config.security;
 
 import com.boxedfolder.carrot.config.security.service.UserDetailService;
 import com.boxedfolder.carrot.config.security.xauth.XAuthTokenConfigurer;
+import com.boxedfolder.carrot.domain.User;
+import com.boxedfolder.carrot.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 
 import javax.inject.Inject;
@@ -46,13 +51,22 @@ import javax.inject.Inject;
 @EnableWebMvcSecurity
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserProperties userProperties;
+    private UserService userService;
+    private AuthenticationHelper authenticationHelper;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // Allow posting logs
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/client/analytics/logs/**").permitAll();
+
+        // There should be a special role for user specific actions
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/client/users").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/client/users/**").denyAll();
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/client/users/**").denyAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/client/users/**").hasRole(User.ROLE_USER);
 
         // Define secured routes here
         String[] securedEndpoints = {
@@ -60,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/client/beacons/**",
                 "/client/apps/**",
                 "/client/events/**",
-                "/client/analytics/**"
+                "/client/analytics/**",
         };
 
         for (String endpoint : securedEndpoints) {
@@ -68,15 +82,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
 
         SecurityConfigurer<DefaultSecurityFilterChain, HttpSecurity> securityConfigurerAdapter =
-                new XAuthTokenConfigurer(userDetailsServiceBean());
+                new XAuthTokenConfigurer(userDetailsServiceBean(), authenticationHelper);
         http.apply(securityConfigurerAdapter);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
-        authManagerBuilder.userDetailsService(new UserDetailService(userProperties));
+        authManagerBuilder.userDetailsService(new UserDetailService(userService)).passwordEncoder(passwordEncoder());
     }
-
 
     @Bean
     @Override
@@ -90,8 +103,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Inject
-    public void setUserProperties(UserProperties userProperties) {
-        this.userProperties = userProperties;
+    public void setAuthenticationHelper(AuthenticationHelper authenticationHelper) {
+        this.authenticationHelper = authenticationHelper;
+    }
+
+    @Inject
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

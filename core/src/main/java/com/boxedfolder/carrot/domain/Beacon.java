@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 package com.boxedfolder.carrot.domain;
 
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
-import com.boxedfolder.carrot.domain.general.AbstractNamedEntity;
+import com.boxedfolder.carrot.domain.general.AbstractUserRelatedEntity;
 import com.boxedfolder.carrot.domain.util.View;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -38,7 +38,7 @@ import java.util.UUID;
  */
 @Table(name = "beacon")
 @Entity
-public class Beacon extends AbstractNamedEntity {
+public class Beacon extends AbstractUserRelatedEntity {
     @JsonView(View.General.class)
     @Type(type = "org.hibernate.type.UUIDCharType")
     @NotNull

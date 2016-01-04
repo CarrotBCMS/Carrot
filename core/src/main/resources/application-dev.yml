@@ -1,3 +1,6 @@
+app:
+    baseUrl: http://localhost:9000
+
 spring:
     profiles: dev
 
@@ -25,9 +28,15 @@ spring:
             ddl-auto: update
             naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
         properties:
-            hibernate.cache.use_second_level_cache: true
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: false
+            hibernate:
+                generate_statistics: false
+                cache:
+                    use_second_level_cache: true
+                    use_query_cache: false
+    mail:
+        smtp:
+            port: 1025
+        port: 1025
 
 logging:
     level:

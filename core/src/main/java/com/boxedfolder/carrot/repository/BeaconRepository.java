@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 
 package com.boxedfolder.carrot.repository;
 
-import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.User;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -31,9 +31,12 @@ import java.util.UUID;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Repository
-public interface BeaconRepository extends OrderedRepository<Beacon> {
+public interface BeaconRepository extends UserRelatedRepository<Beacon> {
     Beacon findFirstByUuidAndMajorAndMinor(UUID uuid, int major, int minor);
 
     @Query("SELECT DISTINCT b FROM Beacon b WHERE b.dateUpdated > ?1")
     List<Beacon> findByDateUpdated(DateTime dateTime);
+
+    @Query("SELECT DISTINCT b FROM Beacon b WHERE b.dateUpdated > ?1 AND b.user = ?2")
+    List<Beacon> findByDateUpdatedAndUser(DateTime dateTime, User user);
 }

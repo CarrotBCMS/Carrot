@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,9 @@ package com.boxedfolder.domain;
 
 import com.boxedfolder.carrot.Application;
 import com.boxedfolder.carrot.config.Profiles;
-import com.boxedfolder.carrot.domain.App;
-import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.config.security.AuthenticationHelper;
+import com.boxedfolder.carrot.domain.*;
 import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
-import com.boxedfolder.carrot.domain.NotificationEvent;
-import com.boxedfolder.carrot.domain.TextEvent;
 import com.boxedfolder.carrot.repository.impl.AnalyticsLogRepositoryImpl;
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -43,6 +41,8 @@ import java.util.UUID;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
@@ -54,26 +54,40 @@ import static junit.framework.Assert.assertTrue;
 public class AnalyticsLogRepositoryTest {
     @PersistenceContext
     private EntityManager entityManager;
+
     private AnalyticsLogRepositoryImpl analyticsRepository;
 
     private App app;
     private Beacon beacon;
     private NotificationEvent event;
+    private User user;
+
+    private AuthenticationHelper authenticationHelper;
 
     @Before
     public void setup() {
+        authenticationHelper = mock(AuthenticationHelper.class);
+
         // Setup test data
+        user = new User();
+        user.setDateCreated(new DateTime());
+        user.setDateUpdated(new DateTime());
+        user.setEmail("test@test.com");
+        entityManager.persist(user);
+
         app = new App();
         app.setDateCreated(new DateTime());
         app.setDateUpdated(new DateTime());
         app.setName("Testapp");
         app.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440001"));
+        app.setUser(user);
         entityManager.persist(app);
 
         App secondApp = new App();
         secondApp.setDateCreated(new DateTime());
         secondApp.setName("Testapp 2");
         secondApp.setApplicationKey(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"));
+        secondApp.setUser(user);
         entityManager.persist(secondApp);
 
         beacon = new Beacon();
@@ -83,6 +97,7 @@ public class AnalyticsLogRepositoryTest {
         beacon.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440002"));
         beacon.setMajor(1);
         beacon.setMinor(2);
+        beacon.setUser(user);
         entityManager.persist(beacon);
 
         event = new NotificationEvent();
@@ -93,6 +108,7 @@ public class AnalyticsLogRepositoryTest {
         event.setTitle("testtitle");
         event.getApps().add(app);
         event.getBeacons().add(beacon);
+        event.setUser(user);
         entityManager.persist(event);
 
         TextEvent secondEvent = new TextEvent();
@@ -102,6 +118,7 @@ public class AnalyticsLogRepositoryTest {
         secondEvent.setText("test");
         secondEvent.getApps().add(app);
         secondEvent.getBeacons().add(beacon);
+        secondEvent.setUser(user);
         entityManager.persist(secondEvent);
 
         AnalyticsLog log = new AnalyticsLog();
@@ -109,6 +126,7 @@ public class AnalyticsLogRepositoryTest {
         log.setDateUpdated(new DateTime());
         log.setBeacon(beacon);
         log.setOccuredEvent(event);
+        log.setUser(user);
         entityManager.persist(log);
 
         AnalyticsLog secondLog = new AnalyticsLog();
@@ -116,11 +134,13 @@ public class AnalyticsLogRepositoryTest {
         secondLog.setDateUpdated(new DateTime());
         secondLog.setBeacon(beacon);
         secondLog.setOccuredEvent(secondEvent);
+        secondLog.setUser(user);
         entityManager.persist(secondLog);
         entityManager.flush();
 
         analyticsRepository = new AnalyticsLogRepositoryImpl();
         analyticsRepository.setEntityManager(entityManager);
+        analyticsRepository.setAuthenticationHelper(authenticationHelper);
     }
 
     @After
@@ -170,6 +190,7 @@ public class AnalyticsLogRepositoryTest {
         Long aLong = analyticsRepository.count(beacon);
         assertTrue(aLong == 2);
     }
+
     @Test
     public void testCountLogsForEvent() {
         Long aLong = analyticsRepository.count(event);
@@ -190,6 +211,7 @@ public class AnalyticsLogRepositoryTest {
 
     @Test
     public void testFindAllFromTo() {
+        when(authenticationHelper.getCurrentUser()).thenReturn(user);
         DateTime to = new DateTime();
         DateTime from = new DateTime().minusDays(4);
         List<AnalyticsLog> logs = analyticsRepository.findAll(from, to);

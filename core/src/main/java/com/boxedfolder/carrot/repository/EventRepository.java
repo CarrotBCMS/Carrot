@@ -1,6 +1,6 @@
 /*
  * Carrot - beacon management
- * Copyright (C) 2015 Heiko Dreyer
+ * Copyright (C) 2016 Heiko Dreyer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ import java.util.List;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Repository
-public interface EventRepository extends OrderedRepository<Event> {
+public interface EventRepository extends UserRelatedRepository<Event> {
     @Query("SELECT DISTINCT e FROM #{#entityName} e, IN(e.apps) a WHERE e.dateUpdated > ?1 AND a = ?2")
     List<Event> findByDateUpdated(DateTime dateTime, App app);
 }
