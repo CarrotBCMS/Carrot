@@ -22,7 +22,7 @@ PROPS_REF = ./core/src/main/resources/application.yml
 PROPS_COPY_REF = ./core/src/main/resources/application.bak
 PROPS_DEPL_REF = ./core/src/main/resources/application.depl
 
-APP_DEV_LINK = http://localhost:8080/
+APP_DEV_LINK = http://localhost:8080
 APP_JS_PROD_SYMBOL = prod
 APP_JS_DEV_SYMBOL = dev
 
