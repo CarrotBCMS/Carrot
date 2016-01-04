@@ -1,0 +1,25 @@
+spring:
+    profiles:
+        active: prod
+
+    thymeleaf:
+        mode: LEGACYHTML5
+
+    jpa:
+        properties:
+            hibernate:
+                current_session_context_class: "org.springframework.orm.hibernate4.SpringSessionContext"
+
+    mail:
+        host: localhost
+        port: 25
+        username: noreply@carrot.re
+        password: xxxxx
+        protocol: smtp
+        tls: false
+        auth: true
+        from: noreply@carrot.re
+        smtp:
+            host: localhost
+            port: 25
+            from: noreply@carrot.re
