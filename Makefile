@@ -38,9 +38,9 @@ deploy:
 	cp -ru @$(PROPS_REF) @$(PROPS_COPY_REF)
 	echo 2) Modifying files ...
 	echo 3) Generating build ...
-	cd client;@$(GRUNT_BUILD);cd..;
-	cd core;@$(MVN_PACKAGE);cd..;
-	cd client;@$(GRUNT_CLEAN);cd..;
+	cd client && @$(GRUNT_BUILD) && cd..;
+	cd core && @$(MVN_PACKAGE) && cd..;
+	cd client && @$(GRUNT_CLEAN) && cd..;
 	echo 4) Renaming build ...
 	find / -iname "*.war" -type f -exec carrot.war
 
