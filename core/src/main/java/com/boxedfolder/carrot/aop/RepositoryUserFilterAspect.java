@@ -84,8 +84,6 @@ public class RepositoryUserFilterAspect {
             return returnEntites;
         }
 
-        logger.debug("Return value: " + returnValue.toString());
-
         return returnValue;
     }
 
