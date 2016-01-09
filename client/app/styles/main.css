@@ -52,6 +52,10 @@ body {
     cursor: pointer;
 }
 
+li.pre-border{
+    cursor: pointer;    
+}
+
 .side-menu {
     min-height: 200px;
     min-width: 150px;
