@@ -98,6 +98,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         object.setApp(app);
         object.setOccuredEvent(eventRepository.findOne(object.getOccuredEvent().getId()));
         object.setBeacon(beaconRepository.findOne(object.getBeacon().getId()));
+        object.setUser(app.getUser());
 
         if (!isValid(object, app)) {
             throw new GeneralExceptions.InvalidLog();
