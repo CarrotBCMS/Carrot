@@ -13,7 +13,7 @@ The following technologies are in use:
 + Thymeleaf
 + Joda Time
 + Bootstrap
-+ Jquery
++ jQuery
 
 # How to get started?
 
