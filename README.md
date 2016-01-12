@@ -13,7 +13,7 @@ The following technologies are in use:
 + Thymeleaf
 + Joda Time
 + Bootstrap
-+ Jquery
++ jQuery
 
 # How to get started?
 
@@ -31,7 +31,7 @@ To integrate the client module into the core, run the grunt command ´grunt buil
 
 # Example
 
-An instance of carrot is running on Heroku under http://carrotbms.heroku.com. Login with _admin_ (username) and _carrot_ (password).
+Carrot is running as a multi-tenancy application under [app.carrot.re](http://app.carrot.re). Feel free to create a user account and connect your mobile apps.
 
 # What's next?
 
