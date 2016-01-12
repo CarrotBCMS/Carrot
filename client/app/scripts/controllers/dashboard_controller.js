@@ -14,7 +14,7 @@
  * Controller showing the dashboard
  */
 angular.module('Carrot')
-    .controller('DashboardController', function ($scope, flash, ngTableParams, AnalyticsService) {
+    .controller('DashboardController', function ($scope, $rootScope, flash, ngTableParams, AnalyticsService) {
         $scope.countsResolved = false;
         AnalyticsService.count().then(function (data) {
             $scope.beaconCount = data.beacons;
