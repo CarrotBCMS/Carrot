@@ -25,4 +25,5 @@ public class Profiles {
     public static final String DEVELOP = "dev";
     public static final String PRODUCTION = "prod";
     public static final String TESTING = "test";
+    public static final String CLOUD = "cloud";
 }

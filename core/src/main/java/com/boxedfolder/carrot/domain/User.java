@@ -38,7 +38,7 @@ import java.util.Set;
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
-@Table(name = "user")
+@Table(name = "users")
 @Entity
 public class User extends AbstractEntity implements UserDetails {
     public static final String ROLE_USER = "USER";

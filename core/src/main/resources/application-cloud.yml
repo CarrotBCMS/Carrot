@@ -1,21 +1,7 @@
 app:
-    baseUrl: http://localhost:9000
+    baseUrl: http://app.carrot.re
 
 spring:
-    profiles: dev
-
-    thymeleaf:
-        cache: true
-        mode: LEGACYHTML5
-
-    datasource:
-        url: jdbc:postgresql://localhost:5432/carrot
-        username: bfolder
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
-
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         database: POSTGRESQL
@@ -31,12 +17,11 @@ spring:
                 cache:
                     use_second_level_cache: true
                     use_query_cache: false
-    mail:
-        smtp:
-            port: 1025
-        port: 1025
 
+    mail:
+        host: mail.carrot.re
 logging:
     level:
-        org.springframework: INFO
-        org.hibernate: INFO
+        org.springframework: ERROR
+        org.hibernate: ERROR
+            

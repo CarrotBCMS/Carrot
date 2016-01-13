@@ -59,6 +59,19 @@
             <version>4.0.0.RELEASE</version>
         </dependency>
 
+        <!-- Spring Cloud -->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-spring-service-connector</artifactId>
+            <version>1.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-heroku-connector</artifactId>
+            <version>1.1.1.RELEASE</version>
+        </dependency>
+
         <!-- nekoHTML for Thymeleaf legacy support -->
 
         <dependency>
@@ -88,15 +101,21 @@
             <version>1.4.187</version>
         </dependency>
 
-
-        <!-- MySQL -->
+        <!-- Postgres & DBCP -->
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.31</version>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc4</version>
+            <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+        
         <!-- Java EE -->
 
         <dependency>
