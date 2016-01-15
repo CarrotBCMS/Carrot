@@ -10,7 +10,7 @@
     <url>http://maven.apache.org</url>
 
     <name>Carrot</name>
-    <description>Carrot - Beacon Management</description>
+    <description>Carrot - beacon content management</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
