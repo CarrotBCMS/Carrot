@@ -22,6 +22,8 @@ import com.boxedfolder.carrot.config.Profiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -32,17 +34,19 @@ import java.io.IOException;
 /**
  * Adds specific headers to every response to allow cross-origin resource sharing. Only
  * available in develop mode.
- *
+ * <p/>
  * With Spring Boot 1.3.0 this could be activated via annotation.
  *
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @Profile(Profiles.DEVELOP)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 public class CORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
-            ServletException {
+                                                                                            ServletException
+    {
         HttpServletResponse response = (HttpServletResponse)res;
         HttpServletRequest request = (HttpServletRequest)req;
 
