@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <diskStore path="java.io.tmpdir"/>
+
+    <cache name="sync"
+           maxEntriesLocalHeap="200"
+           timeToLiveSeconds="3600">
+    </cache>
+</ehcache>

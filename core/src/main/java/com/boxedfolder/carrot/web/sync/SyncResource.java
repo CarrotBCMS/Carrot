@@ -21,6 +21,7 @@ package com.boxedfolder.carrot.web.sync;
 import com.boxedfolder.carrot.domain.util.View;
 import com.boxedfolder.carrot.service.SyncService;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ import java.util.Map;
 public class SyncResource {
     private SyncService syncService;
 
+    @Cacheable("sync")
     @JsonView(View.Sync.class)
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
