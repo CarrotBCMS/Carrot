@@ -9,7 +9,7 @@ The following technologies are in use:
 + Spring Boot
 + Spring Security
 + Spring Data / Hibernate
-+ HSQLDB
++ HSQLDB / Postgres
 + Thymeleaf
 + Joda Time
 + Bootstrap
