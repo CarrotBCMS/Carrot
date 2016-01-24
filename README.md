@@ -1,4 +1,4 @@
-![Carrot Logo](http://temp.boxedfolder.com/smartlogo_carrot.png =476x)
+![Carrot Logo](http://www.carrot.re/files/carrot_logo_big.png =476x)
 
 # What is Carrot?
 
