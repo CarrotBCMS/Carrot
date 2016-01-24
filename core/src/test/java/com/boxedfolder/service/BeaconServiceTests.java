@@ -41,7 +41,7 @@ import static org.mockito.Mockito.when;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class BeaconServiceTest {
+public class BeaconServiceTests {
     @Mock
     private BeaconRepository repository;
     private BeaconServiceImpl service;

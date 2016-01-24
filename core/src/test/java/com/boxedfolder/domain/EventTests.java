@@ -34,7 +34,7 @@ import static junit.framework.Assert.assertTrue;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class EventTest {
+public class EventTests {
     private ObjectMapper mapper;
 
     @Before

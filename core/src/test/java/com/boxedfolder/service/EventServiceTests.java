@@ -18,9 +18,11 @@
 
 package com.boxedfolder.service;
 
-import com.boxedfolder.carrot.domain.App;
-import com.boxedfolder.carrot.repository.AppRepository;
-import com.boxedfolder.carrot.service.impl.AppServiceImpl;
+import com.boxedfolder.carrot.domain.Event;
+import com.boxedfolder.carrot.domain.NotificationEvent;
+import com.boxedfolder.carrot.domain.TextEvent;
+import com.boxedfolder.carrot.repository.EventRepository;
+import com.boxedfolder.carrot.service.impl.EventServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,50 +39,50 @@ import static org.mockito.Mockito.when;
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AppServiceTest {
+public class EventServiceTests {
     @Mock
-    private AppRepository repository;
-    private AppServiceImpl service;
-    private List<App> testData;
+    private EventRepository repository;
+    private EventServiceImpl service;
+    private List<Event> testData;
 
     @Before
     public void setUp() {
-        service = new AppServiceImpl();
+        service = new EventServiceImpl();
         service.setRepository(repository);
         testData = new ArrayList<>();
 
-        // Create 3 different apps
-        App app = new App();
-        app.setName("App 1");
-        testData.add(app);
+        // Create 3 different events
+        Event event = new TextEvent();
+        event.setName("Event 1");
+        testData.add(event);
 
-        app = new App();
-        app.setName("App 2");
-        testData.add(app);
+        event = new NotificationEvent();
+        event.setName("Event 2");
+        testData.add(event);
 
-        app = new App();
-        app.setName("App 3");
-        testData.add(app);
+        event = new TextEvent();
+        event.setName("Event 3");
+        testData.add(event);
     }
 
     @Test
-    public void testRetrieveAllApps() {
+    public void testRetrieveAllEvents() {
         when(repository.findAllByOrderByDateCreatedDesc()).thenReturn(testData);
-        List<App> apps = service.findAll();
-        assertEquals(apps, testData);
+        List<Event> events = service.findAll();
+        assertEquals(events, testData);
     }
 
     @Test
-    public void testRetrieveSingleApp() {
+    public void testRetrieveSingleEvent() {
         when(repository.findOne(1L)).thenReturn(testData.get(0));
-        App app = service.find(1L);
-        assertEquals(app, testData.get(0));
+        Event event = service.find(1L);
+        assertEquals(event, testData.get(0));
     }
 
     @Test
-    public void testSaveApp() {
+    public void testSaveEvent() {
         when(repository.save(testData.get(0))).thenReturn(testData.get(0));
-        App app = service.save(testData.get(0));
-        assertEquals(app, testData.get(0));
+        Event event = service.save(testData.get(0));
+        assertEquals(event, testData.get(0));
     }
 }

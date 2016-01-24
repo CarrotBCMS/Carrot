@@ -16,18 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.boxedfolder.service;
+package com.boxedfolder.web.sync;
 
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.Event;
 import com.boxedfolder.carrot.domain.NotificationEvent;
-import com.boxedfolder.carrot.repository.AppRepository;
-import com.boxedfolder.carrot.repository.BeaconRepository;
-import com.boxedfolder.carrot.repository.EventRepository;
-import com.boxedfolder.carrot.repository.TransactionLogRepository;
-import com.boxedfolder.carrot.service.impl.SyncServiceImpl;
+import com.boxedfolder.carrot.domain.util.View;
+import com.boxedfolder.carrot.service.SyncService;
 import com.boxedfolder.carrot.web.sync.SyncResource;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -36,44 +34,39 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.*;
 
-import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SyncServiceTest {
+public class SyncResourceTests {
+    @Mock
+    private SyncService service;
+    private MockMvc restUserMockMvc;
+    private ObjectMapper mapper;
     private Map<String, Object> testData;
     private Long timestamp;
     private App app;
-    private Beacon beacon;
-    private NotificationEvent event;
-    private SyncServiceImpl syncService;
-
-    @Mock
-    private BeaconRepository beaconRepository;
-    @Mock
-    private AppRepository appRepository;
-    @Mock
-    private EventRepository eventRepository;
-    @Mock
-    private TransactionLogRepository logRepository;
 
     @Before
     public void setup() {
-        syncService = new SyncServiceImpl();
-        syncService.setAppRepository(appRepository);
-        syncService.setBeaconRepository(beaconRepository);
-        syncService.setEventRepository(eventRepository);
-        syncService.setLogRepository(logRepository);
+        MockitoAnnotations.initMocks(this);
+        SyncResource resource = new SyncResource();
+        resource.setSyncService(service);
+        restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
+        mapper = new ObjectMapper();
 
         testData = new HashMap<>();
         app = new App();
@@ -83,7 +76,14 @@ public class SyncServiceTest {
         app.setDateUpdated(new DateTime());
         app.setApplicationKey(UUID.randomUUID());
 
-        event = new NotificationEvent();
+        App secondApp = new App();
+        secondApp.setName("Testapp 2");
+        secondApp.setId(2L);
+        secondApp.setDateCreated(new DateTime());
+        secondApp.setDateUpdated(new DateTime());
+        secondApp.setApplicationKey(UUID.randomUUID());
+
+        NotificationEvent event = new NotificationEvent();
         event.setName("Event 1");
         event.setId(1L);
         event.setMessage("Test");
@@ -92,7 +92,7 @@ public class SyncServiceTest {
         event.setDateCreated(new DateTime());
         event.getApps().add(app);
 
-        beacon = new Beacon();
+        Beacon beacon = new Beacon();
         beacon.setName("Beacon");
         beacon.setId(1L);
         beacon.setMajor(2);
@@ -114,20 +114,20 @@ public class SyncServiceTest {
 
         Map<String, Object> eventResult = new HashMap<>();
         eventResult.put("createdOrUpdated", Arrays.asList(event));
-        eventResult.put("deleted", new ArrayList<>());
         testData.put("events", eventResult);
     }
 
     @Test
-    public void testSync() {
-        when(appRepository.findByApplicationKey((UUID)anyObject())).thenReturn(app);
-        when(beaconRepository.findByDateUpdated((DateTime)anyObject())).thenReturn(Arrays.asList(beacon));
-        when(logRepository.findDeletedIDsByDateTimeAndClass((DateTime)anyObject(), (Class)anyObject())).thenReturn(new ArrayList<Long>());
+    public void testSyncData() throws Exception {
+        mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
+        mapper.setConfig(mapper.getSerializationConfig().withView(View.Sync.class));
+        String value = mapper.writeValueAsString(testData);
 
-        List<Event> eList = new ArrayList<>();
-        eList.add(event);
-        when(eventRepository.findByDateUpdated((DateTime)anyObject(), (App)anyObject())).thenReturn(eList);
-        Map<String, Object> result = syncService.sync(timestamp, app.getApplicationKey().toString());
-        assertEquals(result, testData);
+        when(service.sync((Long)anyObject(), (String)anyObject())).thenReturn(testData);
+        restUserMockMvc.perform(get("/sync")
+                .param("app_key", app.getApplicationKey().toString())
+                .accept(MediaType.APPLICATION_JSON))
+                       .andExpect(status().isOk())
+                       .andExpect(content().string(value));
     }
 }

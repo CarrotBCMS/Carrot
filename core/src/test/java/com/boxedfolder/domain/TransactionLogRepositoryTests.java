@@ -22,10 +22,10 @@ import com.boxedfolder.carrot.Application;
 import com.boxedfolder.carrot.config.Profiles;
 import com.boxedfolder.carrot.domain.App;
 import com.boxedfolder.carrot.domain.Beacon;
-import com.boxedfolder.carrot.domain.analytics.AnalyticsLog;
 import com.boxedfolder.carrot.domain.NotificationEvent;
-import com.boxedfolder.carrot.domain.TextEvent;
-import com.boxedfolder.carrot.repository.impl.AnalyticsLogRepositoryImpl;
+import com.boxedfolder.carrot.domain.general.logs.EntityDeletionLog;
+import com.boxedfolder.carrot.domain.general.logs.RemovedRelationshipLog;
+import com.boxedfolder.carrot.repository.impl.TransactionLogRepositoryImpl;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -41,7 +41,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -51,18 +50,25 @@ import static junit.framework.Assert.assertTrue;
 @ActiveProfiles(Profiles.TESTING)
 @SpringApplicationConfiguration(classes = {Application.class})
 @Transactional
-public class AnalyticsLogRepositoryTest {
+public class TransactionLogRepositoryTests {
     @PersistenceContext
     private EntityManager entityManager;
-    private AnalyticsLogRepositoryImpl analyticsRepository;
+    private TransactionLogRepositoryImpl logRepository;
 
+    private RemovedRelationshipLog rLog;
+
+    private DateTime prevDate;
     private App app;
     private Beacon beacon;
     private NotificationEvent event;
 
     @Before
     public void setup() {
-        // Setup test data
+        logRepository = new TransactionLogRepositoryImpl();
+        logRepository.setEntityManager(entityManager);
+
+        prevDate = DateTime.now().minus(1000);
+
         app = new App();
         app.setDateCreated(new DateTime());
         app.setDateUpdated(new DateTime());
@@ -95,104 +101,81 @@ public class AnalyticsLogRepositoryTest {
         event.getBeacons().add(beacon);
         entityManager.persist(event);
 
-        TextEvent secondEvent = new TextEvent();
-        secondEvent.setDateCreated(new DateTime());
-        secondEvent.setDateUpdated(new DateTime());
-        secondEvent.setName("Testevent 2");
-        secondEvent.setText("test");
-        secondEvent.getApps().add(app);
-        secondEvent.getBeacons().add(beacon);
-        entityManager.persist(secondEvent);
+        EntityDeletionLog deletionLog = new EntityDeletionLog();
+        deletionLog.setType(event.getClass());
+        deletionLog.setDateTime(new DateTime());
+        deletionLog.setEntityId(event.getId());
+        entityManager.persist(deletionLog);
 
-        AnalyticsLog log = new AnalyticsLog();
-        log.setDateCreated(new DateTime());
-        log.setDateUpdated(new DateTime());
-        log.setBeacon(beacon);
-        log.setOccuredEvent(event);
-        entityManager.persist(log);
+        deletionLog = new EntityDeletionLog();
+        deletionLog.setType(event.getClass());
+        deletionLog.setDateTime(new DateTime());
+        deletionLog.setEntityId(3L);
+        entityManager.persist(deletionLog);
 
-        AnalyticsLog secondLog = new AnalyticsLog();
-        secondLog.setDateCreated(new DateTime());
-        secondLog.setDateUpdated(new DateTime());
-        secondLog.setBeacon(beacon);
-        secondLog.setOccuredEvent(secondEvent);
-        entityManager.persist(secondLog);
+        RemovedRelationshipLog arLog = new RemovedRelationshipLog();
+        arLog.setAppId(app.getId());
+        arLog.setEventId(2L);
+        arLog.setDateTime(new DateTime());
+        entityManager.persist(arLog);
+
+        arLog = new RemovedRelationshipLog();
+        arLog.setAppId(app.getId());
+        arLog.setEventId(3L);
+        arLog.setDateTime(new DateTime());
+        entityManager.persist(arLog);
         entityManager.flush();
-
-        analyticsRepository = new AnalyticsLogRepositoryImpl();
-        analyticsRepository.setEntityManager(entityManager);
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         entityManager.clear();
     }
 
     @Test
-    public void testSaveLog() {
-        AnalyticsLog log = new AnalyticsLog();
-        log.setDateUpdated(new DateTime());
-        log.setDateCreated(new DateTime());
-        log.setOccuredEvent(event);
-        log.setBeacon(beacon);
-        assertTrue(analyticsRepository.findAll().size() == 2);
-        log = analyticsRepository.save(log);
-        assertTrue(analyticsRepository.findAll().size() == 3);
-        assertNotNull(log);
-    }
-
-    @Test
-    public void testFindAll() {
-        List<AnalyticsLog> logs = analyticsRepository.findAll();
+    public void testSaveTransactionLog() {
+        List<RemovedRelationshipLog> logs = logRepository.findAll(prevDate, app.getId());
         assertTrue(logs.size() == 2);
+        RemovedRelationshipLog nLog = new RemovedRelationshipLog();
+        nLog.setAppId(app.getId());
+        nLog.setDateTime(new DateTime());
+        nLog.setEventId(1L);
+        logRepository.save(nLog);
+        logs = logRepository.findAll(prevDate, app.getId());
+        assertTrue(logs.size() == 3);
     }
 
     @Test
-    public void testFindAllFromBeacon() {
-        List<AnalyticsLog> logs = analyticsRepository.findAll(beacon);
+    public void testFindDeletedIDsByDateTimeAndClassTest() {
+        List<Long> data = logRepository.findDeletedIDsByDateTimeAndClass(prevDate, event.getClass());
+        assertTrue(data.size() == 2);
+    }
+
+    @Test
+    public void testDeleteTransactionLog() {
+        List<RemovedRelationshipLog> logs = logRepository.findAll(prevDate, app.getId());
         assertTrue(logs.size() == 2);
-    }
-
-    @Test
-    public void testFindAllFromApp() {
-        List<AnalyticsLog> logs = analyticsRepository.findAll(app);
-        assertTrue(logs.size() == 2);
-    }
-
-    @Test
-    public void testFindAllFromEvent() {
-        List<AnalyticsLog> logs = analyticsRepository.findAll(event);
+        logRepository.delete(logs.get(0));
+        logs = logRepository.findAll(prevDate, app.getId());
         assertTrue(logs.size() == 1);
     }
 
     @Test
-    public void testCountLogsForBeacon() {
-        Long aLong = analyticsRepository.count(beacon);
-        assertTrue(aLong == 2);
-    }
-    @Test
-    public void testCountLogsForEvent() {
-        Long aLong = analyticsRepository.count(event);
-        assertTrue(aLong == 1);
+    public void testFindOneById() {
+        List<RemovedRelationshipLog> logs = logRepository.findAll(prevDate, app.getId());
+        RemovedRelationshipLog log = logRepository.findOne(logs.get(0).getId());
+        assertTrue(log != null);
     }
 
     @Test
-    public void testCountLogs() {
-        Long aLong = analyticsRepository.count();
-        assertTrue(aLong == 2);
+    public void testFineOneEventApp() {
+        RemovedRelationshipLog log = logRepository.findOne(2L, app.getId());
+        assertTrue(log != null);
     }
 
     @Test
-    public void testCountLogsForApp() {
-        Long aLong = analyticsRepository.count(app);
-        assertTrue(aLong == 2);
-    }
-
-    @Test
-    public void testFindAllFromTo() {
-        DateTime to = new DateTime();
-        DateTime from = new DateTime().minusDays(4);
-        List<AnalyticsLog> logs = analyticsRepository.findAll(from, to);
-        assertTrue(logs.size() == 2);
+    public void testFindAll() {
+        List<RemovedRelationshipLog> all = logRepository.findAll(prevDate, app.getId());
+        assertTrue(all.size() == 2);
     }
 }

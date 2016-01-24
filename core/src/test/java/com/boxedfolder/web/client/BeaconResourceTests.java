@@ -18,10 +18,10 @@
 
 package com.boxedfolder.web.client;
 
-import com.boxedfolder.carrot.domain.App;
+import com.boxedfolder.carrot.domain.Beacon;
 import com.boxedfolder.carrot.domain.util.View;
-import com.boxedfolder.carrot.service.AppService;
-import com.boxedfolder.carrot.web.client.AppResource;
+import com.boxedfolder.carrot.service.BeaconService;
+import com.boxedfolder.carrot.web.client.BeaconResource;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -36,6 +36,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.notNull;
@@ -46,19 +47,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * @author Heiko Dreyer (heiko@boxedfolder.com)
- **/
+ */
 @RunWith(MockitoJUnitRunner.class)
-public class AppResourceTest {
+public class BeaconResourceTests {
     @Mock
-    private AppService service;
+    private BeaconService service;
     private MockMvc restUserMockMvc;
-    private List<App> testData;
+    private List<Beacon> testData;
     private ObjectMapper mapper;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        AppResource resource = new AppResource();
+        BeaconResource resource = new BeaconResource();
         resource.setService(service);
         restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
 
@@ -66,38 +67,47 @@ public class AppResourceTest {
         mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
         mapper.setConfig(mapper.getSerializationConfig().withView(View.Client.class));
 
-        // Create 3 apps
-        testData = new ArrayList<App>();
-        App app = new App();
-        app.setName("App 1");
-        testData.add(app);
+        // Create 3 beacons
+        testData = new ArrayList<Beacon>();
+        Beacon beacon = new Beacon();
+        beacon.setName("Beacon 1");
+        beacon.setMajor(1);
+        beacon.setMinor(2);
+        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546014"));
+        testData.add(beacon);
 
-        app = new App();
-        app.setName("App 2");
-        testData.add(app);
+        beacon = new Beacon();
+        beacon.setName("Beacon 2");
+        beacon.setMajor(1);
+        beacon.setMinor(2);
+        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546011"));
+        testData.add(beacon);
 
-        app = new App();
-        app.setName("App 3");
-        testData.add(app);
+        beacon = new Beacon();
+        beacon.setName("Beacon 3");
+        beacon.setMajor(1);
+        beacon.setMinor(2);
+        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546012"));
+        testData.add(beacon);
     }
 
     @Test
-    public void testGetAllApps() throws Exception {
+    public void testGetAllBeacons() throws Exception {
         String value = mapper.writeValueAsString(testData);
 
         when(service.findAll()).thenReturn(testData);
-        restUserMockMvc.perform(get("/client/apps")
+        restUserMockMvc.perform(get("/client/beacons")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(value));
     }
 
     @Test
-    public void testAddApp() throws Exception {
-        App app = testData.get(0);
-        String value = mapper.writeValueAsString(app);
-        given(service.save((App)notNull())).willReturn(app);
-        restUserMockMvc.perform(post("/client/apps")
+    public void testAddBeacon() throws Exception {
+        Beacon beacon = testData.get(0);
+        String value = mapper.writeValueAsString(beacon);
+        given(service.save((Beacon)notNull())).willReturn(beacon);
+        restUserMockMvc.perform(post("/client/beacons")
                 .content(value)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -106,17 +116,17 @@ public class AppResourceTest {
     }
 
     @Test
-    public void testDeleteApp() throws Exception {
-        restUserMockMvc.perform(delete("/client/apps/0"))
+    public void testDeleteBeacon() throws Exception {
+        restUserMockMvc.perform(delete("/client/beacons/0"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetSingleApp() throws Exception {
-        App app = testData.get(0);
-        given(service.find(1L)).willReturn(app);
-        String value = mapper.writeValueAsString(app);
-        restUserMockMvc.perform(get("/client/apps/1"))
+    public void testGetSingleBeacon() throws Exception {
+        Beacon beacon = testData.get(0);
+        given(service.find(1L)).willReturn(beacon);
+        String value = mapper.writeValueAsString(beacon);
+        restUserMockMvc.perform(get("/client/beacons/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(value));
     }

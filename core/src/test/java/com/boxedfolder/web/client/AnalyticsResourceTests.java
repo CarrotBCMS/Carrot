@@ -55,7 +55,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AnalyticsResourceTest {
+public class AnalyticsResourceTests {
     @Mock
     private AnalyticsService service;
     private MockMvc restUserMockMvc;

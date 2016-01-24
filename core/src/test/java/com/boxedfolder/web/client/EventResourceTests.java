@@ -18,10 +18,13 @@
 
 package com.boxedfolder.web.client;
 
-import com.boxedfolder.carrot.domain.Beacon;
+import com.boxedfolder.carrot.domain.Event;
+import com.boxedfolder.carrot.domain.NotificationEvent;
+import com.boxedfolder.carrot.domain.TextEvent;
+import com.boxedfolder.carrot.domain.util.EventList;
 import com.boxedfolder.carrot.domain.util.View;
-import com.boxedfolder.carrot.service.BeaconService;
-import com.boxedfolder.carrot.web.client.BeaconResource;
+import com.boxedfolder.carrot.service.EventService;
+import com.boxedfolder.carrot.web.client.EventResource;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -34,10 +37,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.when;
@@ -49,17 +48,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Heiko Dreyer (heiko@boxedfolder.com)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class BeaconResourceTest {
+public class EventResourceTests {
     @Mock
-    private BeaconService service;
+    private EventService service;
     private MockMvc restUserMockMvc;
-    private List<Beacon> testData;
+    private EventList testData;
     private ObjectMapper mapper;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        BeaconResource resource = new BeaconResource();
+        EventResource resource = new EventResource();
         resource.setService(service);
         restUserMockMvc = MockMvcBuilders.standaloneSetup(resource).build();
 
@@ -67,67 +66,60 @@ public class BeaconResourceTest {
         mapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
         mapper.setConfig(mapper.getSerializationConfig().withView(View.Client.class));
 
-        // Create 3 beacons
-        testData = new ArrayList<Beacon>();
-        Beacon beacon = new Beacon();
-        beacon.setName("Beacon 1");
-        beacon.setMajor(1);
-        beacon.setMinor(2);
-        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546014"));
-        testData.add(beacon);
+        // Create 3 events
+        testData = new EventList();
+        Event event = new TextEvent();
+        event.setName("Event 1");
+        testData.add(event);
 
-        beacon = new Beacon();
-        beacon.setName("Beacon 2");
-        beacon.setMajor(1);
-        beacon.setMinor(2);
-        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546011"));
-        testData.add(beacon);
+        event = new NotificationEvent();
+        event.setName("Event 2");
+        testData.add(event);
 
-        beacon = new Beacon();
-        beacon.setName("Beacon 3");
-        beacon.setMajor(1);
-        beacon.setMinor(2);
-        beacon.setUuid(UUID.fromString("de305d54-75b4-431b-adb2-eb6b9e546012"));
-        testData.add(beacon);
+        event = new TextEvent();
+        event.setName("Event 3");
+        testData.add(event);
     }
 
     @Test
-    public void testGetAllBeacons() throws Exception {
+    public void testGetAllEvents() throws Exception {
         String value = mapper.writeValueAsString(testData);
 
         when(service.findAll()).thenReturn(testData);
-        restUserMockMvc.perform(get("/client/beacons")
+        restUserMockMvc.perform(get("/client/events")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(value));
+                       .andExpect(status().isOk())
+                       .andExpect(content().string(value));
     }
 
     @Test
-    public void testAddBeacon() throws Exception {
-        Beacon beacon = testData.get(0);
-        String value = mapper.writeValueAsString(beacon);
-        given(service.save((Beacon)notNull())).willReturn(beacon);
-        restUserMockMvc.perform(post("/client/beacons")
+    public void testAddEvent() throws Exception {
+        TextEvent event = new TextEvent();
+        event.setText("hi");
+        event.setName("testevent");
+        String value = mapper.writeValueAsString(event);
+        given(service.save((Event)notNull())).willReturn(event);
+        restUserMockMvc.perform(post("/client/events")
                 .content(value)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().string(value));
+                       .andExpect(status().isCreated())
+                       .andExpect(content().string(value));
     }
 
     @Test
-    public void testDeleteBeacon() throws Exception {
-        restUserMockMvc.perform(delete("/client/beacons/0"))
-                .andExpect(status().isOk());
+    public void testDeleteEvent() throws Exception {
+        restUserMockMvc.perform(delete("/client/events/0"))
+                       .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetSingleBeacon() throws Exception {
-        Beacon beacon = testData.get(0);
-        given(service.find(1L)).willReturn(beacon);
-        String value = mapper.writeValueAsString(beacon);
-        restUserMockMvc.perform(get("/client/beacons/1"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(value));
+    public void testGetSingleEvent() throws Exception {
+        Event event = testData.get(0);
+        given(service.find(1L)).willReturn(event);
+        String value = mapper.writeValueAsString(event);
+        restUserMockMvc.perform(get("/client/events/1"))
+                       .andExpect(status().isOk())
+                       .andExpect(content().string(value));
     }
 }
