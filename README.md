@@ -1,4 +1,4 @@
-![Carrot Logo](http://www.carrot.re/files/carrot_logo_big.png =476x)
+![Carrot Logo](https://raw.githubusercontent.com/CarrotBCMS/Carrot/master/client/app/images/logo_alt.svg)
 
 # What is Carrot?
 
