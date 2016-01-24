@@ -15,6 +15,10 @@ The following technologies are in use:
 + Bootstrap
 + jQuery
 
+## Status
+
+[![Build Status](https://travis-ci.org/CarrotBCMS/Carrot.svg?branch=master)](https://travis-ci.org/CarrotBCMS/Carrot)
+
 # How to get started?
 
 This repository consists of two separate projects. The folder 'core' contains the Spring Boot project and the folder 'client' includes the AngularJS client application. Dependencies are managed via Maven & Bower. You can run both _client_ and _core_ on your local machine, your own server hardware or deploy everything to the cloud (e.g. Heroku via Spring Cloud). Use the appropriate _application.yml_ file to configure your datasource.
