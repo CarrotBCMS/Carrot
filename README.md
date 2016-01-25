@@ -2,7 +2,7 @@
 
 # What is Carrot?
 
-Carrot is the beacon management system for everyone. It's build on top of the popular Spring framework und utilizes AngularJS as a frontend component.
+Carrot is the beacon content management system for everyone. It's build on top of the popular Spring framework und utilizes AngularJS as a frontend component.
 
 The following technologies are in use:
 
