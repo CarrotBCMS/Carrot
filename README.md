@@ -27,11 +27,11 @@ _See the CarrotSDK repository for additional details on how to communicate with 
 
 ## Development
 
-Run Spring Boot by running the command ´mvn spring-boot:run´ (_/core_). When your Spring Boot application is running, you can fire up the build-in frontend server by running ´grunt server´ (_/client_).
+Run Spring Boot by running the command `mvn spring-boot:run` (_/core_). When your Spring Boot application is running, you can fire up the build-in frontend server by running `grunt server` (_/client_).
 
 ## Deployment
 
-To integrate the client module into the core, run the grunt command ´grunt build´. All assets, html, js and css files are being copied to the resources directory inside your Spring boot project.
+To integrate the client module into the core, run the grunt command `grunt build`. All assets, html, js and css files are being copied to the resources directory inside your Spring boot project.
 
 # Example
 
